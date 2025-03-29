@@ -1,0 +1,6 @@
+/data
+/output
+*.err
+*.out
+*.txt
+/halLiftover*
