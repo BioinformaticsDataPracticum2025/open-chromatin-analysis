@@ -6,7 +6,7 @@ Our goals are to:
 - Evaluate the quality of chromatin accessibility datasets. (ATAC-seq)
 - Identify and compare open chromatin regions across species and tissues.
 - Analyze conserved regulatory elements such as enhancers and promoters.
-- Investigate associated biological processes and transcription factor binding
+- Investigate associated biological processes and transcription factor binding sites.
 
 ---
 
