@@ -10,6 +10,14 @@
 #SBATCH -A bio230007p
 ##SBATCH --gres=gpu:1
 
+# hal and HALPER; installation documentation says you have to set these manually, without ~
+# I think that adding these lines was key to getting halLiftover to run, because the job no longer finishes within seconds
+export PATH=/jet/home/kwang18/repos/hal/bin:${PATH}
+export PYTHONPATH=/jet/home/kwang18/repos/halLiftover-postprocessing:${PYTHONPATH}
+
+source activate base
+conda activate hal
+
 # It's important to allow 12 hours for halLiftover because it does take a long time
 cd ~ # ensure that the output directory ends up in the home directory; when running things on a cluster, this is important
 
