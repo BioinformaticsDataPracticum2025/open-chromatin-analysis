@@ -19,6 +19,7 @@ conda create -n hal python=3.7
 conda activate hal
 ```
 HALPER expects the conda env name to be hal. If using another name, modify line 27 of `halper_map_peak_orthologs.sh` and change to the corresponding name. 
+Detailed instructions on how to install hal and HALPER [here](https://github.com/pfenninglab/halLiftover-postprocessing/blob/master/hal_install_instructions.md).
 
 ### Git
 ```bash
