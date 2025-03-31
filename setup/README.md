@@ -24,6 +24,6 @@ HALPER expects the conda env name to be hal. If using another name, modify line 
 ```bash
 conda activate hal
 conda install git
-git clone https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis.git
+git clone https://github.com/pfenninglab/halLiftover-postprocessing.git
 ```
 
