@@ -19,7 +19,7 @@ conda create -n hal python=3.7
 conda activate hal
 ```
 HALPER expects the conda env name to be hal. If using another name, modify line 27 of `halper_map_peak_orthologs.sh` and change to the corresponding name. 
-Detailed instructions on how to install hal and HALPER [here](https://github.com/pfenninglab/halLiftover-postprocessing/blob/master/hal_install_instructions.md).
+Detailed instructions on how to install hal and HALPER [here](https://github.com/pfenninglab/halLiftover-postprocessing/blob/master/hal_install_instructions.md). IMPORTANT: this installation, as well as our code, assumes that the directories are cloned in a "repos" directory.
 
 ### Git
 **🧩 Step 1: Activate Env and Install Git**
@@ -37,5 +37,6 @@ https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis.git
 ```bash
 cd open-chromatin-analysis
 git clone https://github.com/pfenninglab/halLiftover-postprocessing.git
+# note: this doesn't actually install HALPER. Follow the instructions linked [here](https://github.com/pfenninglab/halLiftover-postprocessing/blob/master/hal_install_instructions.md).
 ```
 
