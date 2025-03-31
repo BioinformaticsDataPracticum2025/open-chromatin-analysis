@@ -22,9 +22,20 @@ HALPER expects the conda env name to be hal. If using another name, modify line 
 Detailed instructions on how to install hal and HALPER [here](https://github.com/pfenninglab/halLiftover-postprocessing/blob/master/hal_install_instructions.md).
 
 ### Git
+**🧩 Step 1: Activate Env and Install Git**
+
 ```bash
 conda activate hal
 conda install git
+```
+
+**🧩 Step 2: Clone the Main Repository**
+```bash
+https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis.git
+```
+**🧩 Step 3: Clone the HALPER Repository**
+```bash
+cd open-chromatin-analysis
 git clone https://github.com/pfenninglab/halLiftover-postprocessing.git
 ```
 
