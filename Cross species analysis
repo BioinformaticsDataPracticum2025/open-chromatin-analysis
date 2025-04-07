@@ -1,0 +1,16 @@
+#first decompress the files we'll use and then use bedtools intersect to find orthologous open chromatin regions.
+gunzip -k /Users/Hursh/Desktop/hal/Human/Ovary/peaks.HumanToMouse.halLiftover.sFile.bed.gz /Users/Hursh/Desktop/hal/Mouse/Ovary/peaks.MouseToHuman.halLiftover.sFile.bed.gz
+
+#extract column 4 (mapping information) from both files:
+cut -f4 Human/Ovary/peaks.HumanToMouse.HALPER.narrowPeak | awk -F':' '{print $1"\t"$2}' | tr '-' '\t' > human_to_mouse.bed
+cut -f4 Mouse/Ovary/peaks.MouseToHuman.HALPER.narrowPeak | awk -F':' '{print $1"\t"$2}' | tr '-' '\t' > mouse_to_human.bed
+
+
+#bedtools intersect to find the overlapping regions
+bedtools intersect -a human_to_mouse.bed -b mouse_to_human.bed -wa -wb > ovary_orthologous_regions.bed
+
+
+#Unique regions 
+sort -u orthologous_regions.bed | awk 'BEGIN {print "HumanChromosome\tStart\tEnd\tMouseChromosome\tStart\tEnd"} {print $0}' > Ovary_orthologous_regions_unique.bed
+
+
