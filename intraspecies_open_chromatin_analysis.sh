@@ -43,5 +43,36 @@ bedtools intersect -a mouse_pancreas.bed -b mouse_ovary.bed > "${Output_director
 #Output BED file: open regions unique to pancreas
 bedtools intersect -a mouse_pancreas.bed -b mouse_ovary.bed -v > "${Output_directory}/mouse/pancreas_regions_only.bed"
 
+#% of Open chromatin regions shared between tissues and % unique to tissues 
+# Human Ovary
+ovary_total=$(wc -l < human_ovary.bed)
+ovary_not_shared=$(wc -l < "${Output_directory}/human/ovaryonly_regions_ovaryfirst.bed")
+ovary_shared=$(wc -l < "${Output_directory}/human/shared_regions_ovaryfirst.bed")
+ovary_percent=$(awk "BEGIN {printf \"%.4f\", ($ovary_shared / $ovary_total) * 100}")
+ovary_percent_not_shared=$(awk "BEGIN {printf \"%.4f\", ($ovary_not_shared / $ovary_total) * 100}")
+echo "Human Ovary: $ovary_shared out of $ovary_total regions shared (${ovary_percent}%)"
+echo "Regions of human ovary not shared: $ovary_not_shared of $ovary_total regions (${ovary_percent_not_shared}%)"
+
+# Human Pancreas
+pancreas_total=$(wc -l < human_pancreas.bed)
+pancreas_shared=$(wc -l < "${Output_directory}/human/shared_regions_pancreasfirst.bed")
+pancreas_not_shared=$(wc -l < "${Output_directory}/human/pancreas_regions_only.bed")
+pancreas_percent=$(awk "BEGIN {printf \"%.4f\", ($pancreas_shared / $pancreas_total) * 100}")
+pancreas_percent_not_shared=$(awk "BEGIN {printf \"%.4f\", ($pancreas_not_shared / $pancreas_total) * 100}")
+echo "Human Pancreas: $pancreas_shared out of $pancreas_total regions shared (${pancreas_percent}%)"
+echo "Regions of human pancreas not shared: $pancreas_not_shared (${pancreas_percent_not_shared}%)"
+
+
+# Mouse Ovary
+mouse_ovary_total=$(wc -l < mouse_ovary.bed)
+mouse_ovary_shared=$(wc -l < "${Output_directory}/mouse/shared_regions_ovaryfirst.bed")
+mouse_ovary_not_shared=$(wc -l < "${Output_directory}/mouse/ovaryonly_regions_ovaryfirst.bed")
+mouse_ovary_percent=$(awk "BEGIN {printf \"%.4f\", ($mouse_ovary_shared / $mouse_ovary_total) * 100}")
+mouse_ovary_percent_not_shared=$(awk "BEGIN {printf \"%.4f\", ($mouse_ovary_not_shared / $mouse_ovary_total) * 100}")
+echo "Mouse Ovary: $mouse_ovary_shared out of $mouse_ovary_total regions shared (${mouse_ovary_percent}%)"
+echo "Regions of mouse ovary not shared: $mouse_ovary_not_shared (${mouse_ovary_percent_not_shared}%)"
+
+
+
 
 
