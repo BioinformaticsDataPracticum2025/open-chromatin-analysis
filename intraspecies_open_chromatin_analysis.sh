@@ -21,25 +21,25 @@ gunzip -c /ocean/projects/bio230007p/ikaplow/MouseAtac/Pancreas/peak/idr_reprodu
 
 # Human - Ovary first
 #Output BED file: regions in ovary that also overlap pancreas
-bedtools intersect -a human_ovary.bed -b human_pancreas.bed -u > "${Output_directory}/human/shared_regions_ovaryfirst.bed"
+bedtools intersect -a human_ovary.bed -b human_pancreas.bed -wa -wb > "${Output_directory}/human/shared_regions_ovaryfirst.bed"
 #Output BED file: open regions unique to ovary
 bedtools intersect -a human_ovary.bed -b human_pancreas.bed -v > "${Output_directory}/human/ovaryonly_regions_ovaryfirst.bed"
 
 # Human - Pancreas first
 #Output BED file: regions in pancreas that also overlap ovary
-bedtools intersect -a human_pancreas.bed -b human_ovary.bed -u > "${Output_directory}/human/shared_regions_pancreasfirst.bed"
+bedtools intersect -a human_pancreas.bed -b human_ovary.bed -wa -wb > "${Output_directory}/human/shared_regions_pancreasfirst.bed"
 #Output BED file: open regions unique to pancreas
 bedtools intersect -a human_pancreas.bed -b human_ovary.bed -v > "${Output_directory}/human/pancreas_regions_only.bed"
 
 # Mouse - Ovary first
 #Output BED file: regions in ovary that also overlap pancreas
-bedtools intersect -a mouse_ovary.bed -b mouse_pancreas.bed -u > "${Output_directory}/mouse/shared_regions_ovaryfirst.bed"
+bedtools intersect -a mouse_ovary.bed -b mouse_pancreas.bed -wa -wb > "${Output_directory}/mouse/shared_regions_ovaryfirst.bed"
 #Output BED file: open regions unique to ovary
 bedtools intersect -a mouse_ovary.bed -b mouse_pancreas.bed -v > "${Output_directory}/mouse/ovaryonly_regions_ovaryfirst.bed"
 
 # Mouse - Pancreas first
 #Output BED file: regions in pancreas that also overlap ovary
-bedtools intersect -a mouse_pancreas.bed -b mouse_ovary.bed > "${Output_directory}/mouse/shared_regions_pancreasfirst.bed"
+bedtools intersect -a mouse_pancreas.bed -b mouse_ovary.bed -wa -wb > "${Output_directory}/mouse/shared_regions_pancreasfirst.bed"
 #Output BED file: open regions unique to pancreas
 bedtools intersect -a mouse_pancreas.bed -b mouse_ovary.bed -v > "${Output_directory}/mouse/pancreas_regions_only.bed"
 
