@@ -19,6 +19,12 @@ To run the analyses and workflows in this project, the following packages and to
 - GREAT
 - MEMEsuite
 
+## Scripts
+- (Integrated scripts here; below are individual scripts)
+
+**Usage of the following scripts can be found [here](setup/SCRIPTS.md).**
+- `bedtools.sh`
+
 ## Input files
 (add later)
 
