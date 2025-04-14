@@ -27,6 +27,8 @@ To run the analyses and workflows in this project, the following packages and to
 
 ## Input files
 (add later)
+(note to self: although submit_hal.sh is currently configured to accept zipped input narrowPeak files and automatically unzip to ~/input/peaks.narrowPeak, this is an issue if running HALPER multiple times because then the input ATAC-seq data will overwrite each other, and we will probably want to access these unzipped narrowPeak files later. So we should modify submit_hal.sh so that if it detects that the user gave it zipped .narrowPeak files, it prompts the user to provide new filenames to use when unzipping the file, e.g. with gunzip -c $zipped_input > $unzipped_input.)
+ 
 
 ## Output files
 (add later; include all intermediate files)
