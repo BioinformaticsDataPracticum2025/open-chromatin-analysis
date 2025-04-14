@@ -18,3 +18,25 @@ To run the analyses and workflows in this project, the following packages and to
 - **[halLiftover and HALPER](https://github.com/pfenninglab/halLiftover-postprocessing.git)**
 - GREAT
 - MEMEsuite
+
+## Input files
+(add later)
+
+## Output files
+(add later; include all intermediate files)
+
+## Example run
+(add later)
+
+## Citations
+* CACTUS: Paten, Benedict et al. “Cactus: Algorithms for Genome Multiple Sequence Alignment.” Genome Research 21.9 (2011): 1512–1528. Genome Research. Web.
+* halLiftover and HALPER: Zhang, Xiaoyu et al. “HALPER facilitates the identification of regulatory element orthologs across species.” Bioinformatics (Oxford, England) vol. 36,15 (2020): 4339-4340. doi:10.1093/bioinformatics/btaa493
+* BEDTools: Quinlan, Aaron R, and Ira M Hall. “BEDTools: a flexible suite of utilities for comparing genomic features.” Bioinformatics (Oxford, England) vol. 26,6 (2010): 841-2. doi:10.1093/bioinformatics/btq033
+* GREAT: McLean, Cory Y et al. “GREAT improves functional interpretation of cis-regulatory regions.” Nature biotechnology vol. 28,5 (2010): 495-501. doi:10.1038/nbt.1630
+* MEMEsuite: Bailey, Timothy L et al. “The MEME Suite.” Nucleic acids research vol. 43,W1 (2015): W39-49. doi:10.1093/nar/gkv416
+
+## Contributors
+* Shih-Ying Lin (shihying@andrew.cmu.edu)
+* Peng Qiu (pengq@andrew.cmu.edu)
+* Aayushi Soni (ajsoni@andrew.cmu.edu)
+* Katherine Wang (kcw2@andrew.cmu.edu)
