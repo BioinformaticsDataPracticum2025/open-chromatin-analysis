@@ -23,7 +23,7 @@ To run the analyses and workflows in this project, the following packages and to
 - (Integrated scripts here; below are individual scripts)
 
 **Usage of the following scripts (with inputs and outputs) can be found [here](setup/SCRIPTS.md).**
-- `submit_hal.sh`, which is used to run halLiftover and HALPER
+- `submit_hal.sh`, which is used to run halLiftover and HALPER. **IMPORTANT: refer to the "important note" heading in the markdown linked above. You will need to change a few lines of code in order to get this to run on your own device; according to [hal setup documentation](https://github.com/pfenninglab/halLiftover-postprocessing/blob/master/hal_install_instructions.md), it must be hardcoded without use of "~".** 
 - `bedtools.sh`, which will ultimately be used to run cross-species and intraspecies (cross-tissue) comparison of open chromatin regions
 - `cross_species_bedtools_intersection.sh`, which is equivalent to intraspecies_open_chromatin_analysis.sh (it can be used for both cross-species and intraspecies comparison of open chromatin regions); we will later merge the two scripts
 
