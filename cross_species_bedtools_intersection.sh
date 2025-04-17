@@ -45,14 +45,17 @@ both_open=$4 # either "y" or "n"; will not take other values
 # and "bedtools intersect -a $a -b $b -v | wc -l" do sum up to the same number as "zcat $a | wc -l",
 # so I am fairly sure that these statements are both correct.
 
+# To prepare the output file for upload to GREAT, we cut it to the first three columns.
+# (GREAT complains if the input BED has more than 3 columns.)
+
 if [ "$both_open" = "y" ]; then
     # looking for regions open in both input files
     echo "Looking for regions that are open in both input files."
-    bedtools intersect -a $a -b $b -u > $out 
+    bedtools intersect -a $a -b $b -u | cut -f 1-3 > $out 
 elif [ "$both_open" = "n" ]; then
     # looking for regions open in -a but closed in -b; use -v instead of -u
     echo "Looking for regions that are open in ${a} but closed in ${b}."
-    bedtools intersect -a $a -b $b -v > $out # (can't use -u and -v together)
+    bedtools intersect -a $a -b $b -v | cut -f 1-3 > $out # (can't use -u and -v together)
 else
     echo "Error: Invalid value for the fourth CLI specifying whether to search for regions open in both genomes. Expected 'y' or 'n'."
     exit 1
