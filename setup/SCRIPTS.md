@@ -102,7 +102,7 @@ bash cross_species_bedtools_intersection.sh $1 $2 $3 $4
 # With example values:
 bash cross_species_bedtools_intersection.sh "~/output/hal/Mouse/Ovary/peaks.MouseToHuman.HALPER.narrowPeak.gz" "$PROJECT/../ikaplow/HumanAtac/Ovary/peak/idr_reproducibility/idr.conservative_peak.narrowPeak.gz" "ovary_intersect_mouse_peaks_to_human_coords_open.bed" y
 
-# $1 and $2 are input files to bedtools, $3 is the name of the output file,
+# $1 and $2 are input files to bedtools (.gz format expected), $3 is the name of the output file,
 # $4 specifies whether to look for regions that are open in both genomes ("y") or closed in the second genome ("n")
 
 # Using CLIs:
