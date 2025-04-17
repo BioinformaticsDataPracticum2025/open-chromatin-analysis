@@ -23,8 +23,9 @@ To run the analyses and workflows in this project, the following packages and to
 - (Integrated scripts here; below are individual scripts)
 
 **Usage of the following scripts (with inputs and outputs) can be found [here](setup/SCRIPTS.md).**
-- `bedtools.sh`
-- `cross_species_bedtools_intersection.sh` (equivalent to intraspecies_open_chromatin_analysis.sh; we will later merge the two scripts)
+- `submit_hal.sh`, which is used to run halLiftover and HALPER
+- `bedtools.sh`, which will ultimately be used to run cross-species and intraspecies (cross-tissue) comparison of open chromatin regions
+- `cross_species_bedtools_intersection.sh`, which is equivalent to intraspecies_open_chromatin_analysis.sh (it can be used for both cross-species and intraspecies comparison of open chromatin regions); we will later merge the two scripts
 
 (note to self: although submit_hal.sh is currently configured to accept zipped input narrowPeak files and automatically unzip to ~/input/peaks.narrowPeak, this is an issue if running HALPER multiple times because then the input ATAC-seq data will overwrite each other, and we will probably want to access these unzipped narrowPeak files later. So we should modify submit_hal.sh so that if it detects that the user gave it zipped .narrowPeak files, it prompts the user to provide new filenames to use when unzipping the file, e.g. with gunzip -c $zipped_input > $unzipped_input. Also note that the HALPER output files will differ in names depending on the input file's name and the source and target species, so the easiest way to identify them would be to search for "HALPER" in the filename.)
 
