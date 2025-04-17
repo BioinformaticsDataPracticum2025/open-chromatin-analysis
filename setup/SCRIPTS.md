@@ -4,9 +4,63 @@ This document provides detailed usage information for the scripts.
 
 ---
 
+## submit_hal.sh
+Runs [halLiftover and HALPER](https://github.com/pfenninglab/halLiftover-postprocessing?tab=readme-ov-file#example-run-of-halper) on the input files.
+
+### Dependencies
+* [hal](https://github.com/pfenninglab/halLiftover-postprocessing?tab=readme-ov-file#example-run-of-halper)
+* [Anaconda3](https://www.anaconda.com/docs/getting-started/anaconda/install)
+
+### IMPORTANT NOTE
+Refer to this block of code. Before you run submit_hal.sh on your own device, change these lines of code in submit_hal.sh.
+```bash
+# hal and HALPER; installation documentation says you have to set these manually, without ~
+# IMPORTANT: if you are running this on your own device, change the paths to match your own paths to the hal and halLiftover repositories
+# These lines are key to getting halLiftover to run.
+export PATH=/jet/home/kwang18/repos/hal/bin:${PATH}
+export PYTHONPATH=/jet/home/kwang18/repos/halLiftover-postprocessing:${PYTHONPATH}
+```
+
+### Usage
+```bash
+# Usage(){
+#     echo "Usage: $0 -p <path_to_halper_script> -b <input_bed_file> -o <output_directory> -s <source_species> -t <target_species> -c <alignment_file>" 
+#     exit 1
+# }
+
+help_str="
+Parameters:
+  -h, --help:     Print out the manual
+  -d, --dir:      halLiftover-postprocessing directory    Optional parameter
+  -b, --bed:      Input BED or narrowpeak file            Mandatory parameter
+  -o, --output:   Output directory                        Optional parameter
+  -s, --source:   Source species                          Mandatory parameter
+  -t, --target:   Target species                          Mandatory parameter
+  -c, --align:    Alignment File                          Optional parameter
+"
+
+# mouse pancreas (sbatch to run on the cluster):
+# sbatch submit_hal.sh -b "/ocean/projects/bio230007p/ikaplow/MouseAtac/Pancreas/peak/idr_reproducibility/idr.optimal_peak.narrowPeak.gz" -o ~/output/hal/Mouse/Pancreas -s Mouse -t Human
+```
+
+### Inputs
+Refer to the help string under the "usage" heading.
+
+### Outputs
+Two halLiftover output files ending in .sFile.bed.gz and .tFile.bed.gz. Also a HALPER output file ending in .HALPER.narrowPeak.gz. The HALPER file is essentially a BED file in which the first three columns are the coordinates of the source species's gene in terms of the target species's coordinates (for every ortholog found between the two), the fourth column contains the original coordinates from the source species, and the rest of the columns can be ignored.
+See [hal documentation](https://github.com/pfenninglab/halLiftover-postprocessing?tab=readme-ov-file#output-files-produced-by-halper) for more information.
+
+Example:
+peaks.MouseToHuman.HALPER.narrowPeak.gz  peaks.MouseToHuman.halLiftover.sFile.bed.gz  peaks.MouseToHuman.halLiftover.tFile.bed.gz
+
+
 ## bedtool.sh
 
 This script offers a convenient way to perform multiple bedtools intersection analysis with user-customizable options. (Currently not up-to-date- run cross_species_bedtools_intersection.sh instead.)
+
+### Dependencies
+* [Anaconda3](https://www.anaconda.com/docs/getting-started/anaconda/install)
+* [bedtools](https://anaconda.org/bioconda/bedtools) (can be conda installed)
 
 ### Usage
 ```bash
@@ -37,8 +91,12 @@ file_path_to_peak_file_C     file_path_to_peak_file_D     bedfile_output_path   
 
 This script will eventually be merged into bedtool.sh. It takes two input BED files, outputs a bedtools intersection of these two files, and prints two metrics: the percentage overlap (number of lines in output intersection file divided by number of lines in the first input file) and the Jaccard overlap (a better metric to use than percentage if the two input files differ greatly in number of lines, as might be the case if intersecting conservative peaks with optimal peaks).
 
+### Dependencies
+* [Anaconda3](https://www.anaconda.com/docs/getting-started/anaconda/install)
+* [bedtools](https://anaconda.org/bioconda/bedtools) (can be conda installed)
+
 ### Usage
-```
+```bash
 bash cross_species_bedtools_intersection.sh $1 $2 $3 $4
 
 # With example values:
