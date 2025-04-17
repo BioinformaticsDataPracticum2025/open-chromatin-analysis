@@ -8,7 +8,7 @@
 
 module load bedtools
 
-cd /jet/home/kwang18/output/step2a_bedtools 
+cd ~/output/step2a_bedtools 
 # I navigated to my own output directory for convenience, but you could put the output directory in the output filename
 
 
@@ -60,27 +60,34 @@ fi
 
 
 # Step 2:
-# save the number of lines as a variable (using cut in order to discard all the text after the first space)
+# save the number of lines in the intersected output as the numerator variable (using cut in order to discard all the text after the first space)
 numerator=$(wc -l $out | cut -d " " -f 1)
-total_genes_a=$(zcat $a | wc -l | cut -d " " -f 1)
-echo Number of hits found: $numerator out of $total_genes_a total regions in $a
+echo Number of intersections found: $numerator
 
 # Step 3:
-# Similar to step 2, but for both input files, then summing them and dividing by 2
+# For the denominator, simply use the number of lines in the input $a file
 # IMPORTANT: these are compressed .gz files, so you actually have to use zcat, otherwise the line count will be
 # much lower than it should be. As part of the pipeline, I think we can assume these files are compressed
 # because when I unzipped the inputs to halLiftover and HALPER, I unzipped to a different location.
-d1=$(zcat $a | wc -l | cut -d " " -f 1)
-d2=$(zcat $b | wc -l | cut -d " " -f 1)
 # get the average in two steps: first add together d1 and d2, then divide their sum by 2.
-denominator=$((${d1}+${d2}))
-denominator=$(awk "BEGIN {print $denominator / 2}") # awk script for floating point division
-echo Average number of genes in input genomes: $denominator
+denominator=$(zcat $a | wc -l | cut -d " " -f 1)
+echo Number of genes in input A: $denominator
 
 # Step 4:
 # need to use awk script to do floating point division
-percentage=$(awk "BEGIN {print $numerator / $denominator}")
-echo Percentage of hits for the intersection that created $out: $percentage
+percentage=$(awk "BEGIN {print $numerator / $denominator}") # awk script for floating point division
+echo Percentage for $out: $numerator / $denominator = $percentage
+
+# Step 5:
+# Find the Jaccard between the two input files $a and $b, as it's a better metric when they're very different in size
+# Base pair level similarity using Jaccard index; it is a symmetric metric 
+# The output is saved to a txt file and printed as a percentage overlap (extracted from the third column of output)
+
+# Human: Ovary vs Pancreas
+echo Jaccard overlap:
+zcat $a | sort -k1,1 -k2,2n > ~/input/temp_a.bed
+zcat $b | sort -k1,1 -k2,2n > ~/input/temp_b.bed
+echo $(bedtools jaccard -a ~/input/temp_a.bed -b ~/input/temp_b.bed | tail -n 1 | awk '{printf "%.4f", $3 * 100}') "%"
 
 
 # My part of the project is to do cross-species intersections (different species, same tissue).
