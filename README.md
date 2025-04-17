@@ -19,6 +19,10 @@ To run the analyses and workflows in this project, the following packages and to
 - [bedtools](https://anaconda.org/bioconda/bedtools) (can be conda installed)
 - **[halLiftover and HALPER](https://github.com/pfenninglab/halLiftover-postprocessing.git)**
 - [GREAT](http://great.stanford.edu/public/html/) (cut your input BED files to columns 1-3)
+```bash
+cut -f1-3 input_bed_file  > output_file_name 
+# This keeps only the first 3 columns of the file.
+```
 - MEMEsuite
 
 ## Scripts
