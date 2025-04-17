@@ -15,8 +15,10 @@ Our goals are to:
 ## Required Packages & Tools
 To run the analyses and workflows in this project, the following packages and tools are required. Initial setup is available [here](setup/README.md). 
 
+- [Anaconda3](https://www.anaconda.com/docs/getting-started/anaconda/install)
+- [bedtools](https://anaconda.org/bioconda/bedtools) (can be conda installed)
 - **[halLiftover and HALPER](https://github.com/pfenninglab/halLiftover-postprocessing.git)**
-- GREAT
+- [GREAT](http://great.stanford.edu/public/html/) (cut your input BED files to columns 1-3)
 - MEMEsuite
 
 ## Scripts
