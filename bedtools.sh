@@ -73,12 +73,12 @@ while read -r line || [[ -n "$line" ]]; do
         echo "Intersecting (open in both):"
         echo "  File A: $filename_a"
         echo "  File B: $filename_b"
-        bedtools intersect -a "$file_a" -b "$file_b" -u > "$out"
+        bedtools intersect -a "$file_a" -b "$file_b" -u | cut -f1-3 > "$out"
     elif [ "$mode" = "n" ]; then
         echo "Intersecting (open in file_a, closed in file_b):"
         echo "  File A: $filename_a"
         echo "  File B: $filename_b"
-        bedtools intersect -a "$file_a" -b "$file_b" -v > "$out"
+        bedtools intersect -a "$file_a" -b "$file_b" -v | cut -f1-3 > "$out"
     else
         echo "Error: Invalid mode '$mode' for line:"
         echo "$line"
@@ -87,17 +87,19 @@ while read -r line || [[ -n "$line" ]]; do
     fi
 
     # counting 
-    count_a=$(wc -l < "$file_a")
-    count_b=$(wc -l < "$file_b")
-    avg=$(echo "scale=2; ($count_a + $count_b)/2" | bc)
+    denominator=$(wc -l < "$file_a")
     numerator=$(wc -l < "$out")
 
-    percentage=$(echo "scale=2; $numerator / $avg" | bc)
+    percentage=$(echo "scale=2; $numerator / $denominator" | bc)
     echo Percentage of hits for the intersection that created $out: $percentage
 
     names_arr+=("$name")
-    dataA_arr+=("$avg")
+    dataA_arr+=("$denominator")
     dataB_arr+=("$numerator")
+
+    # Jaccard calculation
+    jaccard=$(bedtools jaccard -a "$file_a" -b "$file_b" | tail -n1 | awk '{ printf "%.4f", $3 * 100 }')
+    echo "Jaccard overlap for the intersection that created $out: $jaccard%"
 
     rm -f "$file_a" "$file_b"
 
