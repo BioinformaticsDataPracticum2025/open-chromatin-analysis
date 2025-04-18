@@ -1,6 +1,7 @@
 # open-chromatin-analysis
 
-This project explores the conservation and functional significance of open chromatin regions across human and mouse tissues, such as the ovary and pancreas. Open chromatin regions play a crucial role in regulating gene expression by providing access to transcriptional machinery. These open chromatin regions may be promoters or enhancers. 
+This project explores the conservation and functional significance of open chromatin regions across human and mouse tissues, such as the ovary and pancreas. Open chromatin regions play a crucial role in regulating gene expression by providing access to transcriptional machinery. These open chromatin regions may be promoters or enhancers.  
+This pipeline could generally be used to conduct differential regulatory analysis between two different conditions in  bulk ATAC-seq data, e.g. between species and tissues. 
 
 Our goals are to:  
 1. Evaluate the quality of chromatin accessibility datasets (manual inspection of ATAC-seq QC reports).
