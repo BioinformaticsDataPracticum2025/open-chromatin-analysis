@@ -10,6 +10,8 @@
 #SBATCH -A bio230007p
 ##SBATCH --gres=gpu:1
 
+# Received help from Ziyun
+
 # example run:
 # sbatch ~/repos/open-chromatin-analysis/motif_analysis.sh ~/input/getfasta_test_output.fasta ~/output/meme_outdir_test $PROJECT/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme
 
@@ -21,4 +23,4 @@ outdir=$2 # the name of the directory that you want MEME-ChIP to output to
 ref_db=$3 # path to a MEME database of motifs
 
 
-meme-chip -oc $outdir -db $ref_db -meme-nmotifs 3 $input
+meme-chip -oc $outdir -db $ref_db -meme-nmotifs 3 -spamo-skip $input
