@@ -1,9 +1,11 @@
 # Scripts Documentation
 
 This document provides detailed usage information for the scripts.
+Steps 1 and 4 are not included. Step 1 entails manual inspection of QC reports, while Step 4 is done using the [GREAT web tool](http://great.stanford.edu/public/html/).
 
 ---
 
+# Step 2: map OCRs from the same tissues across species
 ## submit_hal.sh
 Runs [halLiftover and HALPER](https://github.com/pfenninglab/halLiftover-postprocessing?tab=readme-ov-file#example-run-of-halper) on the input files.
 
@@ -53,10 +55,10 @@ See [hal documentation](https://github.com/pfenninglab/halLiftover-postprocessin
 Example:
 peaks.MouseToHuman.HALPER.narrowPeak.gz  peaks.MouseToHuman.halLiftover.sFile.bed.gz  peaks.MouseToHuman.halLiftover.tFile.bed.gz
 
-
+# Steps 2a and 3: find OCRs shared between different species (step 2a) or different tissues (step 3)
 ## bedtools.sh
 
-This script offers a convenient way to perform multiple bedtools intersection analysis with user-customizable options. (Currently not up-to-date- run cross_species_bedtools_intersection.sh instead.)
+This script offers a convenient way to perform multiple bedtools intersection analysis with user-customizable options.
 
 ### Dependencies
 * [Anaconda3](https://www.anaconda.com/docs/getting-started/anaconda/install)
@@ -120,3 +122,39 @@ both_open=$4 # either "y" or "n"; will not take other values
 ### Outputs
 If $both_open == "y", writes bedtools intersect -a $a -b $b -u > $out. This is the set of unique overlaps between the first and second input files. If the input files contain open chromatin regions, then the output file represents peaks that occur in both input files.
 If $both_open == "n", writes bedtools intersect -a $a -b $b -v > $out. This is the set of peaks that occur in the first but not the second input file. If the input files contain open chromatin regions, then the output file represents peaks that occur in $a but not $b.
+
+# Step 5: identify promoters and enhancers
+## (add step 5 script once it's done)
+
+# Step 6: find motifs enriched in OCRs (particularly enhancers) from previously-processed datasets
+## convert_bed_to_fasta.sh
+Step 6 (motif analysis) requires FASTA input. Prior steps in the pipeline produce BED files, so it's necessary to run this on any files you intend to use in step 6. In particular, use this script to convert bed outputs from step 5 (enhancers and promoters) to FASTA.
+
+### Inputs:
+$1: $ref_fasta which is either h (human), m (mouse), or a filepath ending in .fasta. If the file is equivalent to FASTA but has a different file extension, rename it to end in .fasta.
+$2: $input_bed which is a filepath to the BED file you want to convert to a FASTA
+$3: $output_filename. If you want to put it in a new directory, please make the directory beforehand so that it exists.
+
+### Output: a fasta file with the specified $output_filename, containing sequences at regions specified in $input_bed.
+
+### Example run:
+```bash
+bash convert_bed_to_fasta.sh h ~/output/step3_bedtools/human_ovary_to_pancreas_intersect_pancreasClosed.bed ~/input/getfasta_test_output.fasta
+# I chose to put the output FASTA file in the "input" dir because it'll be used for step 6 motif analysis
+```
+
+## motif_analysis.sh
+After converting your input from bed to fasta using convert_bed_to_fasta.sh, you are ready to find motifs that are enriched in the input file.
+
+### Inputs:
+$1: $input fasta in which to find motifs.
+$2: $outdir in which the results will be written. IMPORTANT NOTE ABOUT OUTDIR: provide a unique outdir each time, otherwise the results will be overwritten
+$3: ref_db, which is either h, m, or a path to a file that ends in .meme. Throws an error otherwise.
+
+#### Output: Look for the motifs and E-values in the summary.tsv file in $outdir.
+
+### Example run:
+```bash
+sbatch ~/repos/open-chromatin-analysis/motif_analysis.sh ~/input/getfasta_test_output.fasta ~/output/meme_outdir_test h
+# I recommend using sbatch because MEME-suite takes a long time to run (it could take 24 hours depending on the size of the input file)
+```
