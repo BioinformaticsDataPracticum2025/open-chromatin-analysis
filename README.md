@@ -9,35 +9,34 @@ Our goals are to:
 3. Compare the percentages of open chromatin regions that are conserved between species and between tissues (bedtools intersection between ATAC-seq peaks for same-species comparison, and between halLiftover and HALPER outputs for cross-species comparison).
 4. Predict functions of regulatory regions (GREAT gene ontology analysis; manual web upload).
 5. Analyze conserved regulatory elements such as enhancers and promoters (bedtools intersection with ENCODE CCREs).
-6. Investigate associated biological processes and transcription factor binding sites (MEMEsuite; specific software TBD).
+6. Investigate associated biological processes and transcription factor binding sites (MEME-ChIP, or just MEME and STREME).
 
 ---
 
 ## Required Packages & Tools
 To run the analyses and workflows in this project, the following packages and tools are required. Initial setup is available [here](setup/README.md). 
 
-- [Anaconda3](https://www.anaconda.com/docs/getting-started/anaconda/install)
+- [Anaconda3](https://www.anaconda.com/docs/getting-started/anaconda/install) for conda installation and Python
 - [bedtools](https://anaconda.org/bioconda/bedtools) (can be conda installed)
 - **[halLiftover and HALPER](https://github.com/pfenninglab/halLiftover-postprocessing.git)**
-- [GREAT](http://great.stanford.edu/public/html/) (cut your input BED files to columns 1-3)
+- [GREAT](http://great.stanford.edu/public/html/) (please make sure that your input BED files have been cut to columns 1-3)
 ```bash
 cut -f1-3 input_bed_file  > output_file_name 
 # This keeps only the first 3 columns of the file.
 ```
-- MEMEsuite
+- MEME-ChIP [MEMEsuite](https://meme-suite.org/meme/doc/install.html) v5.4.1, or you can use the web version of [MEME-ChIP](https://meme-suite.org/meme/tools/meme-chip).
 
 ## Scripts
 - (Integrated scripts here; below are individual scripts)
 
 **Usage of the following scripts (with inputs and outputs) can be found [here](setup/SCRIPTS.md).**
 - `submit_hal.sh`, which is used to run halLiftover and HALPER. **IMPORTANT: refer to the "important note" heading in the markdown linked above. You will need to change a few lines of code in order to get this to run on your own device; according to [hal setup documentation](https://github.com/pfenninglab/halLiftover-postprocessing/blob/master/hal_install_instructions.md), it must be hardcoded without use of "~".** 
-- `bedtools.sh`, which will ultimately be used to run cross-species and intraspecies (cross-tissue) comparison of open chromatin regions
-- `cross_species_bedtools_intersection.sh`, which is equivalent to intraspecies_open_chromatin_analysis.sh (it can be used for both cross-species and intraspecies comparison of open chromatin regions); we will later merge the two scripts
+- `bedtools.sh`, which is used to run cross-species (same tissue) and intraspecies (cross-tissue) comparison of open chromatin regions
 
 (note to self: although submit_hal.sh is currently configured to accept zipped input narrowPeak files and automatically unzip to ~/input/peaks.narrowPeak, this is an issue if running HALPER multiple times because then the input ATAC-seq data will overwrite each other, and we will probably want to access these unzipped narrowPeak files later. So we should modify submit_hal.sh so that if it detects that the user gave it zipped .narrowPeak files, it prompts the user to provide new filenames to use when unzipping the file, e.g. with gunzip -c $zipped_input > $unzipped_input. Also note that the HALPER output files will differ in names depending on the input file's name and the source and target species, so the easiest way to identify them would be to search for "HALPER" in the filename.)
 
 ## Example run
-(add later)
+(TODO: list the input files, output files, and bash/sbatch commands)
 
 ## Citations
 * CACTUS: Paten, Benedict et al. “Cactus: Algorithms for Genome Multiple Sequence Alignment.” Genome Research 21.9 (2011): 1512–1528. Genome Research. Web.
@@ -51,3 +50,7 @@ cut -f1-3 input_bed_file  > output_file_name
 * Peng Qiu (pengq@andrew.cmu.edu)
 * Aayushi Soni (ajsoni@andrew.cmu.edu)
 * Katherine Wang (kcw2@andrew.cmu.edu)
+
+  Special thanks to:
+  * Professor: Dr. Irene Kaplow (ikaplow@andrew.cmu.edu)
+  * TA: Wanxing Zhang (wanxingz@andrew.cmu.edu)
