@@ -54,7 +54,7 @@ Example:
 peaks.MouseToHuman.HALPER.narrowPeak.gz  peaks.MouseToHuman.halLiftover.sFile.bed.gz  peaks.MouseToHuman.halLiftover.tFile.bed.gz
 
 
-## bedtool.sh
+## bedtools.sh
 
 This script offers a convenient way to perform multiple bedtools intersection analysis with user-customizable options. (Currently not up-to-date- run cross_species_bedtools_intersection.sh instead.)
 
@@ -85,9 +85,13 @@ file_path_to_peak_file_C     file_path_to_peak_file_D     bedfile_output_path   
 
 
 ### Outputs
-(tbd)
+* A bed file at bedfile_output_path (the 3rd item in the input txt file), containing intersected peaks between peak files A and B (which were the 1st and 2nd items in the input txt file).
+  * If column 4 is "y", writes bedtools intersect -a $a -b $b -u > $out. This is the set of unique overlaps between the first and second input files. If the input files contain open chromatin regions, then the output file represents peaks that occur in both input files.
+  * If column 4 is "n", writes bedtools intersect -a $a -b $b -v > $out. This is the set of peaks that occur in the first but not the second input file. If the input files contain open chromatin regions, then the output file represents peaks that occur in $a but not $b.
+* Prints the ratio of lines in the output bed file to lines in input file A, as a percentage. This is not a very robust measure, especially if input files A and B differ greatly in size.
+* Prints the [Jaccard](https://bedtools.readthedocs.io/en/latest/content/tools/jaccard.html) of input files A and B; a measurement that is robust to input file sizes.
 
-## cross_species_bedtools_intersection.sh
+## cross_species_bedtools_intersection.sh (deprecated)
 
 This script will eventually be merged into bedtool.sh. It takes two input BED files, outputs a bedtools intersection of these two files, and prints two metrics: the percentage overlap (number of lines in output intersection file divided by number of lines in the first input file) and the Jaccard overlap (a better metric to use than percentage if the two input files differ greatly in number of lines, as might be the case if intersecting conservative peaks with optimal peaks).
 
