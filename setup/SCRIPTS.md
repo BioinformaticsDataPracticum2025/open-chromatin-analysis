@@ -94,6 +94,7 @@ There are 5 CLIs. Below is an example:
   * If column 4 is "n", writes bedtools intersect -a $a -b $b -v > $out. This is the set of peaks that occur in the first but not the second input file. If the input files contain open chromatin regions, then the output file represents peaks that occur in $a but not $b.
 * Prints the ratio of lines in the output bed file to lines in input file A, as a percentage. This is not a very robust measure, especially if input files A and B differ greatly in size.
 * Prints the [Jaccard](https://bedtools.readthedocs.io/en/latest/content/tools/jaccard.html) of input files A and B; a measurement that is robust to input file sizes.
+* An output file with name provided as CLI 5.
 
 ## cross_species_bedtools_intersection.sh (deprecated)
 
