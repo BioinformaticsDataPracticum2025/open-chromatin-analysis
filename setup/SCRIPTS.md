@@ -69,8 +69,8 @@ This script offers a convenient way to perform multiple bedtools intersection an
 . bedtools.sh path_to_input_file
 ```
 
-### Input File Format
-The input file should be a tab-separated text file containing 5 columns. Below is an example file format:
+### Input:
+There are 5 CLIs. Below is an example:
 
 **Example: `example_input.txt`**
 ```txt
