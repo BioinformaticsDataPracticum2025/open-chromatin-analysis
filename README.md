@@ -16,15 +16,15 @@ Our goals are to:
 ## Required Packages & Tools
 To run the analyses and workflows in this project, the following packages and tools are required. Initial setup is available [here](setup/README.md). 
 
-- [Anaconda3](https://www.anaconda.com/docs/getting-started/anaconda/install) for conda installation and Python
-- [bedtools](https://anaconda.org/bioconda/bedtools) (can be conda installed)
-- **[halLiftover and HALPER](https://github.com/pfenninglab/halLiftover-postprocessing.git)**
+- [Anaconda3](https://www.anaconda.com/docs/getting-started/anaconda/install) 2024.10-1 for conda installation and Python
+- [bedtools](https://anaconda.org/bioconda/bedtools) v2.30.0 (can be conda installed)
+- **[halLiftover and HALPER](https://github.com/pfenninglab/halLiftover-postprocessing.git)**, March 2025 version
 - [GREAT](http://great.stanford.edu/public/html/) (please make sure that your input BED files have been cut to columns 1-3)
 ```bash
 cut -f1-3 input_bed_file  > output_file_name 
 # This keeps only the first 3 columns of the file.
 ```
-- MEME-ChIP [MEMEsuite](https://meme-suite.org/meme/doc/install.html) v5.4.1, or you can use the web version of [MEME-ChIP](https://meme-suite.org/meme/tools/meme-chip).
+- MEME-ChIP from [MEMEsuite](https://meme-suite.org/meme/doc/install.html) v5.4.1, or you can use the web version of [MEME-ChIP](https://meme-suite.org/meme/tools/meme-chip).
 
 ## Scripts
 ### Integrated script: main.sh
