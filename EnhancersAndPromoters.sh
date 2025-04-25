@@ -36,28 +36,3 @@ bedtools intersect -a $Project_directory/input/humanOvary.HumanToMouse.HALPER.na
 bedtools intersect -a $Project_directory/input/mousePancreas.MouseToHuman.HALPER.narrowPeak -b $Project_directory/input/enhancers_human.txt -u > $Project_directory/output/mousePancreas_humanCoordinates_enhancers.bed
 bedtools intersect -a $Project_directory/input/mouseOvary.MouseToHuman.HALPER.narrowPeak -b $Project_directory/input/enhancers_human.txt -u > $Project_directory/output/mouseOvary_humanCoordinates_enhancers.bed
 
-# % shared
-
-# Human promoters
-bedtools intersect -a $Project_directory/output/humanPancreas_promoters.bed -b $Project_directory/output/humanOvary_promoters.bed -u > $Project_directory/output/human_crossTissue_promoters.bed
-count=$(wc -l < $Project_directory/output/human_crossTissue_promoters.bed)
-a=$(wc -l < $Project_directory/output/humanPancreas_promoters.bed)
-b=$(wc -l < $Project_directory/output/humanOvary_promoters.bed)
-avg=$(( (a + b) / 2 ))
-echo "Human promoters shared across tissues: $count / $avg = $(awk "BEGIN { printf \"%.2f\", ($count/$avg)*100 }")%"
-
-# Mouse promoters
-bedtools intersect -a $Project_directory/output/mousePancreas_promoters.bed -b $Project_directory/output/mouseOvary_promoters.bed -u > $Project_directory/output/mouse_crossTissue_promoters.bed
-count=$(wc -l < $Project_directory/output/mouse_crossTissue_promoters.bed)
-a=$(wc -l < $Project_directory/output/mousePancreas_promoters.bed)
-b=$(wc -l < $Project_directory/output/mouseOvary_promoters.bed)
-avg=$(( (a + b) / 2 ))
-echo "Mouse promoters shared across tissues: $count / $avg = $(awk "BEGIN { printf \"%.2f\", ($count/$avg)*100 }")%"
-
-# Human enhancers
-bedtools intersect -a $Project_directory/output/humanPancreas_enhancers.bed -b $Project_directory/output/humanOvary_enhancers.bed -u > $Project_directory/output/human_crossTissue_enhancers.bed
-count=$(wc -l < $Project_directory/output/human_crossTissue_enhancers.bed)
-a=$(wc -l < $Project_directory/output/humanPancreas_enhancers.bed)
-b=$(wc -l < $Project_directory/output/humanOvary_enhancers.bed)
-avg=$(( (a + b) / 2 ))
-echo "Human enhancers shared across tissues: $count / $avg = $(awk "BEGIN { printf \"%.2f\", ($count/$avg)*100 }")%"
