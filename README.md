@@ -27,9 +27,11 @@ cut -f1-3 input_bed_file  > output_file_name
 - MEME-ChIP [MEMEsuite](https://meme-suite.org/meme/doc/install.html) v5.4.1, or you can use the web version of [MEME-ChIP](https://meme-suite.org/meme/tools/meme-chip).
 
 ## Scripts
-- (Integrated scripts here; below are individual scripts)
+### Integrated scripts: main.sh
+main.sh prompts the user for inputs. Make sure to follow its suggestions, such as providing unique outdirs so that your outputs don't get overwritten.
 
-**Usage of the following scripts (with inputs and outputs) can be found [here](setup/SCRIPTS.md).**
+### Individual scripts, if you'd like to run only parts of the pipeline:
+**Usage of the following individual scripts (with inputs and outputs) can be found [here](setup/SCRIPTS.md).**
 - `submit_hal.sh`, which is used to run halLiftover and HALPER. **IMPORTANT: refer to the "important note" heading in the markdown linked above. You will need to change a few lines of code in order to get this to run on your own device; according to [hal setup documentation](https://github.com/pfenninglab/halLiftover-postprocessing/blob/master/hal_install_instructions.md), it must be hardcoded without use of "~".** 
 - `bedtools.sh`, which is used to run cross-species (same tissue) and intraspecies (cross-tissue) comparison of open chromatin regions
 
