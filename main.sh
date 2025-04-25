@@ -35,6 +35,8 @@ find_halper_file() {
 # Get inputs for step 2 (HAL)
 echo "Taking inputs for HALPER."
 echo "Note: enter unique outdirs for each analysis, otherwise they will overwrite each other and the pipeline will not work."
+echo "Also, outdirs will be placed in ${HOME}."
+# TODO: modify script so it automatically creates outdirs (at least for HALPER) and prints them so the user can find them
 
 read -p "Enter the first species you are comparing (exactly as written in the alignment file): " species1
 read -p "Enter the second species you are comparing (exactly as written in the alignment file): " species2
@@ -43,15 +45,19 @@ read -p "Enter the second tissue you are comparing: " tissue2
 
 read -p "Enter the filename for the $species1 $tissue1 ATAC-seq peaks data: " s1t1
 read -p "Enter the output directory for this HALPER $species1 to $species2 $tissue1 analysis (make sure the outdir exists already): " s1t1_outdir
+s1t1_outdir="${HOME}/${s1t1_outdir%/}"
 
 read -p "Enter the filename for the $species1 $tissue2 ATAC-seq peaks data: " s1t2
 read -p "Enter the output directory for this HALPER $species1 to $species2 $tissue2 analysis (make sure the outdir exists already): " s1t2_outdir
+s1t2_outdir="${HOME}/${s1t2_outdir%/}"
 
 read -p "Enter the filename for the $species2 $tissue1 ATAC-seq peaks data: " s2t1
 read -p "Enter the output directory for this HALPER $species2 to $species1 $tissue1 analysis (make sure the outdir exists already): " s2t1_outdir
+s2t1_outdir="${HOME}/${s2t1_outdir%/}"
 
 read -p "Enter the filename for the $species2 $tissue2 ATAC-seq peaks data: " s2t2
 read -p "Enter the output directory for this HALPER $species2 to $species1 $tissue2 analysis (make sure the outdir exists already): " s2t2_outdir
+s2t2_outdir="${HOME}/${s2t2_outdir%/}"
 
 
 # Get inputs for steps 2a and 3 (bedtools intersection to find shared OCRs between species and between tissues):
@@ -59,11 +65,11 @@ read -p "Enter the output directory for this HALPER $species2 to $species1 $tiss
 
 # Also get output directory for step 2a
 read -p "Enter the output directory for cross-species intersections (step 2a), making sure it already exists: " step2a_outdir
-step2a_outdir="${step2a_outdir%/}" # remove trailing slash if present
+step2a_outdir="${HOME}/${step2a_outdir%/}" # remove trailing slash if present
 
 # Step 3 (between tissues) will compare the ATAC-seq files that were provided as input for step 2. Just need to get an outdir.
 read -p "Enter the output directory for cross-tissue intersections (step 3), making sure it already exists: " step3_outdir
-step3_outdir="${step3_outdir%/}" # remove trailing slash if present
+step3_outdir="${HOME}/${step3_outdir%/}" # remove trailing slash if present
 
 # TODO: get step 5 inputs, if there are any additional inputs (like output directories or output filenames).
 # I think we should include the ENCODE cCREs (split by enhancers and promoters) in the repo so that the user can just download them and use them
