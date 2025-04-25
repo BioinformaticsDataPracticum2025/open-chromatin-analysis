@@ -66,7 +66,8 @@ This script offers a convenient way to perform multiple bedtools intersection an
 
 ### Usage
 ```bash
-. bedtools.sh path_to_input_file
+# Example usage:
+# bash bedtools.sh ~/output/hal/Mouse/Ovary/peaks.MouseToHuman.HALPER.narrowPeak.gz $PROJECT/../ikaplow/HumanAtac/Ovary/peak/idr_reproducibility/idr.conservative_peak.narrowPeak.gz ~/input/test_bedtools.bed y testname
 ```
 
 ### Input:
@@ -80,9 +81,6 @@ There are 5 CLIs. Below is an example:
 # For intersection_mode:
 # y: open in both
 # n: open in file_A, closed in file_B
-
-# Example usage:
-# bash bedtools.sh ~/output/hal/Mouse/Ovary/peaks.MouseToHuman.HALPER.narrowPeak.gz $PROJECT/../ikaplow/HumanAtac/Ovary/peak/idr_reproducibility/idr.conservative_peak.narrowPeak.gz ~/input/test_bedtools.bed y testname
 ```
 - **CLI 4:** Reporting flag:  
  `y` corresponds to `-u` flag for bedtools, meaning unique overlap report   
