@@ -74,16 +74,20 @@ The input file should be a tab-separated text file containing 5 columns. Below i
 
 **Example: `example_input.txt`**
 ```txt
-# comment the line with #
-file_path_to_peak_file_A     file_path_to_peak_file_B     bedfile_output_path     y     file_A_B
+# take 5 CLIs as input:
+# bash bedtools.sh file_A file_B output_file intersection_mode name
 
-# second pair
-file_path_to_peak_file_C     file_path_to_peak_file_D     bedfile_output_path     n     file_C_D
+# For intersection_mode:
+# y: open in both
+# n: open in file_A, closed in file_B
+
+# Example usage:
+# bash bedtools.sh ~/output/hal/Mouse/Ovary/peaks.MouseToHuman.HALPER.narrowPeak.gz $PROJECT/../ikaplow/HumanAtac/Ovary/peak/idr_reproducibility/idr.conservative_peak.narrowPeak.gz ~/input/test_bedtools.bed y testname
 ```
-- **Column 4:** Reporting flag:  
+- **CLI 4:** Reporting flag:  
  `y` corresponds to `-u` flag for bedtools, meaning unique overlap report   
  `n` corresponds to `-v` flag for bedtools, meaning non-overlap report
-- **Column 5:** The label that will appear in the generated plot 
+- **CLI 5:** The label that will appear in the generated plot 
 
 
 ### Outputs
