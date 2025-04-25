@@ -27,18 +27,16 @@ cut -f1-3 input_bed_file  > output_file_name
 - MEME-ChIP [MEMEsuite](https://meme-suite.org/meme/doc/install.html) v5.4.1, or you can use the web version of [MEME-ChIP](https://meme-suite.org/meme/tools/meme-chip).
 
 ## Scripts
-### Integrated scripts: main.sh
+### Integrated script: main.sh
 main.sh prompts the user for inputs. Make sure to follow its suggestions, such as providing unique outdirs so that your outputs don't get overwritten.
 
 ### Individual scripts, if you'd like to run only parts of the pipeline:
-**Usage of the following individual scripts (with inputs and outputs) can be found [here](setup/SCRIPTS.md).**
-- `submit_hal.sh`, which is used to run halLiftover and HALPER. **IMPORTANT: refer to the "important note" heading in the markdown linked above. You will need to change a few lines of code in order to get this to run on your own device; according to [hal setup documentation](https://github.com/pfenninglab/halLiftover-postprocessing/blob/master/hal_install_instructions.md), it must be hardcoded without use of "~".** 
-- `bedtools.sh`, which is used to run cross-species (same tissue) and intraspecies (cross-tissue) comparison of open chromatin regions
+**Usage of the following individual scripts (with inputs, outputs, and example runs) can be found [here](setup/SCRIPTS.md).**
+- Step 2: `submit_hal.sh`, which is used to run halLiftover and HALPER. **IMPORTANT: refer to the "important note" heading in the markdown linked above. You will need to change a few lines of code in order to get this to run on your own device; according to [hal setup documentation](https://github.com/pfenninglab/halLiftover-postprocessing/blob/master/hal_install_instructions.md), it must be hardcoded without use of "~".** 
+- Steps 2a and 3: `bedtools.sh`, which is used to run cross-species (same tissue) and intraspecies (cross-tissue) comparison of open chromatin regions
+- TODO: add step 5 script
+- Step 6: convert_bed_to_fasta.sh and motif_analysis.sh
 
-(note to self: although submit_hal.sh is currently configured to accept zipped input narrowPeak files and automatically unzip to ~/input/peaks.narrowPeak, this is an issue if running HALPER multiple times because then the input ATAC-seq data will overwrite each other, and we will probably want to access these unzipped narrowPeak files later. So we should modify submit_hal.sh so that if it detects that the user gave it zipped .narrowPeak files, it prompts the user to provide new filenames to use when unzipping the file, e.g. with gunzip -c $zipped_input > $unzipped_input. Also note that the HALPER output files will differ in names depending on the input file's name and the source and target species, so the easiest way to identify them would be to search for "HALPER" in the filename.)
-
-## Example run
-(TODO: list the input files, output files, and bash/sbatch commands)
 
 ## Citations
 * CACTUS: Paten, Benedict et al. “Cactus: Algorithms for Genome Multiple Sequence Alignment.” Genome Research 21.9 (2011): 1512–1528. Genome Research. Web.
