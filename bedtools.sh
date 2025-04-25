@@ -1,11 +1,15 @@
 #!/bin/bash
 
-# take input as a txt file with five cols:
-# file_A     file_B     output_file     intersection_mode   name
+# take 5 CLIs as input:
+# bash bedtools.sh file_A file_B output_file intersection_mode name
 
 # For intersection_mode:
 # y: open in both
 # n: open in file_A, closed in file_B
+
+# Example usage:
+# bash bedtools.sh ~/output/hal/Mouse/Ovary/peaks.MouseToHuman.HALPER.narrowPeak.gz $PROJECT/../ikaplow/HumanAtac/Ovary/peak/idr_reproducibility/idr.conservative_peak.narrowPeak.gz ~/input/test_bedtools.bed y testname
+
 
 
 module load bedtools
@@ -15,20 +19,20 @@ if ! command -v bedtools &> /dev/null; then
     exit 1
 fi
 
-if [ "$#" -ne 1 ]; then
-    echo "Usage: $0 input_list.txt"
-    exit 1
-fi
+# if [ "$#" -ne 1 ]; then
+#    echo "Usage: $0 input_list.txt"
+#    exit 1
+# fi
 
-preprocess_file() {
-    local infile="$1"
-    local outfile="$2"
-    if [[ "$infile" == *.gz ]]; then
-        zcat "$infile" | sort -k1,1 -k2,2n > "$outfile"
-    else
-        sort -k1,1 -k2,2n "$infile" > "$outfile"
-    fi
-}
+# preprocess_file() {
+#    local infile="$1"
+#    local outfile="$2"
+#    if [[ "$infile" == *.gz ]]; then
+#        zcat "$infile" | sort -k1,1 -k2,2n > "$outfile"
+#    else
+#        sort -k1,1 -k2,2n "$infile" > "$outfile"
+#    fi
+# }
 
 check_file_exists() {
     local file="$1"
@@ -38,72 +42,66 @@ check_file_exists() {
     fi
 }
 
-input_list="$1"
+# input_list="$1"
 
 # check the input txt file 
-[ -f "$input_list" ] || { echo "Error: Input file '$input_list' not found."; exit 1; }
+# [ -f "$input_list" ] || { echo "Error: Input file '$input_list' not found."; exit 1; }
 
 # arrays for plotting
 names_arr=()
 dataA_arr=()
 dataB_arr=()
 
-while read -r line || [[ -n "$line" ]]; do
-    if [[ -z "$line" || $line == \#* ]]; then
-        continue
-    fi
 
-    filename_a=$(echo "$line" | awk '{print $1}')
-    filename_b=$(echo "$line" | awk '{print $2}')
-    out=$(echo "$line" | awk '{print $3}')
-    mode=$(echo "$line" | awk '{print $4}')
-    name=$(echo "$line" | awk '{print $5}')
 
-    check_file_exists "$filename_a"
-    check_file_exists "$filename_b"
+filename_a=$1
+filename_b=$2
+out=$3
+mode=$4
+name=$5
 
-    file_a=$(mktemp)
-    file_b=$(mktemp)
+check_file_exists "$filename_a"
+check_file_exists "$filename_b"
 
-    # unzip peak files and sort by genomic coordinate 
-    preprocess_file "$filename_a" "$file_a"
-    preprocess_file "$filename_b" "$file_b"
 
-    if [ "$mode" = "y" ]; then
-        echo "Intersecting (open in both):"
-        echo "  File A: $filename_a"
-        echo "  File B: $filename_b"
-        bedtools intersect -a "$file_a" -b "$file_b" -u | cut -f1-3 > "$out"
-    elif [ "$mode" = "n" ]; then
-        echo "Intersecting (open in file_a, closed in file_b):"
-        echo "  File A: $filename_a"
-        echo "  File B: $filename_b"
-        bedtools intersect -a "$file_a" -b "$file_b" -v | cut -f1-3 > "$out"
-    else
-        echo "Error: Invalid mode '$mode' for line:"
-        echo "$line"
-        echo "Skipping."
-        continue
-    fi
+# unzip peak files and sort by genomic coordinate 
+zcat $filename_a | sort -k1,1 -k2,2n > temp_a.bed
+zcat $filename_b | sort -k1,1 -k2,2n > temp_b.bed
 
-    # counting 
-    denominator=$(wc -l < "$file_a")
-    numerator=$(wc -l < "$out")
 
-    percentage=$(echo "scale=2; $numerator / $denominator" | bc)
-    echo Percentage of hits for the intersection that created $out: $percentage
+if [ "$mode" = "y" ]; then
+    echo "Intersecting (open in both):"
+    echo "  File A: $filename_a"
+    echo "  File B: $filename_b"
+    bedtools intersect -a temp_a.bed -b temp_b.bed -u | cut -f1-3 > "$out"
+elif [ "$mode" = "n" ]; then
+    echo "Intersecting (open in file_a, closed in file_b):"
+    echo "  File A: $filename_a"
+    echo "  File B: $filename_b"
+    bedtools intersect -a temp_a.bed -b temp_b.bed -v | cut -f1-3 > "$out"
+else
+    echo "Error: Invalid mode '$mode' for line:"
+    echo "$line"
+    echo "Skipping."
+    continue
+fi
 
-    names_arr+=("$name")
-    dataA_arr+=("$denominator")
-    dataB_arr+=("$numerator")
+# counting 
+denominator=$(wc -l < temp_a.bed)
+numerator=$(wc -l < "$out")
 
-    # Jaccard calculation
-    jaccard=$(bedtools jaccard -a "$file_a" -b "$file_b" | tail -n1 | awk '{ printf "%.4f", $3 * 100 }')
-    echo "Jaccard overlap for the intersection that created $out: $jaccard%"
+percentage=$(echo "scale=2; $numerator / $denominator" | bc)
+echo Percentage of hits calculated as number of lines in $filename_a over number of lines in $out: $percentage
 
-    rm -f "$file_a" "$file_b"
+names_arr+=("$name")
+dataA_arr+=("$denominator")
+dataB_arr+=("$numerator")
 
-done < "$input_list"
+# Jaccard calculation
+jaccard=$(bedtools jaccard -a temp_a.bed -b temp_b.bed | tail -n1 | awk '{ printf "%.4f", $3 * 100 }')
+echo "Jaccard overlap for the intersection that created $out: $jaccard%"
+
+rm -f temp_a.bed temp_b.bed
 
 
 names=$(IFS=, ; echo "${names_arr[*]}")
