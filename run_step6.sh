@@ -4,7 +4,7 @@
 # I will later integrate step 6 into the pipeline.
 
 # First, download the step6_inputs zipped folder from Google Drive, unzip it, and place it on the server.
-project_dir="${HOME}/input" # this is where I'm placing my folder
+project_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 dir="${project_dir}/step6_inputs" # turn this into a shortcut for easy reference
 
 # for each set of inputs, convert from bed (or narrowPeak) to fasta, then run the MEME-ChIP job.

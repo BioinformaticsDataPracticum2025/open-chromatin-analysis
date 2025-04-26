@@ -117,13 +117,43 @@ s1t2_hal=$(find_halper_file "$s1t2_outdir")
 s2t1_hal=$(find_halper_file "$s2t1_outdir")
 s2t2_hal=$(find_halper_file "$s1t2_outdir")
 
+jaccard_arr=()
+names_arr=()
+
+# helper function to run bedtools.sh 
+run_bedtools() {
+    local fileA=$1
+    local fileB=$2
+    local out=$3
+    local mode=$4
+    local name=$5
+    local all_out
+
+    all_out=$(bash bedtools.sh "$fileA" "$fileB" "$out" "$mode")
+    printf '%s\n' "$all_out" | sed \$d
+
+    local j
+    j=$(printf '%s\n' "$all_out" | tail -n1)
+    echo "Jaccard overlap for the intersection that created $out: $j%"
+
+    jaccard_arr+=("$j")
+    names_arr+=("$name")
+}
 
 # Run step 2a (cross-species same-tissue intersection)
-bash bedtools.sh $s1t1_hal $s2t1 "${step2a_outdir}/${species1}_to_${species2}_open.bed" y "Shared OCRs between ${species1} and ${species2} ${tissue1}"
-bash bedtools.sh $s1t1_hal $s2t1 "${step2a_outdir}/${species1}_to_${species2}_closed.bed" n "OCRs unique to ${species1} ${tissue1}"
+run_bedtools "$s1t1_hal" "$s2t1" "${step2a_outdir}/${species1}_to_${species2}_open.bed" "y" "Shared OCRs between ${species1} and ${species2} ${tissue1}"
+run_bedtools "$s1t1_hal" "$s2t1" "${step2a_outdir}/${species1}_to_${species2}_closed.bed" "n" "OCRs unique to ${species1} ${tissue1}"
+
+
 # TODO: the rest of step 2a (I think there are 8 in total)
 
 # TODO: run step 3 (intra-species cross-tissue intersection)
+
+
+# after running all the intersection, visualize this! 
+jaccard_string=$(IFS=,; echo "${jaccard_arr[*]}")
+names_string=$(IFS=,; echo "${names_arr[*]}")
+python python_scripts/plot_radial_new.py --names "$names_string" --jaccard "$jaccard_string"
 
 # TODO: run step 5
 

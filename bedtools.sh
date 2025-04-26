@@ -48,9 +48,9 @@ check_file_exists() {
 # [ -f "$input_list" ] || { echo "Error: Input file '$input_list' not found."; exit 1; }
 
 # arrays for plotting
-names_arr=()
-dataA_arr=()
-dataB_arr=()
+# names_arr=()
+# dataA_arr=()
+# dataB_arr=()
 
 
 
@@ -58,7 +58,7 @@ filename_a=$1
 filename_b=$2
 out=$3
 mode=$4
-name=$5
+# name=$5
 
 check_file_exists "$filename_a"
 check_file_exists "$filename_b"
@@ -93,30 +93,31 @@ numerator=$(wc -l < "$out")
 percentage=$(echo "scale=2; $numerator / $denominator" | bc)
 echo Percentage of hits calculated as number of lines in $filename_a over number of lines in $out: $percentage
 
-names_arr+=("$name")
-dataA_arr+=("$denominator")
-dataB_arr+=("$numerator")
+# names_arr+=("$name")
+# dataA_arr+=("$denominator")
+# dataB_arr+=("$numerator")
 
 # Jaccard calculation
 jaccard=$(bedtools jaccard -a temp_a.bed -b temp_b.bed | tail -n1 | awk '{ printf "%.4f", $3 * 100 }')
-echo "Jaccard overlap for the intersection that created $out: $jaccard%"
+# echo "Jaccard overlap for the intersection that created $out: $jaccard%"
+echo "$jaccard"
 
 rm -f temp_a.bed temp_b.bed
 
 
-names=$(IFS=, ; echo "${names_arr[*]}")
-dataA=$(IFS=, ; echo "${dataA_arr[*]}")
-dataB=$(IFS=, ; echo "${dataB_arr[*]}")
+# names=$(IFS=, ; echo "${names_arr[*]}")
+# dataA=$(IFS=, ; echo "${dataA_arr[*]}")
+# dataB=$(IFS=, ; echo "${dataB_arr[*]}")
 
-# check dependencies 
-python -c "import numpy" > /dev/null 2>&1 || {
-    echo "Error: numpy is not installed. Please install numpy."
-    exit 1
-}
+# # check dependencies 
+# python -c "import numpy" > /dev/null 2>&1 || {
+#     echo "Error: numpy is not installed. Please install numpy."
+#     exit 1
+# }
 
-python -c "import matplotlib" > /dev/null 2>&1 || {
-    echo "Error: matplotlib is not installed. Please install matplotlib."
-    exit 1
-}
+# python -c "import matplotlib" > /dev/null 2>&1 || {
+#     echo "Error: matplotlib is not installed. Please install matplotlib."
+#     exit 1
+# }
 
-python python_scripts/plot_radial.py --names "$names" --dataA "$dataA" --dataB "$dataB"
+# python python_scripts/plot_radial.py --names "$names" --dataA "$dataA" --dataB "$dataB"
