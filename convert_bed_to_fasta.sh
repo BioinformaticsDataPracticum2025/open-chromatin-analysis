@@ -6,7 +6,7 @@
 # Inputs:
 # $1: $ref_fasta which is either h (human), m (mouse), or a filepath ending in .fasta
 # (there are just too many equivalent file extensions for FASTA files... so just rename your file to end with .fasta)
-# $2: $input_bed which is a filepath to the BED file you want to convert to a FASTA
+# $2: $input_bed which is a filepath to the BED file you want to convert to a FASTA. Also works on .narrowPeak files.
 # $3: $output_filename. If you want to put it in a new directory, please make the directory beforehand so that it exists.
 
 # Output: a fasta file with the specified $output_filename, containing sequences at regions specified in $input_bed.
@@ -43,8 +43,10 @@ elif [[ "$1" == "m" ]]; then
     ref_fasta="$PROJECT/mm10.fa"
 elif [[ "$1" == *.fasta ]]; then
     ref_fasta="$1"
+elif [[ "$1" == *.fa ]]; then
+    ref_fasta="$1"
 else
-    echo "Invalid first argument: must be 'h', 'm', or a .fasta file. If it has another file extension, try changing the extension to .fasta."
+    echo "Invalid first argument: must be 'h', 'm', or a .fasta file. If it has another file extension, try changing the extension to .fasta or .fa."
     exit 1
 fi
 
