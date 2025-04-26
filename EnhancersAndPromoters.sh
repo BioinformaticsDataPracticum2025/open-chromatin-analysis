@@ -1,7 +1,7 @@
 #!/bin/bash
 module load bedtools
 
-Project_directory="/ocean/projects/bio230007p/asoni2"
+Project_directory=$HOME
 
 gunzip -k "$Project_directory/input/ENCODE_cCREs_human.txt.gz"
 gunzip -k "$Project_directory/input/ENCODE_cCREs_mouse.txt.gz"
@@ -62,7 +62,6 @@ bedtools intersect -a $Project_directory/output/mouseOvary_enhancers.bed -b $Pro
 
 
 
-
 # % shared across tissues 
 
 # Human promoters
@@ -97,3 +96,9 @@ avg=$(( (a + b) / 2 ))
 count=$(wc -l < $Project_directory/output/mouse_crossTissue_enhancers.bed)
 echo "Mouse enhancers shared across tissues: $count overlaps / avg $avg regions = $(awk "BEGIN { printf \"%.2f\", ($count/$avg)*100 }")%"
 
+# TODO: add % (or Jaccard) shared across species
+# Enhancers that are shared across species for each tissue
+# Pancreas enhancers that appear in both species
+bedtools intersect -a $Project_directory/output/humanPancreas_mouseCoordinates_enhancers.bed -b $Project_directory/output/mousePancreas_enhancers.bed -u > $Project_directory/output/bothSpecies_pancreas_enhancers.bed
+# Ovary enhancers that appear in both species
+bedtools intersect -a $Project_directory/output/humanOvary_mouseCoordinates_enhancers.bed -b $Project_directory/output/mouseOvary_enhancers.bed -u > $Project_directory/output/bothSpecies_ovary_enhancers.bed
