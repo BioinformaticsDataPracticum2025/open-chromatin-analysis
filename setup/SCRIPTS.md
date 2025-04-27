@@ -58,7 +58,7 @@ peaks.MouseToHuman.HALPER.narrowPeak.gz  peaks.MouseToHuman.halLiftover.sFile.be
 # Steps 2a and 3: find OCRs shared between different species (step 2a) or different tissues (step 3)
 ## bedtools.sh
 
-This script offers a convenient way to perform multiple bedtools intersection analysis with user-customizable options.
+This script provides a streamlined Bedtools wrapper that automatically decompresses and sorts two gzipped peak files, performs either intersection (common intervals) or subtraction (unique to file A) based on a user‐specified mode, and then computes and reports overlap statistics (percentage retained and Jaccard index).
 
 ### Dependencies
 * [Anaconda3](https://www.anaconda.com/docs/getting-started/anaconda/install)
