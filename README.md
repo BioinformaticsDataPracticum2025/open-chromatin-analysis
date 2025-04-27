@@ -1,5 +1,19 @@
-# open-chromatin-analysis
+# Open Chromatin Analysis Pipline
 
+## Table of Contents
+
+- [Introduction](#introduction)
+
+- [Requirements & Installation](#required-packages--tools)
+
+- [Scripts](#scripts)
+
+- [Usage](#usage)
+
+
+---
+
+## Introduction
 This project explores the conservation and functional significance of open chromatin regions across human and mouse tissues, such as the ovary and pancreas. Open chromatin regions play a crucial role in regulating gene expression by providing access to transcriptional machinery. These open chromatin regions may be promoters or enhancers.  
 This pipeline could generally be used to conduct differential regulatory analysis between two different conditions in  bulk ATAC-seq data, e.g. between species and tissues. 
 
@@ -37,6 +51,9 @@ main.sh prompts the user for inputs. Make sure to follow its suggestions, such a
 - TODO: add step 5 script
 - Step 6: convert_bed_to_fasta.sh and motif_analysis.sh
 
+## Usage
+
+The usage of the main.sh will go here, including the input and output files. 
 
 ## Citations
 * CACTUS: Paten, Benedict et al. “Cactus: Algorithms for Genome Multiple Sequence Alignment.” Genome Research 21.9 (2011): 1512–1528. Genome Research. Web.
