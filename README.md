@@ -42,7 +42,35 @@ cut -f1-3 input_bed_file  > output_file_name
 
 ## Scripts
 ### Integrated script: main.sh
-main.sh prompts the user for inputs. Make sure to follow its suggestions, such as providing unique outdirs so that your outputs don't get overwritten.
+main.sh prompts the user for inputs. Make sure to follow its suggestions, such as providing unique outdirs so that your outputs don't get overwritten.  
+Here is a set of example inputs to paste line by line into the console: (TODO: finalize this later)
+```text
+# species 1
+Human
+
+# species 2
+Mouse
+
+# tissue 1
+Pancreas
+
+# tissue 2
+Ovary
+
+# species 1 tissue 1
+/ocean/projects/bio230007p/ikaplow/HumanAtac/Pancreas/peak/idr_reproducibility/idr.optimal_peak.narrowPeak.gz
+
+# species 1 tissue 2
+/ocean/projects/bio230007p/ikaplow/HumanAtac/Ovary/peak/idr_reproducibility/idr.conservative_peak.narrowPeak.gz
+
+# species 2 tissue 1
+/ocean/projects/bio230007p/ikaplow/MouseAtac/Pancreas/peak/idr_reproducibility/idr.optimal_peak.narrowPeak.gz
+
+# species 2 tissue 2
+/ocean/projects/bio230007p/ikaplow/MouseAtac/Ovary/peak/idr_reproducibility/idr.optimal_peak.narrowPeak.gz
+
+# TODO: finalize
+```
 
 ### Individual scripts, if you'd like to run only parts of the pipeline:
 **Usage of the following individual scripts (with inputs, outputs, and example runs) can be found [here](setup/SCRIPTS.md).**
@@ -71,3 +99,6 @@ The usage of the main.sh will go here, including the input and output files.
   Special thanks to:
   * Professor: Dr. Irene Kaplow (ikaplow@andrew.cmu.edu)
   * TA: Wanxing Zhang (wanxingz@andrew.cmu.edu)
+
+## How to cite this repository
+A pipeline to compare regulatory regions across tissues and species - Github repository. 2025. https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/
