@@ -1,5 +1,6 @@
 #!/bin/bash
 # First prompt user for CLIs, then after all CLIs have been taken, pass them to the corresponding functions that run tasks in the pipeline
+# Note: steps 1 and 4 are not involved in the pipeline because they are separate, manual steps.
 
 # Functions for processing:
 
@@ -28,15 +29,34 @@ find_halper_file() {
 #outdir="/path/to/your/directory"
 #out=$(find_halper_file "$outdir")
 
+jaccard_arr=()
+names_arr=()
 
-# Note: steps 1 and 4 are not involved in the pipeline because they are separate, manual steps.
+# helper function to run bedtools.sh 
+run_bedtools() {
+    local fileA=$1
+    local fileB=$2
+    local out=$3
+    local mode=$4
+    local name=$5
+    local all_out
+
+    all_out=$(bash bedtools.sh "$fileA" "$fileB" "$out" "$mode")
+    printf '%s\n' "$all_out" | sed \$d
+
+    local j
+    j=$(printf '%s\n' "$all_out" | tail -n1)
+    echo "Jaccard overlap for the intersection that created $out: $j%"
+
+    jaccard_arr+=("$j")
+    names_arr+=("$name")
+}
 
 
 # Get inputs for step 2 (HAL)
 echo "Taking inputs for HALPER."
 echo "Note: enter unique outdirs for each analysis, otherwise they will overwrite each other and the pipeline will not work."
 echo "Also, outdirs will be placed in ${HOME}."
-# TODO: modify script so it automatically creates outdirs (at least for HALPER) and prints them so the user can find them
 
 read -p "Enter the first species you are comparing (exactly as written in the alignment file): " species1
 read -p "Enter the second species you are comparing (exactly as written in the alignment file): " species2
@@ -44,25 +64,33 @@ read -p "Enter the first tissue you are comparing: " tissue1
 read -p "Enter the second tissue you are comparing: " tissue2
 
 read -p "Enter the filename for the $species1 $tissue1 ATAC-seq peaks data: " s1t1
-read -p "Enter the output directory for this HALPER $species1 to $species2 $tissue1 analysis (make sure the outdir exists already): " s1t1_outdir
-s1t1_outdir="${HOME}/${s1t1_outdir%/}"
+# read -p "Enter the output directory for this HALPER $species1 to $species2 $tissue1 analysis (make sure the outdir exists already): " s1t1_outdir
+# s1t1_outdir="${HOME}/${s1t1_outdir%/}"
+s1t1_outdir="${HOME}/hal_out/${species1}/${tissue1}"
+mkdir -p $s1t1_outdir
 
 read -p "Enter the filename for the $species1 $tissue2 ATAC-seq peaks data: " s1t2
-read -p "Enter the output directory for this HALPER $species1 to $species2 $tissue2 analysis (make sure the outdir exists already): " s1t2_outdir
-s1t2_outdir="${HOME}/${s1t2_outdir%/}"
+# read -p "Enter the output directory for this HALPER $species1 to $species2 $tissue2 analysis (make sure the outdir exists already): " s1t2_outdir
+# s1t2_outdir="${HOME}/${s1t2_outdir%/}"
+s1t2_outdir="${HOME}/hal_out/${species1}/${tissue2}"
+mkdir -p $s1t2_outdir
 
 read -p "Enter the filename for the $species2 $tissue1 ATAC-seq peaks data: " s2t1
-read -p "Enter the output directory for this HALPER $species2 to $species1 $tissue1 analysis (make sure the outdir exists already): " s2t1_outdir
-s2t1_outdir="${HOME}/${s2t1_outdir%/}"
+# read -p "Enter the output directory for this HALPER $species2 to $species1 $tissue1 analysis (make sure the outdir exists already): " s2t1_outdir
+# s2t1_outdir="${HOME}/${s2t1_outdir%/}"
+s2t1_outdir="${HOME}/hal_out/${species2}/${tissue1}"
+mkdir -p $s2t1_outdir
 
 read -p "Enter the filename for the $species2 $tissue2 ATAC-seq peaks data: " s2t2
-read -p "Enter the output directory for this HALPER $species2 to $species1 $tissue2 analysis (make sure the outdir exists already): " s2t2_outdir
-s2t2_outdir="${HOME}/${s2t2_outdir%/}"
-
+# read -p "Enter the output directory for this HALPER $species2 to $species1 $tissue2 analysis (make sure the outdir exists already): " s2t2_outdir
+# s2t2_outdir="${HOME}/${s2t2_outdir%/}"
+s2t2_outdir="${HOME}/hal_out/${species2}/${tissue2}"
+mkdir -p $s2t2_outdir
 
 # Get inputs for steps 2a and 3 (bedtools intersection to find shared OCRs between species and between tissues):
 # Using outputs from step 2 HAL (see below right after the HAL jobs are submitted)
 
+# consider automatically making the step 2a and step 3 outdirs, printing the directories to the console
 # Also get output directory for step 2a
 read -p "Enter the output directory for cross-species intersections (step 2a), making sure it already exists: " step2a_outdir
 step2a_outdir="${HOME}/${step2a_outdir%/}" # remove trailing slash if present
@@ -72,7 +100,7 @@ read -p "Enter the output directory for cross-tissue intersections (step 3), mak
 step3_outdir="${HOME}/${step3_outdir%/}" # remove trailing slash if present
 
 # TODO: get step 5 inputs, if there are any additional inputs (like output directories or output filenames).
-# I think we should include the ENCODE cCREs (split by enhancers and promoters) in the repo so that the user can just download them and use them
+#We have included the ENCODE cCREs (split by enhancers and promoters) in the repo so that the user can just download them and use them
 
 # TODO: get step 6 inputs.
 
@@ -89,7 +117,7 @@ job_ids+=($(sbatch submit_hal.sh -b "$s2t2" -o "$s2t2_outdir" -s "$species2" -t 
 
 echo "Submitted HALPER jobs with IDs: ${job_ids[*]}"
 echo "Use squeue -u <your username> to check their progress."
-echo "Outputs for HALPER jobs can be found in the outdirs specified. The outputs that will be used in subsequent steps are the ones that end with 'HALPER.narrowPeak.gz'."
+echo "Outputs for HALPER jobs can be found in the hal_out directory (in your home directory). The outputs that will be used in subsequent steps are the ones that end with 'HALPER.narrowPeak.gz'."
 
 # Wait for all jobs to finish
 while true; do
@@ -117,28 +145,6 @@ s1t2_hal=$(find_halper_file "$s1t2_outdir")
 s2t1_hal=$(find_halper_file "$s2t1_outdir")
 s2t2_hal=$(find_halper_file "$s1t2_outdir")
 
-jaccard_arr=()
-names_arr=()
-
-# helper function to run bedtools.sh 
-run_bedtools() {
-    local fileA=$1
-    local fileB=$2
-    local out=$3
-    local mode=$4
-    local name=$5
-    local all_out
-
-    all_out=$(bash bedtools.sh "$fileA" "$fileB" "$out" "$mode")
-    printf '%s\n' "$all_out" | sed \$d
-
-    local j
-    j=$(printf '%s\n' "$all_out" | tail -n1)
-    echo "Jaccard overlap for the intersection that created $out: $j%"
-
-    jaccard_arr+=("$j")
-    names_arr+=("$name")
-}
 
 # Run step 2a (cross-species same-tissue intersection)
 run_bedtools "$s1t1_hal" "$s2t1" "${step2a_outdir}/${species1}_to_${species2}_open.bed" "y" "Shared OCRs between ${species1} and ${species2} ${tissue1}"
