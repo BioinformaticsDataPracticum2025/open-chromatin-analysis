@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import argparse
 
 
-def plot_jaccard_values(jaccard_values, names):
+def plot_jaccard_values(jaccard_values, names, output_path):
     
     """
     Plots a radial bar chart using jaccard values and category names.
@@ -48,9 +48,9 @@ def plot_jaccard_values(jaccard_values, names):
             label.set_rotation(180)
         label.set_horizontalalignment("center")
 
-    ax.set_title("Radial Stacked Bar Chart", y=1.08)
+    ax.set_title("Radial Bar Chart for Jaccard", y=1.08)
     ax.legend(loc="lower right")
-    plt.savefig("bed_intersact.png")
+    plt.savefig(output_path)
 
 def main():
     parser = argparse.ArgumentParser(
@@ -60,7 +60,10 @@ def main():
                         help="Comma-separated list of category names.")
     parser.add_argument("--jaccard", type=str, required=True,
                         help="Comma-separated list of Jaccard values.")
-    
+    parser.add_argument("-o", "--out", type=str,
+                        default="bed_intersect.png",
+                        help="Path to save the output figure.")
+
     args = parser.parse_args()
 
     names = [name.strip() for name in args.names.split(",")]
@@ -69,7 +72,7 @@ def main():
     if len(names) != len(jaccard_values):
         raise ValueError("Length of names and jaccard values must match.")
 
-    plot_jaccard_values(jaccard_values, names)
+    plot_jaccard_values(jaccard_values, names, args.out)
 
 if __name__ == "__main__":
     main()
