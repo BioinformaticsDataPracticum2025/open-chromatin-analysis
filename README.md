@@ -40,36 +40,48 @@ cut -f1-3 input_bed_file  > output_file_name
 ```
 - MEME-ChIP from [MEMEsuite](https://meme-suite.org/meme/doc/install.html) v5.4.1, or you can use the web version of [MEME-ChIP](https://meme-suite.org/meme/tools/meme-chip).
 
+### IMPORTANT NOTE REGARDING HAL
+**IMPORTANT: refer to the "important note" heading in the markdown linked [here](setup/SCRIPTS.md). You will need to change a few lines of code in order to get this to run on your own device; according to [hal setup documentation](https://github.com/pfenninglab/halLiftover-postprocessing/blob/master/hal_install_instructions.md), it must be hardcoded without use of "~".** 
+
 ## Scripts
 ### Integrated script: main.sh
 main.sh prompts the user for inputs. Make sure to follow its suggestions, such as providing unique outdirs so that your outputs don't get overwritten.  
-Here is a set of example inputs to paste line by line into the console: (TODO: finalize this later)
+### Here is a set of example inputs to paste line by line into the console.
+Output directory (you can download a copy of this directory from our repository):
 ```text
-# species 1
+test_output
+```
+Species 1:
+```text
 Human
-
-# species 2
+```
+Species 2:
+```text
 Mouse
-
-# tissue 1
+```
+Tissue 1:
+```text
 Pancreas
-
-# tissue 2
+```
+Tissue 2:
+```text
 Ovary
-
-# species 1 tissue 1
+```
+Species 1, tissue 1:
+```text
 /ocean/projects/bio230007p/ikaplow/HumanAtac/Pancreas/peak/idr_reproducibility/idr.optimal_peak.narrowPeak.gz
-
-# species 1 tissue 2
+```
+Species 1, tissue 2:
+```text
 /ocean/projects/bio230007p/ikaplow/HumanAtac/Ovary/peak/idr_reproducibility/idr.conservative_peak.narrowPeak.gz
-
-# species 2 tissue 1
+```
+Species 2, tissue 1:
+```text
 /ocean/projects/bio230007p/ikaplow/MouseAtac/Pancreas/peak/idr_reproducibility/idr.optimal_peak.narrowPeak.gz
-
-# species 2 tissue 2
+```
+Species 2, tissue 2:
+```text
 /ocean/projects/bio230007p/ikaplow/MouseAtac/Ovary/peak/idr_reproducibility/idr.optimal_peak.narrowPeak.gz
-
-# TODO: finalize
 ```
 
 ### Individual scripts, if you'd like to run only parts of the pipeline:
