@@ -11,7 +11,6 @@
 # bash bedtools.sh ~/output/hal/Mouse/Ovary/peaks.MouseToHuman.HALPER.narrowPeak.gz $PROJECT/../ikaplow/HumanAtac/Ovary/peak/idr_reproducibility/idr.conservative_peak.narrowPeak.gz ~/input/test_bedtools.bed y testname
 
 
-
 module load bedtools
 
 if ! command -v bedtools &> /dev/null; then
@@ -24,6 +23,7 @@ fi
 #    exit 1
 # fi
 
+# Helper function for sorting
 preprocess_file() {
     local infile="$1"
     local outfile="$2"
@@ -42,23 +42,11 @@ check_file_exists() {
     fi
 }
 
-# input_list="$1"
-
-# check the input txt file 
-# [ -f "$input_list" ] || { echo "Error: Input file '$input_list' not found."; exit 1; }
-
-# arrays for plotting
-# names_arr=()
-# dataA_arr=()
-# dataB_arr=()
-
-
 
 filename_a=$1
 filename_b=$2
 out=$3
 mode=$4
-# name=$5
 
 check_file_exists "$filename_a"
 check_file_exists "$filename_b"
@@ -92,34 +80,12 @@ fi
 denominator=$(wc -l < temp_a.bed)
 numerator=$(wc -l < "$out")
 
+# calculate the percentage File A’s entries that passed the intersection
 percentage=$(echo "scale=2; $numerator / $denominator" | bc)
 echo Percentage of hits calculated as number of lines in $filename_a over number of lines in $out: $percentage
 
-# names_arr+=("$name")
-# dataA_arr+=("$denominator")
-# dataB_arr+=("$numerator")
-
 # Jaccard calculation
 jaccard=$(bedtools jaccard -a temp_a.bed -b temp_b.bed | tail -n1 | awk '{ printf "%.4f", $3 * 100 }')
-# echo "Jaccard overlap for the intersection that created $out: $jaccard%"
 echo "$jaccard"
 
 rm -f temp_a.bed temp_b.bed
-
-
-# names=$(IFS=, ; echo "${names_arr[*]}")
-# dataA=$(IFS=, ; echo "${dataA_arr[*]}")
-# dataB=$(IFS=, ; echo "${dataB_arr[*]}")
-
-# # check dependencies 
-# python -c "import numpy" > /dev/null 2>&1 || {
-#     echo "Error: numpy is not installed. Please install numpy."
-#     exit 1
-# }
-
-# python -c "import matplotlib" > /dev/null 2>&1 || {
-#     echo "Error: matplotlib is not installed. Please install matplotlib."
-#     exit 1
-# }
-
-# python python_scripts/plot_radial.py --names "$names" --dataA "$dataA" --dataB "$dataB"

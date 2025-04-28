@@ -12,11 +12,11 @@
 
 # Received help from Ziyun
 
-
+#================================================================================================
 # Inputs:
 # $1: $input fasta in which to find motifs.
 # $2: $outdir in which the results will be written.
-# IMPORTANT NOTE ABOUT OUTDIR: provide a unique outdir each time, otherwise the results will be overwritten
+# NOTE: Always supply a new output_dir to avoid overwriting previous results.
 # $3: ref_db, which is either h, m, or a path to a file that ends in .meme. Throws an error otherwise.
 
 # Output: Look for the motifs and E-values in the summary.tsv file in $outdir.
@@ -33,7 +33,10 @@
 # Second: copy over the .meme databases from another directory.
 # Ziyun recommended using these .meme files.
 # Note that these are NOT in the directory that the $PROJECT directory is in.
+#================================================================================================
 
+
+# Copy human database if not already present 
 if [[ ! -f "$PROJECT/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme" ]]; then
     echo "Copying human motif database..."
     cp /ocean/projects/bio200034p/ikaplow/MotifData/motif_databases/HUMAN/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme $PROJECT/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme
@@ -50,8 +53,8 @@ fi
 module load MEME-suite
 
 # rename CLIs (which currently must be given in this exact order; someone can update the script so that it takes flags, like submit_hal.sh
-input=$1 # path to the FASTA file that you want to perform motif analysis on
-outdir=$2 # the name of the directory that you want MEME-ChIP to output to
+input=$1        # Input FASTA file 
+outdir=$2       # Output directory for MEME-ChIP
 
 if [[ "$3" == "h" ]]; then
     ref_db="$PROJECT/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme"
@@ -64,5 +67,5 @@ else
     exit 1
 fi
 
-
+# Run MEME-ChIP
 meme-chip -oc $outdir -db $ref_db -meme-nmotifs 3 -spamo-skip $input

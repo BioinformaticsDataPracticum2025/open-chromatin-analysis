@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# -----------------------------------------------------------------------------
+# Simple script to plot Jaccard indices as a radial bar chart
+# -----------------------------------------------------------------------------
 
 import matplotlib
 matplotlib.use("Agg") 
@@ -21,35 +24,38 @@ def plot_jaccard_values(jaccard_values, names, output_path):
     angles = np.linspace(0, 2 * np.pi, N, endpoint=False)
     max_value = np.max(jaccard_values)
     
+    # Create a polar subplot
     fig, ax = plt.subplots(subplot_kw={'projection': 'polar'}, figsize=(8, 8))
     bar_width = (2 * np.pi / N) * 0.8
 
+    # Plot the bars
     ax.bar(angles, jaccard_values, width=bar_width, bottom=0,
            color="#384C7F", alpha=0.8, label="Jaccard Index")
 
+    # Adjust radial limits and grid
     ax.set_ylim(0, max_value * 1.1)
-
     ax.set_theta_zero_location("N")
     ax.set_theta_direction(-1)
-
-    ax.set_xticks(angles)
-    ax.set_xticklabels(names)
-
     ax.xaxis.grid(True)
     ax.yaxis.grid(True)
 
-    # Move radial labels outward if desired
+    # Set category labels around the circle
+    ax.set_xticks(angles)
+    ax.set_xticklabels(names)
     ax.set_rlabel_position(0)
     ax.tick_params(axis="y", pad=-15)
 
+    # Rotate labels for readability
     for label, angle in zip(ax.get_xticklabels(), angles):
         angle_deg = np.degrees(angle)
         if 90 <= angle_deg <= 270:
             label.set_rotation(180)
         label.set_horizontalalignment("center")
 
+    # Title and legend
     ax.set_title("Radial Bar Chart for Jaccard", y=1.08)
     ax.legend(loc="lower right")
+
     plt.savefig(output_path)
 
 def main():
@@ -69,6 +75,7 @@ def main():
     names = [name.strip() for name in args.names.split(",")]
     jaccard_values = [float(x.strip()) for x in args.jaccard.split(",")]
 
+    # Ensure inputs align
     if len(names) != len(jaccard_values):
         raise ValueError("Length of names and jaccard values must match.")
 
