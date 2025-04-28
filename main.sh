@@ -170,10 +170,10 @@ echo "Running step 2 (HALPER)..."
 # Submit jobs and store their job IDs
 # To quickly test the pipeline, comment out the four sbatch commands below. The hal output files will be included in the test_output directory.
 job_ids=()
-job_ids+=($(sbatch submit_hal.sh -b "$s1t1" -o "$s1t1_outdir" -s "$species1" -t "$species2" -c "$align" | awk '{print $4}'))
-job_ids+=($(sbatch submit_hal.sh -b "$s1t2" -o "$s1t2_outdir" -s "$species1" -t "$species2" -c "$align" | awk '{print $4}'))
-job_ids+=($(sbatch submit_hal.sh -b "$s2t1" -o "$s2t1_outdir" -s "$species2" -t "$species1" -c "$align" | awk '{print $4}'))
-job_ids+=($(sbatch submit_hal.sh -b "$s2t2" -o "$s2t2_outdir" -s "$species2" -t "$species1" -c "$align" | awk '{print $4}'))
+# job_ids+=($(sbatch submit_hal.sh -b "$s1t1" -o "$s1t1_outdir" -s "$species1" -t "$species2" -c "$align" | awk '{print $4}'))
+# job_ids+=($(sbatch submit_hal.sh -b "$s1t2" -o "$s1t2_outdir" -s "$species1" -t "$species2" -c "$align" | awk '{print $4}'))
+# job_ids+=($(sbatch submit_hal.sh -b "$s2t1" -o "$s2t1_outdir" -s "$species2" -t "$species1" -c "$align" | awk '{print $4}'))
+# job_ids+=($(sbatch submit_hal.sh -b "$s2t2" -o "$s2t2_outdir" -s "$species2" -t "$species1" -c "$align" | awk '{print $4}'))
 
 echo "Submitted HALPER jobs with IDs: ${job_ids[*]}"
 echo "Use squeue -u ${USER} to check their progress."
@@ -192,8 +192,8 @@ while true; do
         break
     fi
 
-    echo "Waiting for jobs: ${job_ids[*]} to finish..."
-    sleep 1800  # Check progress every 30 minutes
+    echo "Waiting for jobs: ${job_ids[*]} to finish... Will check every 5 minutes"
+    sleep 300  # Check progress every 5 minutes
 done
 
 echo "All HALPER jobs have completed. Proceeding with next steps."

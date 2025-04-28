@@ -166,6 +166,6 @@ if [[ "$bed" == *.gz ]]; then
 # finally, run the halper script
 "$exe" -b "$bed" -o "$out" -s "$source" -t "$target" -c "$align"
 
-rm -f "$out/$base_name" # if the temporary file was created, remove it; -f flag to ignore if nonexistent
+#rm -f "$out/$base_name" # if the temporary file was created, remove it; -f flag to ignore if nonexistent
 
 echo "HAL analysis complete!"
