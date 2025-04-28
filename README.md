@@ -41,7 +41,8 @@ cut -f1-3 input_bed_file  > output_file_name
 - MEME-ChIP from [MEMEsuite](https://meme-suite.org/meme/doc/install.html) v5.4.1, or you can use the web version of [MEME-ChIP](https://meme-suite.org/meme/tools/meme-chip).
 
 ### IMPORTANT NOTE REGARDING HAL
-**IMPORTANT: refer to the "important note" heading in the markdown linked [here](setup/SCRIPTS.md). You will need to change a few lines of code in order to get this to run on your own device; according to [hal setup documentation](https://github.com/pfenninglab/halLiftover-postprocessing/blob/master/hal_install_instructions.md), it must be hardcoded without use of "~".** 
+**IMPORTANT:** refer to the "important note" heading in the markdown linked [here](setup/SCRIPTS.md). You will need to change a few lines of code in order to get submit_hal to run on your own device; according to [hal setup documentation](https://github.com/pfenninglab/halLiftover-postprocessing/blob/master/hal_install_instructions.md), it must be hardcoded without use of "~".  
+Additionally, if you wish to use a different Cactus alignment when running the pipeline, please modify $DEFAULT_ALIGN in submit_hal.sh, because the pipeline does not ask for 
 
 ## Scripts
 ### Integrated script: main.sh
@@ -50,6 +51,10 @@ main.sh prompts the user for inputs. Make sure to follow its suggestions, such a
 Output directory (you can download a copy of this directory from our repository):
 ```text
 test_output
+```
+Cactus alignment file (not included in our repository due to size concerns):
+```text
+/ocean/projects/bio230007p/ikaplow/Alignments/10plusway-master.hal
 ```
 Species 1:
 ```text
@@ -103,13 +108,15 @@ Species 2 enhancers BED file:
 ```text
 input/enhancers_mouse.txt
 ```
+TODO: add step 6 inputs  
+TODO: add info on outputs
 
 ### Individual scripts, if you'd like to run only parts of the pipeline:
 **Usage of the following individual scripts (with inputs, outputs, and example runs) can be found [here](setup/SCRIPTS.md).**
 - Step 2: `submit_hal.sh`, which is used to run halLiftover and HALPER. **IMPORTANT: refer to the "important note" heading in the markdown linked above. You will need to change a few lines of code in order to get this to run on your own device; according to [hal setup documentation](https://github.com/pfenninglab/halLiftover-postprocessing/blob/master/hal_install_instructions.md), it must be hardcoded without use of "~".** 
-- Steps 2a and 3: `bedtools.sh`, which is used to run cross-species (same tissue) and intraspecies (cross-tissue) comparison of open chromatin regions
-- TODO: add step 5 script
-- Step 6: convert_bed_to_fasta.sh and motif_analysis.sh
+- Steps 2a, 3, and parts of 5: `bedtools.sh`, which is used to run cross-species (same tissue) and intraspecies (cross-tissue) comparison of open chromatin regions
+- Step 5: `split_encode_ccres.sh` if you would like to use your own ENCODE cCREs file
+- Step 6: `convert_bed_to_fasta.sh` and `motif_analysis.sh`
 
 ## Usage
 
