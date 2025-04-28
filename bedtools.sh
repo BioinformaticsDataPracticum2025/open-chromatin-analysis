@@ -24,15 +24,15 @@ fi
 #    exit 1
 # fi
 
-# preprocess_file() {
-#    local infile="$1"
-#    local outfile="$2"
-#    if [[ "$infile" == *.gz ]]; then
-#        zcat "$infile" | sort -k1,1 -k2,2n > "$outfile"
-#    else
-#        sort -k1,1 -k2,2n "$infile" > "$outfile"
-#    fi
-# }
+preprocess_file() {
+    local infile="$1"
+    local outfile="$2"
+    if [[ "$infile" == *.gz ]]; then
+        zcat "$infile" | sort -k1,1 -k2,2n > "$outfile"
+    else
+        sort -k1,1 -k2,2n "$infile" > "$outfile"
+    fi
+}
 
 check_file_exists() {
     local file="$1"
@@ -64,9 +64,11 @@ check_file_exists "$filename_a"
 check_file_exists "$filename_b"
 
 
-# unzip peak files and sort by genomic coordinate 
-zcat $filename_a | sort -k1,1 -k2,2n > temp_a.bed
-zcat $filename_b | sort -k1,1 -k2,2n > temp_b.bed
+# unzip peak files (if necessary) and sort by genomic coordinate 
+preprocess_file $filename_a temp_a.bed
+preprocess_file $filename_b temp_b.bed
+# zcat $filename_a | sort -k1,1 -k2,2n > temp_a.bed
+# zcat $filename_b | sort -k1,1 -k2,2n > temp_b.bed
 
 
 if [ "$mode" = "y" ]; then

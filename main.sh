@@ -211,11 +211,8 @@ run_bedtools "$s1t2_hal" "$s2t2" "${step2a_outdir}/${species1}_to_${species2}_${
 run_bedtools "$s2t2_hal" "$s1t2" "${step2a_outdir}/${species2}_to_${species1}_${tissue2}_open.bed" "y" "Shared OCRs between ${species2} and ${species1} ${tissue2}"
 run_bedtools "$s2t2_hal" "$s1t2" "${step2a_outdir}/${species2}_to_${species1}_${tissue2}_closed.bed" "n" "OCRs unique to ${species2} ${tissue2}"
 
-
-# TODO: the rest of step 2a (I think there are 8 in total)
-
 # after running all the intersection, visualize this! 
-echo "Check ${pipe_out} for a visualization of the cross-species Jaccard index!"
+echo "Check ${pipe_out} for a visualization of the step 2a cross-species Jaccard index!"
 jaccard_string=$(IFS=,; echo "${jaccard_arr[*]}")
 names_string=$(IFS=,; echo "${names_arr[*]}")
 python python_scripts/plot_radial_new.py --names "$names_string" --jaccard "$jaccard_string" --out "${pipe_out}/step2a_cross_species_jaccard.png"
@@ -224,10 +221,19 @@ echo "Done drawing for step 2a!"
 # TODO: run step 3 (intra-species cross-tissue intersection)
 echo "Running step 3 (intra-species, cross-tissue intersection)"
 echo "Look for outputs of step 3 here: ${step3_outdir}"
-
 jaccard_arr=()
 names_arr=()
 
+# species 1, tissue 1 against tissue 2
+# run_bedtools 
+
+# species 1, tissue 2 against tissue 1
+
+
+# species 2, tissue 1 against tissue 2
+
+
+# species 2, tissue 2 against tissue 1
 
 
 # after running all the intersection, visualize this! 
