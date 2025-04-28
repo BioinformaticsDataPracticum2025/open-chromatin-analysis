@@ -127,16 +127,31 @@ step3_outdir="${pipe_out}/cross_tissue"
 mkdir -p $step3_outdir
 
 
-# TODO: get step 5 inputs, if there are any additional inputs (like output directories or output filenames).
-# We have included the ENCODE cCREs (split by enhancers and promoters) in the repo so that the user can just download them and use them
-# Still, should ask the user for the paths to these files.
-# If the user has an ENCODE cCREs file for a different species that they need to split... I should write a separate script that handles that.
+# Get step 5 inputs, which are paths to enhancers and promoters for species1 and for species2.
+# We have included the ENCODE cCREs (split by enhancers and promoters) in the repo for ease of use, in the input directory.
 # echo this: The user would be responsible for using that script to split the ENCODE cCREs file before running the pipeline
 # echo a message here to indicate getting step 5 inputs
-# Also add this to GitHub example inputs
+echo "Taking inputs for enhancer and promoter analysis (step 5)"
+echo "Mouse and human enhancers and promoters can be found in the input directory in this repository."
+echo "If you would like to analyze a species that isn't human or mouse, use split_encode_ccres.sh to get the enhancers and promoters."
+read -p "Enter the ${species1} promoters file: " s1p
+read -p "Enter the ${species1} enhancers file: " s1e
+read -p "Enter the ${species2} promoters file: " s2p
+read -p "Enter the ${species2} enhancers file: " s2e
+
+# Also set up a directory for step 5 outputs
+step5_outdir="${pipe_out}/enhancers_and_promoters"
+mkdir -p $step5_outdir
+
 
 # TODO: get step 6 inputs.
-# should ask the user for filenames of .meme databases. Also add this to GitHub example inputs.
+# TODO: should ask the user for filenames of the .meme databases, one for each species. Also add this to GitHub example inputs.
+echo "Taking inputs for motif analysis (step 6)"
+# TODO read -p 
+
+# Also set up a directory for step 6 outputs, which will be passed to MEME-ChIP
+step6_outdir="${pipe_out}/motifs"
+mkdir -p $step6_outdir
 
 
 # Run step 2 (HAL)
@@ -227,7 +242,7 @@ names_string=$(IFS=,; echo "${names_arr[*]}")
 python python_scripts/plot_radial_new.py --names "$names_string" --jaccard "$jaccard_string" --out "${pipe_out}/step2a_cross_species_jaccard.png"
 echo "Done drawing for step 2a!"
 
-# TODO: run step 3 (intra-species cross-tissue intersection)
+# Run step 3 (intra-species cross-tissue intersection)
 echo "Running step 3 (intra-species, cross-tissue intersection)"
 echo "Look for outputs of step 3 here: ${step3_outdir}"
 # reset jaccard_arr and names_arr because we'll make a new plot for this set of intersections
@@ -256,12 +271,80 @@ jaccard_string=$(IFS=,; echo "${jaccard_arr[*]}")
 names_string=$(IFS=,; echo "${names_arr[*]}")
 python python_scripts/plot_radial_new.py --names "$names_string" --jaccard "$jaccard_string" --out "${pipe_out}/step3_cross_tissue_jaccard.png"
 
+echo "Step 4 of the pipeline is to upload the steps 2a and 3 outputs to the GREAT webtool here: http://great.stanford.edu/public/html/"
+
 # TODO: run step 5
-# echo a message, and make a directory.
+# Some bedtools intersections are done to produce intermediate files, and we don't need the Jaccard for them. In that case, use bedtools intersect directly.
+# For the ones that require Jaccard, use run_bedtools.
+module load bedtools
+
+echo "Running step 5 (enhancer and promoter analysis)"
+echo "Look for outputs of step 5 here: ${step5_outdir}"
+echo "Outputs that are used for step 6 will be placed in subdirectories named after the corresponding part of step 6, as described in 03-713-ProjectDescription-2025.pdf."
+
+# TODO: move the following lines where appropriate
+# reset jaccard_arr and names_arr because we'll make a new plot for this set of intersections
+jaccard_arr=()
+names_arr=()
+
+# use run_bedtools for this set of intersections as well
+echo "Splitting input ATAC-seq peak data for ${species1} and ${species2} into enhancers..."
+# TODO: make a subdirectory, and echo it (will be used for 6b)
+
+
+echo "Splitting input ATAC-seq peak data for ${species1} and ${species2} into promoters..."
+# TODO: make a subdirectory, and echo it (6c)
+
+
+echo "Splitting HALPER peak data for ${species1} and ${species2} into enhancers and promoters..."
+
+
+echo "Running step 5a, which compares the Jaccard index of enhancers shared across tissues to the Jaccard index of promoters shared across tissues."
+echo "Finding enhancers shared between ${tissue1} and ${tissue2} within each species..."
+# TODO: make a subdirectory, and echo it (6d)
+# This would probably be a good place to move the jaccard_arr and names_arr stuff
+# Also, use run_bedtools instead of using bedtools directly.
+
+echo "Finding promoters shared between ${tissue1} and ${tissue2} within each species..."
+
+# visualize the Jaccard either here or after step 5b has been completed
+
+echo "Step 5a has been completed."
+
+echo "Finding enhancers unique to ${tissue1} or ${tissue2} within each species..."
+# TODO: make a subdirectory, and echo it (6e)
+
+echo "Running step 5b, which compares the Jaccard index of enhancers shared across species to the Jaccard index of promoters shared across species."
+echo "Finding enhancers shared across species for each tissue..."
+# TODO: make a subdirectory, and echo it (6f)
+
+echo "Finding promoters shared between ${species1} and ${species2} for each tissue..."
+
+# visualize the Jaccard here, either separate from 5a or together with 5a
+
+echo "Step 5b has been completed."
+
+echo "Finding enhancers specific to each species for each tissue..."
+# TODO: make a subdirectory, and echo it (6g)
+
+
 # also do the Jaccard stuff.
+# echo "Check ${pipe_out} for visualizations of the step 5 Jaccard index!"
+# jaccard_string=$(IFS=,; echo "${jaccard_arr[*]}")
+# names_string=$(IFS=,; echo "${names_arr[*]}")
+# python python_scripts/plot_radial_new.py --names "$names_string" --jaccard "$jaccard_string" --out "${pipe_out}/step5_jaccard.png"
+
 
 # TODO: run step 6 (use sbatch because it'll take a long time to run)
 # echo a message, and make a directory. In this case, you'll pass that directory to MEME (through motif_analysis.sh).
 # there will also be a lot of convert_bed_to_fasta.sh usage
 
+echo "Running step 6a..."
+# for each input file, convert the bed to fasta (bash, not sbatch)
+# then run motif_analysis.sh on it
+# Step 6a inputs are simply s1t1, s1t2, s2t1, s2t2
+
+
+echo "Step 6 has been submitted as a set of slurm jobs."
+echo "You can check on the progress of step 6 by viewing the slurm-<job_id>.out file. If there are any errors in file conversion, they will print to that file."
 echo "Once these sbatch jobs have finished, the pipeline is complete!"
