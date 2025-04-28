@@ -46,7 +46,7 @@ cut -f1-3 input_bed_file  > output_file_name
 ## Scripts
 ### Integrated script: main.sh
 main.sh prompts the user for inputs. Make sure to follow its suggestions, such as providing unique outdirs so that your outputs don't get overwritten.  
-### Here is a set of example inputs to paste line by line into the console.
+### Here is a set of example inputs to paste line by line into the console, when prompted to do so by main.sh.
 Output directory (you can download a copy of this directory from our repository):
 ```text
 test_output
@@ -67,6 +67,8 @@ Tissue 2:
 ```text
 Ovary
 ```
+
+**The following files are not included in our repository due to their large size, but if you have access to the ikaplow directory, you can use these paths.**  
 Species 1, tissue 1:
 ```text
 /ocean/projects/bio230007p/ikaplow/HumanAtac/Pancreas/peak/idr_reproducibility/idr.optimal_peak.narrowPeak.gz
@@ -82,6 +84,24 @@ Species 2, tissue 1:
 Species 2, tissue 2:
 ```text
 /ocean/projects/bio230007p/ikaplow/MouseAtac/Ovary/peak/idr_reproducibility/idr.optimal_peak.narrowPeak.gz
+```
+
+**For the following enhancers and promoters BED files, you can either use our pre-split files for human and mouse (included in the input directory) or use [split_encode_ccres.sh](https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/blob/main/split_encode_ccres.sh) if you'd like to analyze a different species**  
+Species 1 promoters BED file:
+```text
+input/promoters_human.txt
+```
+Species 1 enhancers BED file:
+```text
+input/enhancers_human.txt
+```
+Species 2 promoters BED file:
+```text
+input/promoters_mouse.txt
+```
+Species 2 enhancers BED file:
+```text
+input/enhancers_mouse.txt
 ```
 
 ### Individual scripts, if you'd like to run only parts of the pipeline:
