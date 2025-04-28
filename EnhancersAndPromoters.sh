@@ -58,7 +58,7 @@ bedtools intersect -a $Project_directory/output/mousePancreas_enhancers.bed -b $
 # Ovary human-specific enhancers
 bedtools intersect -a $Project_directory/output/humanOvary_mouseCoordinates_enhancers.bed -b $Project_directory/output/mouseOvary_enhancers.bed -v > $Project_directory/output/humanOnly_ovary_enhancers.bed
 # Ovary mouse-specific enhancers
-bedtools intersect -a $Project_directory/output/mouseOvary_enhancers.bed -b $Project_directory/output/humanOvary_mouseCoordinates_enhancers.bed -v > $Project_directory/output/mouseOnly_ovar_enhancers.bed
+bedtools intersect -a $Project_directory/output/mouseOvary_enhancers.bed -b $Project_directory/output/humanOvary_mouseCoordinates_enhancers.bed -v > $Project_directory/output/mouseOnly_ovary_enhancers.bed
 
 
 
@@ -96,9 +96,17 @@ avg=$(( (a + b) / 2 ))
 count=$(wc -l < $Project_directory/output/mouse_crossTissue_enhancers.bed)
 echo "Mouse enhancers shared across tissues: $count overlaps / avg $avg regions = $(awk "BEGIN { printf \"%.2f\", ($count/$avg)*100 }")%"
 
-# TODO: add % (or Jaccard) shared across species
+#  % (or Jaccard) shared across species
 # Enhancers that are shared across species for each tissue
 # Pancreas enhancers that appear in both species
 bedtools intersect -a $Project_directory/output/humanPancreas_mouseCoordinates_enhancers.bed -b $Project_directory/output/mousePancreas_enhancers.bed -u > $Project_directory/output/bothSpecies_pancreas_enhancers.bed
 # Ovary enhancers that appear in both species
 bedtools intersect -a $Project_directory/output/humanOvary_mouseCoordinates_enhancers.bed -b $Project_directory/output/mouseOvary_enhancers.bed -u > $Project_directory/output/bothSpecies_ovary_enhancers.bed
+# Pancreas enhancer Jaccard (human to mouse mapping)
+bedtools jaccard -a $Project_directory/output/humanPancreas_mouseCoordinates_enhancers.bed -b $Project_directory/output/mousePancreas_enhancers.bed > $Project_directory/output/jaccard_pancreas_enhancers.txt
+jaccard_pancreas=$(awk 'NR==2 {print $3}' $Project_directory/output/jaccard_pancreas_enhancers.txt)
+echo "Pancreas enhancer Jaccard index across species: $jaccard_pancreas"
+# Ovary enhancer Jaccard (human to mouse mapping)
+bedtools jaccard -a $Project_directory/output/humanOvary_mouseCoordinates_enhancers.bed -b $Project_directory/output/mouseOvary_enhancers.bed > $Project_directory/output/jaccard_ovary_enhancers.txt
+jaccard_ovary=$(awk 'NR==2 {print $3}' $Project_directory/output/jaccard_ovary_enhancers.txt)
+echo "Ovary enhancer Jaccard index across species: $jaccard_ovary"
