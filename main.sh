@@ -2,8 +2,8 @@
 # First prompt user for CLIs, then after all CLIs have been taken, pass them to the corresponding functions that run tasks in the pipeline
 # Note: steps 1 and 4 are not involved in the pipeline because they are separate, manual steps.
 
-# Functions for processing:
 
+# Functions for processing:
 # Function to find the first matching file and return full path
 find_halper_file() {
     local outdir="$1"
@@ -58,6 +58,9 @@ run_bedtools() {
     names_arr+=("$name")
 }
 
+
+
+
 # First, establish the output directory where everything will go.
 echo "Before entering an output directory, note that if prior analyses were conducted in this outdir, they will be overwritten."
 read -p "Enter the output directory for this pipeline. This will be created in ${HOME}: " pipe_out
@@ -106,11 +109,6 @@ read -p "Enter the filename for the $species2 $tissue2 ATAC-seq peaks data: " s2
 s2t2_outdir="${pipe_out}/hal/${species2}/${tissue2}"
 mkdir -p $s2t2_outdir
 
-echo "Look for step 2 outputs in the following directories:"
-echo $s1t1_outdir
-echo $s1t2_outdir
-echo $s2t1_outdir
-echo $s2t2_outdir
 
 # Get inputs for steps 2a and 3 (bedtools intersection to find shared OCRs between species and between tissues):
 # Using outputs from step 2 HAL (see below right after the HAL jobs are submitted)
@@ -130,13 +128,24 @@ mkdir -p $step3_outdir
 
 
 # TODO: get step 5 inputs, if there are any additional inputs (like output directories or output filenames).
-#We have included the ENCODE cCREs (split by enhancers and promoters) in the repo so that the user can just download them and use them
+# We have included the ENCODE cCREs (split by enhancers and promoters) in the repo so that the user can just download them and use them
+# Still, should ask the user for the paths to these files.
+# If the user has an ENCODE cCREs file for a different species that they need to split... I should write a separate script that handles that.
+# echo this: The user would be responsible for using that script to split the ENCODE cCREs file before running the pipeline
+# echo a message here to indicate getting step 5 inputs
+# Also add this to GitHub example inputs
 
 # TODO: get step 6 inputs.
-
+# should ask the user for filenames of .meme databases. Also add this to GitHub example inputs.
 
 
 # Run step 2 (HAL)
+echo "Look for step 2 outputs in the following directories:"
+echo $s1t1_outdir
+echo $s1t2_outdir
+echo $s2t1_outdir
+echo $s2t2_outdir
+echo "Running step 2 (HALPER)..."
 
 # Submit jobs and store their job IDs
 # Commenting this out for now, in order to test the pipeline
@@ -221,29 +230,38 @@ echo "Done drawing for step 2a!"
 # TODO: run step 3 (intra-species cross-tissue intersection)
 echo "Running step 3 (intra-species, cross-tissue intersection)"
 echo "Look for outputs of step 3 here: ${step3_outdir}"
+# reset jaccard_arr and names_arr because we'll make a new plot for this set of intersections
 jaccard_arr=()
 names_arr=()
 
 # species 1, tissue 1 against tissue 2
-# run_bedtools 
+run_bedtools "$s1t1" "$s1t2" "${step3_outdir}/${species1}_${tissue1}_to_${tissue2}_open.bed" "y" "Shared OCRs between ${species1} ${tissue1} and ${tissue2}"
+run_bedtools "$s1t1" "$s1t2" "${step3_outdir}/${species1}_${tissue1}_to_${tissue2}_closed.bed" "n" "OCRs unique to ${species1} ${tissue1}"
 
 # species 1, tissue 2 against tissue 1
-
+run_bedtools "$s1t2" "$s1t1" "${step3_outdir}/${species1}_${tissue2}_to_${tissue1}_open.bed" "y" "Shared OCRs between ${species1} ${tissue2} and ${tissue1}"
+run_bedtools "$s1t2" "$s1t1" "${step3_outdir}/${species1}_${tissue2}_to_${tissue1}_closed.bed" "n" "OCRs unique to ${species1} ${tissue2}"
 
 # species 2, tissue 1 against tissue 2
-
+run_bedtools "$s2t1" "$s2t2" "${step3_outdir}/${species2}_${tissue1}_to_${tissue2}_open.bed" "y" "Shared OCRs between ${species2} ${tissue1} and ${tissue2}"
+run_bedtools "$s2t1" "$s2t2" "${step3_outdir}/${species2}_${tissue1}_to_${tissue2}_closed.bed" "n" "OCRs unique to ${species2} ${tissue1}"
 
 # species 2, tissue 2 against tissue 1
-
+run_bedtools "$s2t2" "$s2t1" "${step3_outdir}/${species2}_${tissue2}_to_${tissue1}_open.bed" "y" "Shared OCRs between ${species2} ${tissue2} and ${tissue1}"
+run_bedtools "$s2t2" "$s2t1" "${step3_outdir}/${species2}_${tissue2}_to_${tissue1}_closed.bed" "n" "OCRs unique to ${species2} ${tissue2}"
 
 # after running all the intersection, visualize this! 
-echo "Check ${pipe_out} for visualizations of Jaccard index!" # TODO: there will be multiple of these, so print what they're for, as well as their names
+echo "Check ${pipe_out} for visualizations of the step 3 cross-tissue Jaccard index!"
 jaccard_string=$(IFS=,; echo "${jaccard_arr[*]}")
 names_string=$(IFS=,; echo "${names_arr[*]}")
-python python_scripts/plot_radial_new.py --names "$names_string" --jaccard "$jaccard_string" --out "${pipe_out}/example_file_name.png" # change the name, including filepath, later 
+python python_scripts/plot_radial_new.py --names "$names_string" --jaccard "$jaccard_string" --out "${pipe_out}/step3_cross_tissue_jaccard.png"
 
 # TODO: run step 5
+# echo a message, and make a directory.
+# also do the Jaccard stuff.
 
 # TODO: run step 6 (use sbatch because it'll take a long time to run)
+# echo a message, and make a directory. In this case, you'll pass that directory to MEME (through motif_analysis.sh).
+# there will also be a lot of convert_bed_to_fasta.sh usage
 
 echo "Once these sbatch jobs have finished, the pipeline is complete!"
