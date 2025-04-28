@@ -42,12 +42,11 @@ cut -f1-3 input_bed_file  > output_file_name
 
 ### IMPORTANT NOTE REGARDING HAL
 **IMPORTANT:** refer to the "important note" heading in the markdown linked [here](setup/SCRIPTS.md). You will need to change a few lines of code in order to get submit_hal to run on your own device; according to [hal setup documentation](https://github.com/pfenninglab/halLiftover-postprocessing/blob/master/hal_install_instructions.md), it must be hardcoded without use of "~".  
-Additionally, if you wish to use a different Cactus alignment when running the pipeline, please modify $DEFAULT_ALIGN in submit_hal.sh, because the pipeline does not ask for 
 
-## Scripts
+## Usage
 ### Integrated script: main.sh
 main.sh prompts the user for inputs. Make sure to follow its suggestions, such as providing unique outdirs so that your outputs don't get overwritten.  
-### Here is a set of example inputs to paste line by line into the console, when prompted to do so by main.sh.
+#### Here is a set of example inputs to paste line by line into the console, when prompted to do so by main.sh.
 Output directory (you can download a copy of this directory from our repository):
 ```text
 test_output
@@ -118,9 +117,6 @@ TODO: add info on outputs
 - Step 5: `split_encode_ccres.sh` if you would like to use your own ENCODE cCREs file
 - Step 6: `convert_bed_to_fasta.sh` and `motif_analysis.sh`
 
-## Usage
-
-The usage of the main.sh will go here, including the input and output files. 
 
 ## Citations
 * CACTUS: Paten, Benedict et al. “Cactus: Algorithms for Genome Multiple Sequence Alignment.” Genome Research 21.9 (2011): 1512–1528. Genome Research. Web.
