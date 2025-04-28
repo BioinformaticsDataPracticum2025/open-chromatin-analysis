@@ -16,15 +16,14 @@
 # These lines are key to getting halLiftover to run.
 export PATH=/jet/home/kwang18/repos/hal/bin:${PATH}
 export PYTHONPATH=/jet/home/kwang18/repos/halLiftover-postprocessing:${PYTHONPATH}
+# give execute permissions to scripts
+find /jet/home/kwang18/repos/halLiftover-postprocessing/ -type f -exec chmod a+x {} \; # change to match the directory that you put the halLiftover-postprocessing repo in
 
 module load anaconda3
 source activate hal
 
 # It's important to allow 12 hours for halLiftover because it does take a long time
 # To run all halLiftover jobs in parallel, just submit multiple jobs. 
-
-# give execute permissions to scripts
-find ~/repos/halLiftover-postprocessing/ -type f -exec chmod a+x {} \;
 
 # Usage(){
 #     echo "Usage: $0 -p <path_to_halper_script> -b <input_bed_file> -o <output_directory> -s <source_species> -t <target_species> -c <alignment_file>" 
@@ -154,9 +153,19 @@ if [[ "$bed" == *.gz ]]; then
   bed=~/input/peaks.narrowPeak
 
   echo "Extracted the compressed BED to $bed"
-fi
+ fi
+
+# Unzip input $bed only if it is gzipped
+# base_name=$(basename "$bed" .gz)
+
+# if [[ "$bed" == *.gz ]]; then
+#  gunzip -c "$bed" > "$out/$base_name"  # Decompress but keep original gzipped file
+#  $bed="$out/$base_name" # created as a temporary file
+# fi
 
 # finally, run the halper script
 "$exe" -b "$bed" -o "$out" -s "$source" -t "$target" -c "$align"
+
+rm -f "$out/$base_name" # if the temporary file was created, remove it; -f flag to ignore if nonexistent
 
 echo "HAL analysis complete!"
