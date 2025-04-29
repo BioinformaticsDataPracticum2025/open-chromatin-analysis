@@ -45,7 +45,7 @@ enhancers_file="${input_file%.*}_enhancers.bed"
 
 # Split ENCODE file into promoters and enhancers
 awk '$4 == "prom"' "$input_file" > "$promoters_file"
-awk '$4 != "prom"' "$input_file" > "$enhancers_file"
+awk '$4 == "enhD" || $4 == "enhP"' "$input_file" > "$enhancers_file"
 
 # Echo the locations of the new files
 echo "Promoters file saved to: $promoters_file"
