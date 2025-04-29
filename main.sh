@@ -441,17 +441,16 @@ mkdir -p "${step6_outdir}/6a"
 echo "Running step 6a... Outputs will go in ${step6_outdir}/6a"
 # Step 6a inputs are simply s1t1, s1t2, s2t1, s2t2
 echo "Converting BED files to FASTA..."
-# TODO: uncomment these 8 lines later
-# bash convert_bed_to_fasta.sh $s1_genome "${s1t1}" "${step6_outdir}/6a/${species1}_${tissue1}.fasta"
-# bash convert_bed_to_fasta.sh $s1_genome "${s1t2}" "${step6_outdir}/6a/${species1}_${tissue2}.fasta"
-# bash convert_bed_to_fasta.sh $s2_genome "${s2t1}" "${step6_outdir}/6a/${species2}_${tissue1}.fasta"
-# bash convert_bed_to_fasta.sh $s2_genome "${s2t2}" "${step6_outdir}/6a/${species2}_${tissue2}.fasta"
+bash convert_bed_to_fasta.sh $s1_genome "${s1t1}" "${step6_outdir}/6a/${species1}_${tissue1}.fasta"
+bash convert_bed_to_fasta.sh $s1_genome "${s1t2}" "${step6_outdir}/6a/${species1}_${tissue2}.fasta"
+bash convert_bed_to_fasta.sh $s2_genome "${s2t1}" "${step6_outdir}/6a/${species2}_${tissue1}.fasta"
+bash convert_bed_to_fasta.sh $s2_genome "${s2t2}" "${step6_outdir}/6a/${species2}_${tissue2}.fasta"
 
 job_ids=()
-# job_ids+=($(sbatch motif_analysis.sh "${step6_outdir}/6a/${species1}_${tissue1}.fasta" "${step6_outdir}/6a/${species1}_${tissue1}" $s1_meme | awk '{print $4}'))
-# job_ids+=($(sbatch motif_analysis.sh "${step6_outdir}/6a/${species1}_${tissue2}.fasta" "${step6_outdir}/6a/${species1}_${tissue2}" $s1_meme | awk '{print $4}'))
-# job_ids+=($(sbatch motif_analysis.sh "${step6_outdir}/6a/${species2}_${tissue1}.fasta" "${step6_outdir}/6a/${species2}_${tissue1}" $s2_meme | awk '{print $4}'))
-# job_ids+=($(sbatch motif_analysis.sh "${step6_outdir}/6a/${species2}_${tissue2}.fasta" "${step6_outdir}/6a/${species2}_${tissue2}" $s2_meme | awk '{print $4}'))
+job_ids+=($(sbatch motif_analysis.sh "${step6_outdir}/6a/${species1}_${tissue1}.fasta" "${step6_outdir}/6a/${species1}_${tissue1}" $s1_meme | awk '{print $4}'))
+job_ids+=($(sbatch motif_analysis.sh "${step6_outdir}/6a/${species1}_${tissue2}.fasta" "${step6_outdir}/6a/${species1}_${tissue2}" $s1_meme | awk '{print $4}'))
+job_ids+=($(sbatch motif_analysis.sh "${step6_outdir}/6a/${species2}_${tissue1}.fasta" "${step6_outdir}/6a/${species2}_${tissue1}" $s2_meme | awk '{print $4}'))
+job_ids+=($(sbatch motif_analysis.sh "${step6_outdir}/6a/${species2}_${tissue2}.fasta" "${step6_outdir}/6a/${species2}_${tissue2}" $s2_meme | awk '{print $4}'))
 
 echo "Submitted step 6a jobs with IDs: ${job_ids[*]}"
 
@@ -459,11 +458,10 @@ echo "Submitted step 6a jobs with IDs: ${job_ids[*]}"
 mkdir -p "${step6_outdir}/6b"
 echo "Running step 6b... Outputs will go in ${step6_outdir}/6b"
 echo "Converting BED files to FASTA..."
-# TODO: uncomment these 8 lines later
-# bash convert_bed_to_fasta.sh $s1_genome "${s1t1e}" "${step6_outdir}/6b/${species1}_${tissue1}_enhancers.fasta"
-# bash convert_bed_to_fasta.sh $s1_genome "${s1t2e}" "${step6_outdir}/6b/${species1}_${tissue2}_enhancers.fasta"
-# bash convert_bed_to_fasta.sh $s2_genome "${s2t1e}" "${step6_outdir}/6b/${species2}_${tissue1}_enhancers.fasta"
-# bash convert_bed_to_fasta.sh $s2_genome "${s2t2e}" "${step6_outdir}/6b/${species2}_${tissue2}_enhancers.fasta"
+bash convert_bed_to_fasta.sh $s1_genome "${s1t1e}" "${step6_outdir}/6b/${species1}_${tissue1}_enhancers.fasta"
+bash convert_bed_to_fasta.sh $s1_genome "${s1t2e}" "${step6_outdir}/6b/${species1}_${tissue2}_enhancers.fasta"
+bash convert_bed_to_fasta.sh $s2_genome "${s2t1e}" "${step6_outdir}/6b/${species2}_${tissue1}_enhancers.fasta"
+bash convert_bed_to_fasta.sh $s2_genome "${s2t2e}" "${step6_outdir}/6b/${species2}_${tissue2}_enhancers.fasta"
 
 job_ids=()
 
@@ -475,15 +473,76 @@ job_ids+=($(sbatch motif_analysis.sh "${step6_outdir}/6b/${species2}_${tissue2}_
 echo "Submitted step 6b jobs with IDs: ${job_ids[*]}"
 
 
-# TODO: 6c (mkdir and echo it)
+mkdir -p "${step6_outdir}/6c"
+echo "Running step 6c... Outputs will go in ${step6_outdir}/6c"
+bash convert_bed_to_fasta.sh $s1_genome "${s1t1p}" "${step6_outdir}/6c/${species1}_${tissue1}_promoters.fasta"
+bash convert_bed_to_fasta.sh $s1_genome "${s1t2p}" "${step6_outdir}/6c/${species1}_${tissue2}_promoters.fasta"
+bash convert_bed_to_fasta.sh $s2_genome "${s2t1p}" "${step6_outdir}/6c/${species2}_${tissue1}_promoters.fasta"
+bash convert_bed_to_fasta.sh $s2_genome "${s2t2p}" "${step6_outdir}/6c/${species2}_${tissue2}_promoters.fasta"
 
-# TODO: 6d (mkdir and echo it)
+job_ids=()
+job_ids+=($(sbatch motif_analysis.sh "${step6_outdir}/6c/${species1}_${tissue1}_promoters.fasta" "${step6_outdir}/6c/${species1}_${tissue1}_promoters" $s1_meme | awk '{print $4}'))
+job_ids+=($(sbatch motif_analysis.sh "${step6_outdir}/6c/${species1}_${tissue2}_promoters.fasta" "${step6_outdir}/6c/${species1}_${tissue2}_promoters" $s1_meme | awk '{print $4}'))
+job_ids+=($(sbatch motif_analysis.sh "${step6_outdir}/6c/${species2}_${tissue1}_promoters.fasta" "${step6_outdir}/6c/${species2}_${tissue1}_promoters" $s2_meme | awk '{print $4}'))
+job_ids+=($(sbatch motif_analysis.sh "${step6_outdir}/6c/${species2}_${tissue2}_promoters.fasta" "${step6_outdir}/6c/${species2}_${tissue2}_promoters" $s2_meme | awk '{print $4}'))
 
-# TODO: 6e (mkdir and echo it)
+echo "Submitted step 6c jobs with IDs: ${job_ids[*]}"
 
-# TODO: 6f (mkdir and echo it)
 
-# TODO: 6g (mkdir and echo it)
+mkdir -p "${step6_outdir}/6d"
+echo "Running step 6d... Outputs will go in ${step6_outdir}/6d"
+bash convert_bed_to_fasta.sh $s1_genome "${s1e_shared}" "${step6_outdir}/6d/${species1}_crossTissue_enhancers.fasta"
+bash convert_bed_to_fasta.sh $s2_genome "${s2e_shared}" "${step6_outdir}/6d/${species2}_crossTissue_enhancers.fasta"
+
+job_ids=()
+job_ids+=($(sbatch motif_analysis.sh "${step6_outdir}/6d/${species1}_crossTissue_enhancers.fasta" "${step6_outdir}/6d/${species1}_crossTissue_enhancers" $s1_meme | awk '{print $4}'))
+job_ids+=($(sbatch motif_analysis.sh "${step6_outdir}/6d/${species2}_crossTissue_enhancers.fasta" "${step6_outdir}/6d/${species2}_crossTissue_enhancers" $s2_meme | awk '{print $4}'))
+
+echo "Submitted step 6d jobs with IDs: ${job_ids[*]}"
+
+
+mkdir -p "${step6_outdir}/6e"
+echo "Running step 6e... Outputs will go in ${step6_outdir}/6e"
+bash convert_bed_to_fasta.sh $s1_genome "${s1e_t1only}" "${step6_outdir}/6e/${species1}_${tissue1}Only_enhancers.fasta"
+bash convert_bed_to_fasta.sh $s1_genome "${s1e_t2only}" "${step6_outdir}/6e/${species1}_${tissue2}Only_enhancers.fasta"
+bash convert_bed_to_fasta.sh $s2_genome "${s2e_t1only}" "${step6_outdir}/6e/${species2}_${tissue1}Only_enhancers.fasta"
+bash convert_bed_to_fasta.sh $s2_genome "${s2e_t2only}" "${step6_outdir}/6e/${species2}_${tissue2}Only_enhancers.fasta"
+
+job_ids=()
+job_ids+=($(sbatch motif_analysis.sh "${step6_outdir}/6e/${species1}_${tissue1}Only_enhancers.fasta" "${step6_outdir}/6e/${species1}_${tissue1}Only_enhancers" $s1_meme | awk '{print $4}'))
+job_ids+=($(sbatch motif_analysis.sh "${step6_outdir}/6e/${species1}_${tissue2}Only_enhancers.fasta" "${step6_outdir}/6e/${species1}_${tissue2}Only_enhancers" $s1_meme | awk '{print $4}'))
+job_ids+=($(sbatch motif_analysis.sh "${step6_outdir}/6e/${species2}_${tissue1}Only_enhancers.fasta" "${step6_outdir}/6e/${species2}_${tissue1}Only_enhancers" $s2_meme | awk '{print $4}'))
+job_ids+=($(sbatch motif_analysis.sh "${step6_outdir}/6e/${species2}_${tissue2}Only_enhancers.fasta" "${step6_outdir}/6e/${species2}_${tissue2}Only_enhancers" $s2_meme | awk '{print $4}'))
+
+echo "Submitted step 6e jobs with IDs: ${job_ids[*]}"
+
+
+mkdir -p "${step6_outdir}/6f"
+echo "Running step 6f... Outputs will go in ${step6_outdir}/6f"
+bash convert_bed_to_fasta.sh $s2_genome "${t1e_shared}" "${step6_outdir}/6f/bothSpecies_{tissue1}_enhancers.fasta"
+bash convert_bed_to_fasta.sh $s2_genome "${t2e_shared}" "${step6_outdir}/6f/bothSpecies_{tissue2}_enhancers.fasta"
+
+job_ids=()
+job_ids+=($(sbatch motif_analysis.sh "${step6_outdir}/6f/bothSpecies_{tissue1}_enhancers.fasta" "${step6_outdir}/6f/bothSpecies_{tissue1}_enhancers" $s2_meme | awk '{print $4}'))
+job_ids+=($(sbatch motif_analysis.sh "${step6_outdir}/6f/bothSpecies_{tissue2}_enhancers.fasta" "${step6_outdir}/6f/bothSpecies_{tissue2}_enhancers" $s2_meme | awk '{print $4}'))
+
+echo "Submitted step 6f jobs with IDs: ${job_ids[*]}"
+
+
+mkdir -p "${step6_outdir}/6g"
+echo "Running step 6g... Outputs will go in ${step6_outdir}/6g"
+bash convert_bed_to_fasta.sh $s2_genome "${t1e_s1only}" "${step6_outdir}/6g/${species1}Only_${tissue1}_enhancers.fasta"
+bash convert_bed_to_fasta.sh $s2_genome "${t1e_s2only}" "${step6_outdir}/6g/${species2}Only_${tissue1}_enhancers.fasta"
+bash convert_bed_to_fasta.sh $s2_genome "${t2e_s1only}" "${step6_outdir}/6g/${species1}Only_${tissue2}_enhancers.fasta"
+bash convert_bed_to_fasta.sh $s2_genome "${t2e_s2only}" "${step6_outdir}/6g/${species2}Only_${tissue2}_enhancers.fasta"
+
+job_ids=()
+job_ids+=($(sbatch motif_analysis.sh "${step6_outdir}/6g/${species1}Only_${tissue1}_enhancers.fasta" "${step6_outdir}/6g/${species1}Only_${tissue1}_enhancers" $s2_meme | awk '{print $4}'))
+job_ids+=($(sbatch motif_analysis.sh "${step6_outdir}/6g/${species2}Only_${tissue1}_enhancers.fasta" "${step6_outdir}/6g/${species2}Only_${tissue1}_enhancers" $s2_meme | awk '{print $4}'))
+job_ids+=($(sbatch motif_analysis.sh "${step6_outdir}/6g/${species1}Only_${tissue2}_enhancers.fasta" "${step6_outdir}/6g/${species1}Only_${tissue2}_enhancers" $s2_meme | awk '{print $4}'))
+job_ids+=($(sbatch motif_analysis.sh "${step6_outdir}/6g/${species2}Only_${tissue2}_enhancers.fasta" "${step6_outdir}/6g/${species2}Only_${tissue2}_enhancers" $s2_meme | awk '{print $4}'))
+
+echo "Submitted step 6g jobs with IDs: ${job_ids[*]}"
 
 
 echo "All parts of step 6 have been submitted."
