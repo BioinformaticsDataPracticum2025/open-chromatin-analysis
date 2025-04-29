@@ -52,6 +52,7 @@ Output directory (you can download a copy of this directory from our repository)
 ```text
 test_output
 ```
+Step 2 inputs:  
 Cactus alignment file (not included in our repository due to size concerns):
 ```text
 /ocean/projects/bio230007p/ikaplow/Alignments/10plusway-master.hal
@@ -91,6 +92,7 @@ Species 2, tissue 2:
 /ocean/projects/bio230007p/ikaplow/MouseAtac/Ovary/peak/idr_reproducibility/idr.optimal_peak.narrowPeak.gz
 ```
 
+Step 5 inputs:  
 For the following enhancers and promoters BED files, you can either use our pre-split files for human and mouse (included in the input directory) or use [split_encode_ccres.sh](https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/blob/main/split_encode_ccres.sh) if you'd like to analyze a different species. These filepaths assume that your current working directory is this repository.  
 Species 1 promoters BED file:
 ```text
@@ -109,7 +111,16 @@ Species 2 enhancers BED file:
 input/enhancers_mouse.txt
 ```
 
+Step 6 inputs:  
 The following files are not included in our repository due to their large size, but if you have access to the ikaplow directory, you can use these paths.  
+Species 1 reference genome for converting bed to fasta
+```text
+/ocean/projects/bio230007p/ikaplow/HumanGenomeInfo/hg38.fa
+```
+Species 2 reference genome for converting bed to fasta
+```text
+/ocean/projects/bio230007p/ikaplow/MouseGenomeInfo/mm10.fa
+```
 Species 1 .meme motif database
 ```text
 /ocean/projects/bio200034p/ikaplow/MotifData/motif_databases/HUMAN/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme
