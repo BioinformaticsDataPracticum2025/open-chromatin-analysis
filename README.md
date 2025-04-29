@@ -14,7 +14,7 @@
 ---
 
 ## Introduction
-This project explores the conservation and functional significance of open chromatin regions across human and mouse tissues, such as the ovary and pancreas. Open chromatin regions play a crucial role in regulating gene expression by providing access to transcriptional machinery. These open chromatin regions may be promoters or enhancers.  
+This project explores the conservation and functional significance of open chromatin regions across human and mouse tissues, such as the ovary and pancreas. Open chromatin regions play a crucial role in regulating gene expression by providing access to transcriptional machinery. These open chromatin regions may be promoters or enhancers. Refer to the project description [here](https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/blob/main/03-713-ProjectDescription-2025.pdf).  
 This pipeline could generally be used to conduct differential regulatory analysis between two different conditions in  bulk ATAC-seq data, e.g. between species and tissues. 
 
 Our goals are to:  
@@ -38,7 +38,7 @@ To run the analyses and workflows in this project, the following packages and to
 cut -f1-3 input_bed_file  > output_file_name 
 # This keeps only the first 3 columns of the file.
 ```
-- MEME-ChIP from [MEMEsuite](https://meme-suite.org/meme/doc/install.html) v5.4.1, or you may choose to use the web version of [MEME-ChIP](https://meme-suite.org/meme/tools/meme-chip) if you comment out the step 6 section of main.sh. In our installation, CentriMo was non-functional, so our analysis is limited to the MEME and STREME outputs.
+- MEME-ChIP from [MEMEsuite](https://meme-suite.org/meme/doc/install.html) v5.4.1, or you may choose to use the web version of [MEME-ChIP](https://meme-suite.org/meme/tools/meme-chip) instead, commenting out the step 6 section of main.sh. In our installation, CentriMo was non-functional, so our analysis is limited to the MEME and STREME outputs.
 
 ### IMPORTANT NOTE REGARDING HAL
 **IMPORTANT:** refer to the "important note" heading in the markdown linked [here](setup/SCRIPTS.md). You will need to change a few lines of code in order to get submit_hal to run on your own device; according to [hal setup documentation](https://github.com/pfenninglab/halLiftover-postprocessing/blob/master/hal_install_instructions.md), the paths must be hardcoded without use of "~". This unfortunately means that these lines must be hard-coded.  
@@ -47,7 +47,7 @@ cut -f1-3 input_bed_file  > output_file_name
 ### Integrated script: main.sh
 main.sh prompts the user for inputs. If you mistype something, use Ctrl+C to stop the program so that you can start over.  
 #### Example inputs
-Here is a set of example inputs to paste line by line into the console, when prompted to do so by main.sh.  
+Here is a set of example inputs to paste line by line into the console, when prompted to do so by main.sh. The prompts will take inputs that are used in steps 2, 5, and 6.  
 Output directory (you can download a copy of this directory from our repository):
 ```text
 test_output
@@ -138,15 +138,16 @@ Species 2 .meme motif database
 ```
 
 #### Outputs  
-Please refer to the output directory. If you would like to test the pipeline using the example inputs, we recommend that you keep the hal subdirectory and comment out the four sbatch commands that run submit_hal in step 2, as HALPER takes a long time to run.
+Please refer to the test_output directory. If you would like to quickly test the pipeline using the example input files, we recommend that you place the hal subdirectory in your own output directory and comment out the four sbatch commands that run submit_hal in step 2, as HALPER takes a long time to run. Also note that test_output in the example run is created in your $HOME directory, not within this repository directory.
 Here is a list of which output subdirectories correspond to which steps:
 * Step 1 (manual QC inspection of input ATAC-seq data): not applicable
-* Step 2 (hal analysis): hal. Subdirectories of this are divided by species and tissue. Note: the halLiftover files were too large to upload, so they have been deleted.
+* Step 2 (hal analysis): hal. Subdirectories of this are divided by species and tissue. Note: the halLiftover files were too large to upload and are not used downstream in the pipeline, so they have been deleted. Only the HALPER output files from step 2 are used downstream.
 * Step 2a (cross-species intersection): cross_species
 * Step 3 (cross-tissue intersection): cross_tissue
 * Step 4 (GREAT gene ontology analysis): not applicable; however, you could use the intermediate files from several steps in the pipeline (particularly steps 2a, 3, and 5) as input.
-* Step 5 (sorting peaks into enhancers and promoters): enhancers_and_promoters. Generally the output files from step 5 are sorted into subdirectories that correspond to which step 6 task they serve as input for. However, there is no step 6a subdirectory because the inputs to step 6a are simply the four original input ATAC-seq files, and the steps 6d and 6f subdirectories contain promoter files that are not actually used in step 6.
+* Step 5 (sorting peaks into enhancers and promoters): enhancers_and_promoters. While there are a lot of output bed files from this step, the outputs that directly answer the questions posed by 5a and 5b are the Jaccard figures in the top level of the directory. Generally the output files from step 5 are sorted into subdirectories that correspond to which step 6 task they serve as input for. However, there is no step 6a subdirectory because the inputs to step 6a are simply the four original input ATAC-seq files, and the steps 6d and 6f subdirectories contain promoter files that are not actually used in step 6.
 * Step 6 (motif analysis): motifs. Please note that the version uploaded to GitHub only contains a subset of files from the output, as the entire output is too massive to put on GitHub.
+On the main level of the output directory, you can also find figures that visualize the Jaccard index for the overlaps performed.
 
 ### Individual scripts, if you'd like to run only parts of the pipeline:
 **Usage of the following individual scripts (with inputs, outputs, and example runs) can be found [here](setup/SCRIPTS.md).**
