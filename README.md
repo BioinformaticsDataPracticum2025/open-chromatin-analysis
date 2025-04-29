@@ -46,7 +46,8 @@ cut -f1-3 input_bed_file  > output_file_name
 ## Usage
 ### Integrated script: main.sh
 main.sh prompts the user for inputs. Make sure to follow its suggestions, such as providing unique outdirs so that your outputs don't get overwritten.  
-#### Here is a set of example inputs to paste line by line into the console, when prompted to do so by main.sh.
+#### Example inputs
+Here is a set of example inputs to paste line by line into the console, when prompted to do so by main.sh.  
 Output directory (you can download a copy of this directory from our repository):
 ```text
 test_output
@@ -72,7 +73,7 @@ Tissue 2:
 Ovary
 ```
 
-**The following files are not included in our repository due to their large size, but if you have access to the ikaplow directory, you can use these paths.**  
+The following files are not included in our repository due to their large size, but if you have access to the ikaplow directory, you can use these paths.  
 Species 1, tissue 1:
 ```text
 /ocean/projects/bio230007p/ikaplow/HumanAtac/Pancreas/peak/idr_reproducibility/idr.optimal_peak.narrowPeak.gz
@@ -90,7 +91,7 @@ Species 2, tissue 2:
 /ocean/projects/bio230007p/ikaplow/MouseAtac/Ovary/peak/idr_reproducibility/idr.optimal_peak.narrowPeak.gz
 ```
 
-**For the following enhancers and promoters BED files, you can either use our pre-split files for human and mouse (included in the input directory) or use [split_encode_ccres.sh](https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/blob/main/split_encode_ccres.sh) if you'd like to analyze a different species. These filepaths assume that your current working directory is this repository.**  
+For the following enhancers and promoters BED files, you can either use our pre-split files for human and mouse (included in the input directory) or use [split_encode_ccres.sh](https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/blob/main/split_encode_ccres.sh) if you'd like to analyze a different species. These filepaths assume that your current working directory is this repository.  
 Species 1 promoters BED file:
 ```text
 input/promoters_human.txt
@@ -107,8 +108,27 @@ Species 2 enhancers BED file:
 ```text
 input/enhancers_mouse.txt
 ```
-TODO: add step 6 inputs  
-TODO: add info on outputs
+
+The following files are not included in our repository due to their large size, but if you have access to the ikaplow directory, you can use these paths.  
+Species 1 .meme motif database
+```text
+/ocean/projects/bio200034p/ikaplow/MotifData/motif_databases/HUMAN/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme
+```
+Species 2 .meme motif database
+```text
+/ocean/projects/bio200034p/ikaplow/MotifData/motif_databases/MOUSE/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme
+```
+
+#### Outputs  
+Please refer to the output directory. If you would like to test the pipeline using the example inputs, we recommend that you keep the hal subdirectory and comment out the four sbatch commands that run submit_hal in step 2, as HALPER takes a long time to run. Alternatively, if you don't comment out these lines but you keep the hal subdirectory, step 2 seems to finish quickly because the halLiftover files already exist.  
+Here is a list of which output subdirectories correspond to which steps:
+* Step 1 (manual QC inspection of input ATAC-seq data): not applicable
+* Step 2 (hal analysis): hal. Subdirectories of this are divided by species and tissue.
+* Step 2a (cross-species intersection): cross_species
+* Step 3 (cross-tissue intersection): cross_tissue
+* Step 4 (GREAT gene ontology analysis): not applicable; however, you could use the intermediate files from several steps in the pipeline (particularly steps 2a, 3, and 5) as input.
+* Step 5 (sorting peaks into enhancers and promoters): enhancers_and_promoters. Generally the output files from step 5 are sorted into subdirectories that correspond to which step 6 task they serve as input for. However, there is no step 6a subdirectory because the inputs to step 6a are simply the four original input ATAC-seq files, and the steps 6d and 6f subdirectories contain promoter files that are not actually used in step 6.
+* Step 6 (motif analysis): motifs. Please note that the version uploaded to GitHub only contains a subset of files from the output, as the entire output is too massive to put on GitHub.
 
 ### Individual scripts, if you'd like to run only parts of the pipeline:
 **Usage of the following individual scripts (with inputs, outputs, and example runs) can be found [here](setup/SCRIPTS.md).**
