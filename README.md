@@ -23,7 +23,7 @@ Our goals are to:
 3. Compare the percentages of open chromatin regions that are conserved between species and between tissues (bedtools intersection between ATAC-seq peaks for same-species comparison, and between halLiftover and HALPER outputs for cross-species comparison).
 4. Predict functions of regulatory regions (GREAT gene ontology analysis; manual web upload).
 5. Analyze conserved regulatory elements such as enhancers and promoters (bedtools intersection with ENCODE CCREs).
-6. Investigate associated biological processes and transcription factor binding sites (MEME-ChIP, or just MEME and STREME).
+6. Investigate associated biological processes and transcription factor binding sites (MEME and STREME outputs from MEME-ChIP).
 
 ---
 
@@ -38,14 +38,14 @@ To run the analyses and workflows in this project, the following packages and to
 cut -f1-3 input_bed_file  > output_file_name 
 # This keeps only the first 3 columns of the file.
 ```
-- MEME-ChIP from [MEMEsuite](https://meme-suite.org/meme/doc/install.html) v5.4.1, or you can use the web version of [MEME-ChIP](https://meme-suite.org/meme/tools/meme-chip).
+- MEME-ChIP from [MEMEsuite](https://meme-suite.org/meme/doc/install.html) v5.4.1, or you may choose to use the web version of [MEME-ChIP](https://meme-suite.org/meme/tools/meme-chip) if you comment out the step 6 section of main.sh. In our installation, CentriMo was non-functional, so our analysis is limited to the MEME and STREME outputs.
 
 ### IMPORTANT NOTE REGARDING HAL
-**IMPORTANT:** refer to the "important note" heading in the markdown linked [here](setup/SCRIPTS.md). You will need to change a few lines of code in order to get submit_hal to run on your own device; according to [hal setup documentation](https://github.com/pfenninglab/halLiftover-postprocessing/blob/master/hal_install_instructions.md), it must be hardcoded without use of "~".  
+**IMPORTANT:** refer to the "important note" heading in the markdown linked [here](setup/SCRIPTS.md). You will need to change a few lines of code in order to get submit_hal to run on your own device; according to [hal setup documentation](https://github.com/pfenninglab/halLiftover-postprocessing/blob/master/hal_install_instructions.md), the paths must be hardcoded without use of "~". This unfortunately means that these lines must be hard-coded.  
 
 ## Usage
 ### Integrated script: main.sh
-main.sh prompts the user for inputs. Make sure to follow its suggestions, such as providing unique outdirs so that your outputs don't get overwritten.  
+main.sh prompts the user for inputs. If you mistype something, use Ctrl+C to stop the program so that you can start over.  
 #### Example inputs
 Here is a set of example inputs to paste line by line into the console, when prompted to do so by main.sh.  
 Output directory (you can download a copy of this directory from our repository):
@@ -113,8 +113,10 @@ input/enhancers_mouse.txt
 
 Step 6 inputs:  
 The following files are not included in our repository due to their large size, but if you have access to the ikaplow directory, you can use these paths.  
-NOTE: it's not possible to use the ikaplow copies of the human and mouse reference genomes because that directory is read-only, so you must make your own copies of these files.
+**NOTE:** it's not possible to use the ikaplow copies of the human and mouse reference genomes because that directory is read-only, so you must make your own copies of these files.
 ```bash
+# these are not inputs for main.sh. run this in advance.
+# please change the destination to your own directory of choice.
 cp "/ocean/projects/bio230007p/ikaplow/HumanGenomeInfo/hg38.fa" "/ocean/projects/bio230007p/kwang18/hg38.fa"
 cp "/ocean/projects/bio230007p/ikaplow/MouseGenomeInfo/mm10.fa" "/ocean/projects/bio230007p/kwang18/mm10.fa"
 ```
