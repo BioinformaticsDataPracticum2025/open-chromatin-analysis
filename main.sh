@@ -213,17 +213,6 @@ echo "Look for outputs of step 2a here: ${step2a_outdir}"
 jaccard_arr=()
 names_arr=()
 
-# run_bedtools "$s1t1_hal" "$s2t1" "${step2a_outdir}/${species1}_to_${species2}_open.bed" "y" "Shared OCRs between ${species1} and ${species2} ${tissue1}"
-# run_bedtools "$s1t1_hal" "$s2t1" "${step2a_outdir}/${species1}_to_${species2}_closed.bed" "n" "OCRs unique to ${species1} ${tissue1}"
-
-# In order to avoid redundancy when generating the plot, only use the run_bedtools function on one intersection per pair of files
-# e.g. for the same intersection done with y and n modes, use run_bedtools on the first in order to add the info to jaccard_arr and names_arr,
-# but the second is run with vanilla "bash bedtools.sh" so that it doesn't show up a second time
-# because Jaccard is supposed to be symmetrical
-# run_bedtools "$s1t1_hal" "$s2t1" "${species1}_to_${species2}_open.bed" "y" "Shared OCRs between ${species1} and ${species2} ${tissue1}"
-# bash bedtools.sh "$s1t1_hal" "$s2t1" "${species1}_to_${species2}_closed.bed" "n" "OCRs unique to ${species1} ${tissue1}" # this might be in the wrong directory
-# run_bedtools "$s1t1_hal" "$s2t1" "${species1}_to_${species2}_closed.bed" "n" "OCRs unique to ${species1} ${tissue1}"
-
 # species 1 against species 2, tissue 1
 run_bedtools "$s1t1_hal" "$s2t1" "${step2a_outdir}/${species1}_to_${species2}_${tissue1}_open.bed" "y" "Shared OCRs between ${species1} and ${species2} ${tissue1}"
 run_bedtools "$s1t1_hal" "$s2t1" "${step2a_outdir}/${species1}_to_${species2}_${tissue1}_closed.bed" "n" "OCRs unique to ${species1} ${tissue1}"
@@ -287,69 +276,109 @@ echo "Running step 5 (enhancer and promoter analysis)"
 echo "Look for outputs of step 5 here: ${step5_outdir}"
 echo "Outputs that are used for step 6 will be placed in subdirectories named after the corresponding part of step 6, as described in 03-713-ProjectDescription-2025.pdf."
 
-# TODO: move the following lines where appropriate
-# reset jaccard_arr and names_arr because we'll make a new plot for this set of intersections
-jaccard_arr=()
-names_arr=()
+# note that step 6a's inputs are just the four input ATAC-seq files that the user provided at the beginning.
 
 mkdir -p "${step5_outdir}/6b"
 echo "Splitting input ATAC-seq peak data for ${species1} and ${species2} into enhancers... Outputs will go in ${step5_outdir}/6b"
 
 # get enhancers for species1 data
-bedtools intersect -a $s1t1 -b $s1e -u > "${step5_outdir}/6b/${species1}_${tissue1}_enhancers.bed"
-bedtools intersect -a $s1t2 -b $s1e -u > "${step5_outdir}/6b/${species1}_${tissue2}_enhancers.bed"
+s1t1e="${step5_outdir}/6b/${species1}_${tissue1}_enhancers.bed"
+s1t2e="${step5_outdir}/6b/${species1}_${tissue2}_enhancers.bed"
+bedtools intersect -a $s1t1 -b $s1e -u > $s1t1e
+bedtools intersect -a $s1t2 -b $s1e -u > $s1t2e
 
 # get enhancers for species2 data
-bedtools intersect -a $s2t1 -b $s2e -u > "${step5_outdir}/6b/${species2}_${tissue1}_enhancers.bed"
-bedtools intersect -a $s2t2 -b $s2e -u > "${step5_outdir}/6b/${species2}_${tissue2}_enhancers.bed"
+s2t1e="${step5_outdir}/6b/${species2}_${tissue1}_enhancers.bed"
+s2t2e="${step5_outdir}/6b/${species2}_${tissue2}_enhancers.bed"
+bedtools intersect -a $s2t1 -b $s2e -u > $s2t1e
+bedtools intersect -a $s2t2 -b $s2e -u > $s2t2e
 
 
 mkdir -p "${step5_outdir}/6c"
-echo "Splitting input ATAC-seq peak data for ${species1} and ${species2} into promoters... Outputs will go in mkdir -p ${step5_outdir}/6c"
+echo "Splitting input ATAC-seq peak data for ${species1} and ${species2} into promoters... Outputs will go in ${step5_outdir}/6c"
 
 # get promoters for species1 data
-bedtools intersect -a $s1t1 -b $s1p -u > "${step5_outdir}/6c/${species1}_${tissue1}_promoters.bed"
-bedtools intersect -a $s1t2 -b $s1p -u > "${step5_outdir}/6c/${species1}_${tissue2}_promoters.bed"
+s1t1p="${step5_outdir}/6c/${species1}_${tissue1}_promoters.bed"
+s1t2p="${step5_outdir}/6c/${species1}_${tissue2}_promoters.bed"
+bedtools intersect -a $s1t1 -b $s1p -u > $s1t1p
+bedtools intersect -a $s1t2 -b $s1p -u > $s1t2p
 
 # get promoters for species2 data
-bedtools intersect -a $s2t1 -b $s2p -u > "${step5_outdir}/6c/${species2}_${tissue1}_promoters.bed"
-bedtools intersect -a $s2t2 -b $s2p -u > "${step5_outdir}/6c/${species2}_${tissue2}_promoters.bed"
+s2t1p="${step5_outdir}/6c/${species2}_${tissue1}_promoters.bed"
+s2t2p="${step5_outdir}/6c/${species2}_${tissue2}_promoters.bed"
+bedtools intersect -a $s2t1 -b $s2p -u > $s2t1p
+bedtools intersect -a $s2t2 -b $s2p -u > $s2t2p
 
 
-echo "Splitting HALPER peak data for ${species1} and ${species2} into enhancers and promoters..."
+# Need to do cross-species intersection for step 5b (which connects to 6f), so need to split HALPER output files into enhancers and promoters.
+# For the cross-species comparison, will map species1 to the coordinates of species2. 
+echo "Splitting HALPER peak data for ${species1} and ${species2} into enhancers and promoters... Outputs will go in ${step5_outdir}"
 
-# use run_bedtools for this set of intersections 
+# get enhancers for both tissues mapped from species1 to the coordinates of species2
+# Note that because these are in species2 coordinates, we use the species2 enhancers.
+s1t1e_hal="${step5_outdir}/${species1}_mappedTo_${species2}_${tissue1}_enhancers.bed"
+s1t2e_hal="${step5_outdir}/${species1}_mappedTo_${species2}_${tissue2}_enhancers.bed"
+bedtools intersect -a $s1t1_hal -b $s2e -u > $s1t1e_hal
+bedtools intersect -a $s1t2_hal -b $s2e -u > $s1t2e_hal
+
+# get promoters for both tissues mapped from species1 to the coordinates of species2
+# Note that because these are in species2 coordinates, we use the species2 promoters.
+s1t1p_hal="${step5_outdir}/${species1}_mappedTo_${species2}_${tissue1}_promoters.bed"
+s1t2p_hal="${step5_outdir}/${species1}_mappedTo_${species2}_${tissue2}_promoters.bed"
+bedtools intersect -a $s1t1_hal -b $s2p -u > $s1t1p_hal
+bedtools intersect -a $s1t2_hal -b $s2p -u > $s1t2p_hal
+
+
+# use run_bedtools for this set of intersections because we want to track the Jaccard for these intersections
 echo "Running step 5a, which compares the Jaccard index of enhancers shared across tissues to the Jaccard index of promoters shared across tissues."
-echo "Finding enhancers shared between ${tissue1} and ${tissue2} within each species..."
 # reset jaccard_arr and names_arr because we'll make a new plot for this set of intersections
 jaccard_arr=()
 names_arr=()
-# TODO: make a subdirectory, and echo it (6d)
-# Also, use run_bedtools instead of using bedtools directly.
 
-echo "Finding promoters shared between ${tissue1} and ${tissue2} within each species..."
+mkdir -p "${step5_outdir}/6d"
+echo "Finding enhancers shared between ${tissue1} and ${tissue2} within each species... Outputs will go in ${step5_outdir}/6d"
+# For this, we need to intersect the files that we just created in the 6b directory.
+run_bedtools "$s1t1e" "$s1t2e" "${step5_outdir}/6d/${species1}_crossTissue_enhancers.bed" "y" "${species1} enhancers shared across tissues"
+run_bedtools "$s2t1e" "$s2t2e" "${step5_outdir}/6d/${species2}_crossTissue_enhancers.bed" "y" "${species2} enhancers shared across tissues"
 
-# visualize the Jaccard either here or after step 5b has been completed
+echo "Finding promoters shared between ${tissue1} and ${tissue2} within each species... Outputs will go in ${step5_outdir}/6d"
+# For this, we need to intersect the files that we just created in the 6c directory.
+# Note that these promoter intersection BED files aren't actually used in step 6d, or in step 6 at all.
+run_bedtools "$s1t1p" "$s1t2p" "${step5_outdir}/6d/${species1}_crossTissue_promoters.bed" "y" "${species1} promoters shared across tissues"
+run_bedtools "$s2t1p" "$s2t2p" "${step5_outdir}/6d/${species2}_crossTissue_promoters.bed" "y" "${species2} promoters shared across tissues"
+
+# visualize the Jaccard for cross-tissue comparisons
+echo "Check ${pipe_out} for visualizations of the step 5a (cross-tissue comparison) Jaccard indices!"
+jaccard_string=$(IFS=,; echo "${jaccard_arr[*]}")
+names_string=$(IFS=,; echo "${names_arr[*]}")
+python python_scripts/plot_radial_new.py --names "$names_string" --jaccard "$jaccard_string" --out "${pipe_out}/step5a_jaccard.png"
 
 echo "Step 5a has been completed."
 
-echo "Finding enhancers unique to ${tissue1} or ${tissue2} within each species..."
-# TODO: make a subdirectory, and echo it (6e)
-# use run_bedtools for this set of intersections as well
+# 6e has nothing to do with either step 5a or step 5b
+mkdir -p "${step5_outdir}/6e"
+echo "Finding enhancers specific to ${tissue1} and specific to ${tissue2} within each species... Outputs will go in ${step5_outdir}/6e"
+# This is like the first part of the 6d set of intersections, but ultimately with a -v flag instead of -u flag (as -u underlies the "y" mode)
+# TODO
 
+
+
+
+# use run_bedtools for this set of intersections as well
 echo "Running step 5b, which compares the Jaccard index of enhancers shared across species to the Jaccard index of promoters shared across species."
 echo "Finding enhancers shared across species for each tissue..."
-# should we reset jaccard_arr and names_arr?
-# TODO: make a subdirectory, and echo it (6f)
+# reset jaccard_arr and names_arr because we'll make a new plot for this set of intersections
+jaccard_arr=()
+names_arr=()
 
-echo "Finding promoters shared between ${species1} and ${species2} for each tissue..."
 
-# visualize the Jaccard here, either separate from 5a or together with 5a
 
-echo "Step 5b has been completed."
 
-echo "Finding enhancers specific to each species for each tissue..."
-# TODO: make a subdirectory, and echo it (6g)
+
+
+
+mkdir -p "${step5_outdir}/6f"
+echo "Finding promoters shared between ${species1} and ${species2} for each tissue... Outputs will go in ${step5_outdir}/6f"
 
 
 # also do the Jaccard stuff.
@@ -357,6 +386,14 @@ echo "Finding enhancers specific to each species for each tissue..."
 # jaccard_string=$(IFS=,; echo "${jaccard_arr[*]}")
 # names_string=$(IFS=,; echo "${names_arr[*]}")
 # python python_scripts/plot_radial_new.py --names "$names_string" --jaccard "$jaccard_string" --out "${pipe_out}/step5_jaccard.png"
+
+echo "Step 5b has been completed."
+
+
+echo "Finding enhancers specific to each species for each tissue..."
+# TODO: make a subdirectory, and echo it (6g)
+
+
 
 
 # TODO: run step 6 (use sbatch because it'll take a long time to run)
@@ -370,5 +407,5 @@ echo "Running step 6a..."
 
 
 echo "Step 6 has been submitted as a set of slurm jobs."
-echo "You can check on the progress of step 6 by viewing the slurm-<job_id>.out file. If there are any errors in file conversion, they will print to that file."
+echo "You can check on the progress of step 6 by viewing the slurm-<job_id>.out file. If there are any errors, e.g. in file conversion, they will print to that file."
 echo "Once these sbatch jobs have finished, the pipeline is complete!"
