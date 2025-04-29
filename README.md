@@ -113,13 +113,18 @@ input/enhancers_mouse.txt
 
 Step 6 inputs:  
 The following files are not included in our repository due to their large size, but if you have access to the ikaplow directory, you can use these paths.  
-Species 1 reference genome for converting bed to fasta
-```text
-/ocean/projects/bio230007p/ikaplow/HumanGenomeInfo/hg38.fa
+NOTE: it's not possible to use the ikaplow copies of the human and mouse reference genomes because that directory is read-only, so you must make your own copies of these files.
+```bash
+cp "/ocean/projects/bio230007p/ikaplow/HumanGenomeInfo/hg38.fa" "/ocean/projects/bio230007p/kwang18/hg38.fa"
+cp "/ocean/projects/bio230007p/ikaplow/MouseGenomeInfo/mm10.fa" "/ocean/projects/bio230007p/kwang18/mm10.fa"
 ```
-Species 2 reference genome for converting bed to fasta
+Species 1 reference genome for converting bed to fasta (change this out with your own directory)
 ```text
-/ocean/projects/bio230007p/ikaplow/MouseGenomeInfo/mm10.fa
+/ocean/projects/bio230007p/kwang18/hg38.fa
+```
+Species 2 reference genome for converting bed to fasta (change this out with your own directory)
+```text
+/ocean/projects/bio230007p/kwang18/mm10.fa
 ```
 Species 1 .meme motif database
 ```text
