@@ -27,12 +27,12 @@ module load bedtools
 # If reference genome files don't already exist at these locations, copy them over.
 if [[ ! -f "$PROJECT/hg38.fa" ]]; then
     echo "Copying human reference genome..."
-    cp "$PROJECT/../ikaplow/HumanGenomeInfo/hg38.fa" "$PROJECT/hg38.fa"
+    cp "/ocean/projects/bio230007p/ikaplow/HumanGenomeInfo/hg38.fa" "$PROJECT/hg38.fa"
 fi
 
 if [[ ! -f "$PROJECT/mm10.fa" ]]; then
     echo "Copying mouse reference genome..."
-    cp "$PROJECT/../ikaplow/MouseGenomeInfo/mm10.fa" "$PROJECT/mm10.fa"
+    cp "/ocean/projects/bio230007p/ikaplow/MouseGenomeInfo/mm10.fa" "$PROJECT/mm10.fa"
 fi
 
 
