@@ -2,6 +2,7 @@
 # First prompt user for CLIs, then after all CLIs have been taken, pass them to the corresponding functions that run tasks in the pipeline
 # Note: steps 1 and 4 are not involved in the pipeline because they are separate, manual steps.
 
+# These two lines appear in submit_hal.sh already, but I'm loading them just in case.
 module load anaconda3
 source activate hal
 
@@ -9,7 +10,7 @@ source activate hal
 # Function to find the first matching file and return full path
 find_halper_file() {
     local outdir="$1"
-    # echo "Looking for halper file in ${outdir}" # nvm, can't echo anything that isn't intended to be in the output
+
     # Ensure proper concatenation: remove trailing slash if present
     outdir="${outdir%/}"
 
@@ -23,9 +24,7 @@ find_halper_file() {
         return 1
     fi
 
-    # Construct full path with exactly one "/"
-    # echo "$outdir/$file"
-    echo "$file" # let's see if this fixes the error
+    echo "$file"
 }
 
 # Example usage of find_halper_file():
@@ -42,13 +41,8 @@ run_bedtools() {
     local name=$5
     local all_out
 
-    # echo fileA $fileA
-    # echo fileB $fileB
-    # echo out $out
-    # echo mode $mode
-    # echo name $name
     all_out=$(bash bedtools.sh "$fileA" "$fileB" "$out" "$mode")
-    # echo "All out: ${all_out}"
+
     printf '%s\n' "$all_out" | sed \$d
 
     local j
@@ -73,11 +67,6 @@ echo "Step 1 of the pipeline was to perform QC on the input data that you are ab
 
 # Get inputs for step 2 (HAL)
 echo "Taking inputs for HALPER (step 2)."
-# echo "Note: enter unique outdirs for each analysis, otherwise they will overwrite each other and the pipeline will not work."
-# echo "Also, outdirs will be placed in ${HOME}."
-
-# hal_out="test_output/hal" # maybe allow the user to set this
-
 echo "Do not include quotation marks around filepaths."
 read -p "Enter the filename for the Cactus alignment you are using: " align
 
@@ -87,55 +76,35 @@ read -p "Enter the first tissue you are comparing: " tissue1
 read -p "Enter the second tissue you are comparing: " tissue2
 
 read -p "Enter the filename for the $species1 $tissue1 ATAC-seq peaks data: " s1t1
-# read -p "Enter the output directory for this HALPER $species1 to $species2 $tissue1 analysis: " s1t1_outdir
-# s1t1_outdir="${HOME}/${s1t1_outdir%/}"
-# s1t1_outdir="${HOME}/${hal_out}/${species1}/${tissue1}"
 s1t1_outdir="${pipe_out}/hal/${species1}/${tissue1}"
 mkdir -p $s1t1_outdir
 
 read -p "Enter the filename for the $species1 $tissue2 ATAC-seq peaks data: " s1t2
-# read -p "Enter the output directory for this HALPER $species1 to $species2 $tissue2 analysis: " s1t2_outdir
-# s1t2_outdir="${HOME}/${s1t2_outdir%/}"
-# s1t2_outdir="${HOME}/${hal_out}/${species1}/${tissue2}"
 s1t2_outdir="${pipe_out}/hal/${species1}/${tissue2}"
 mkdir -p $s1t2_outdir
 
 read -p "Enter the filename for the $species2 $tissue1 ATAC-seq peaks data: " s2t1
-# read -p "Enter the output directory for this HALPER $species2 to $species1 $tissue1 analysis: " s2t1_outdir
-# s2t1_outdir="${HOME}/${s2t1_outdir%/}"
-# s2t1_outdir="${HOME}/${hal_out}/${species2}/${tissue1}"
 s2t1_outdir="${pipe_out}/hal/${species2}/${tissue1}"
 mkdir -p $s2t1_outdir
 
 read -p "Enter the filename for the $species2 $tissue2 ATAC-seq peaks data: " s2t2
-# read -p "Enter the output directory for this HALPER $species2 to $species1 $tissue2 analysis: " s2t2_outdir
-# s2t2_outdir="${HOME}/${s2t2_outdir%/}"
-# s2t2_outdir="${HOME}/${hal_out}/${species2}/${tissue2}"
 s2t2_outdir="${pipe_out}/hal/${species2}/${tissue2}"
 mkdir -p $s2t2_outdir
 
 
-# Get inputs for steps 2a and 3 (bedtools intersection to find shared OCRs between species and between tissues):
+# Steps 2a and 3 (bedtools intersection to find shared OCRs between species and between tissues):
 # Using outputs from step 2 HAL (see below right after the HAL jobs are submitted)
+# These two steps don't require additional user inputs.
 
-# consider automatically making the step 2a and step 3 outdirs, printing the directories to the console
-# Also get output directory for step 2a
-# read -p "Enter the output directory for cross-species intersections (step 2a), making sure it already exists: " step2a_outdir
-# step2a_outdir="${HOME}/${step2a_outdir%/}" # remove trailing slash if present
 step2a_outdir="${pipe_out}/cross_species"
 mkdir -p $step2a_outdir
 
-# Step 3 (between tissues) will compare the ATAC-seq files that were provided as input for step 2. Just need to get an outdir.
-# read -p "Enter the output directory for cross-tissue intersections (step 3), making sure it already exists: " step3_outdir
-# step3_outdir="${HOME}/${step3_outdir%/}" # remove trailing slash if present
 step3_outdir="${pipe_out}/cross_tissue"
 mkdir -p $step3_outdir
 
 
 # Get step 5 inputs, which are paths to enhancers and promoters for species1 and for species2.
 # We have included the ENCODE cCREs (split by enhancers and promoters) in the repo for ease of use, in the input directory.
-# echo this: The user would be responsible for using that script to split the ENCODE cCREs file before running the pipeline
-# echo a message here to indicate getting step 5 inputs
 echo "Taking inputs for enhancer and promoter analysis (step 5)"
 echo "Mouse and human enhancers and promoters can be found in the input directory in this repository."
 echo "If you would like to analyze a species that isn't human or mouse, use split_encode_ccres.sh to get the enhancers and promoters."
@@ -176,10 +145,10 @@ echo "Running step 2 (HALPER)..."
 # Submit jobs and store their job IDs
 # To quickly test the pipeline, comment out the four sbatch commands below. The hal output files will be included in the test_output directory.
 job_ids=()
-# job_ids+=($(sbatch submit_hal.sh -b "$s1t1" -o "$s1t1_outdir" -s "$species1" -t "$species2" -c "$align" | awk '{print $4}'))
-# job_ids+=($(sbatch submit_hal.sh -b "$s1t2" -o "$s1t2_outdir" -s "$species1" -t "$species2" -c "$align" | awk '{print $4}'))
-# job_ids+=($(sbatch submit_hal.sh -b "$s2t1" -o "$s2t1_outdir" -s "$species2" -t "$species1" -c "$align" | awk '{print $4}'))
-# job_ids+=($(sbatch submit_hal.sh -b "$s2t2" -o "$s2t2_outdir" -s "$species2" -t "$species1" -c "$align" | awk '{print $4}'))
+job_ids+=($(sbatch submit_hal.sh -b "$s1t1" -o "$s1t1_outdir" -s "$species1" -t "$species2" -c "$align" | awk '{print $4}'))
+job_ids+=($(sbatch submit_hal.sh -b "$s1t2" -o "$s1t2_outdir" -s "$species1" -t "$species2" -c "$align" | awk '{print $4}'))
+job_ids+=($(sbatch submit_hal.sh -b "$s2t1" -o "$s2t1_outdir" -s "$species2" -t "$species1" -c "$align" | awk '{print $4}'))
+job_ids+=($(sbatch submit_hal.sh -b "$s2t2" -o "$s2t2_outdir" -s "$species2" -t "$species1" -c "$align" | awk '{print $4}'))
 
 echo "Submitted HALPER jobs with IDs: ${job_ids[*]}"
 echo "Use squeue -u ${USER} to check their progress."
@@ -284,6 +253,8 @@ echo "Outputs that are used for step 6 will be placed in subdirectories named af
 
 # note that step 6a's inputs are just the four input ATAC-seq files that the user provided at the beginning.
 
+
+# As part of step 5, get inputs for step 6b
 mkdir -p "${step5_outdir}/6b"
 echo "Splitting input ATAC-seq peak data for ${species1} and ${species2} into enhancers... Outputs will go in ${step5_outdir}/6b"
 
@@ -300,6 +271,7 @@ bedtools intersect -a $s2t1 -b $s2e -u > $s2t1e
 bedtools intersect -a $s2t2 -b $s2e -u > $s2t2e
 
 
+# As part of step 5, get inputs for step 6c
 mkdir -p "${step5_outdir}/6c"
 echo "Splitting input ATAC-seq peak data for ${species1} and ${species2} into promoters... Outputs will go in ${step5_outdir}/6c"
 
@@ -335,6 +307,7 @@ bedtools intersect -a $s1t1_hal -b $s2p -u > $s1t1p_hal
 bedtools intersect -a $s1t2_hal -b $s2p -u > $s1t2p_hal
 
 
+# As part of step 5, get inputs for step 6d
 # use run_bedtools for this set of intersections (step 5a) because we want to track the Jaccard for these intersections
 echo "Running step 5a, which compares the Jaccard index of enhancers shared across tissues to the Jaccard index of promoters shared across tissues."
 # reset jaccard_arr and names_arr because we'll make a new plot for this set of intersections
@@ -366,6 +339,7 @@ python python_scripts/plot_radial_new.py --names "$names_string" --jaccard "$jac
 echo "Step 5a has been completed."
 
 
+# As part of step 5, get inputs for step 6e
 # 6e has nothing to do with either step 5a or step 5b
 mkdir -p "${step5_outdir}/6e"
 echo "Finding enhancers specific to ${tissue1} and specific to ${tissue2} within each species... Outputs will go in ${step5_outdir}/6e"
@@ -384,7 +358,7 @@ s2e_t2only="${step5_outdir}/6e/${species2}_${tissue2}Only_enhancers.bed"
 bedtools intersect -a $s2t2e -b $s2t1e -v > $s2e_t2only
 
 
-
+# As part of step 5, get inputs for step 6e
 # use run_bedtools for this set of intersections (step 5b) because we want to track the Jaccard for these intersections
 mkdir -p "${step5_outdir}/6f"
 echo "Running step 5b, which compares the Jaccard index of enhancers shared across species to the Jaccard index of promoters shared across species."
@@ -413,6 +387,7 @@ python python_scripts/plot_radial_new.py --names "$names_string" --jaccard "$jac
 echo "Step 5b has been completed."
 
 
+# As part of step 5, get inputs for step 6g
 mkdir -p "${step5_outdir}/6g"
 echo "Finding enhancers specific to each species for each tissue... Outputs will go in ${step5_outdir}/6g"
 
