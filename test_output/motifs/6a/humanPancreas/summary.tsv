@@ -1,0 +1,8 @@
+MOTIF_INDEX	MOTIF_SOURCE	MOTIF_ID	ALT_ID	CONSENSUS	WIDTH	SITES	E-VALUE	E-VALUE_SOURCE	MOST_SIMILAR_MOTIF_SOURCE	MOST_SIMILAR_MOTIF	URL
+1	MEME	AWWAAAAAANAAAMA	MEME-1	AWWAAAAAANAAAMA	15	5103	1.0e-069	MEME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme	CPEB1_HUMAN.H11MO.0.D	http://hocomoco.autosome.ru/motif/CPEB1_HUMAN.H11MO.0.D
+2	MEME	RSYGCCMYCTRSTGG	MEME-2	RSYGCCMYCTRSTGG	15	5644	1.4e-049	MEME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme	CTCF_HUMAN.H11MO.0.A	http://hocomoco.autosome.ru/motif/CTCF_HUMAN.H11MO.0.A
+3	MEME	TGTGTGTGTGTGTGT	MEME-3	TGTGTGTGTGTGTGT	15	640	4.0e-009	MEME	 	 	 
+
+# MEME-ChIP (Motif Analysis of Large Nucleotide Datasets): Version 5.4.1 released on Sat Aug 21 19:23:23 2021 -0700
+# The format of this file is described at https://meme-suite.org/meme//doc/meme-chip-output-format.html
+# meme-chip -oc /jet/home/kwang18/output/meme/6a/humanPancreas -db /ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme -meme-nmotifs 3 -spamo-skip /jet/home/kwang18/input/step6_inputs/6a/humanPancreas.fasta

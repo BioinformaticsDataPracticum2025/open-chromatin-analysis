@@ -1,0 +1,37 @@
+MOTIF_INDEX	MOTIF_SOURCE	MOTIF_ID	ALT_ID	CONSENSUS	WIDTH	SITES	E-VALUE	E-VALUE_SOURCE	MOST_SIMILAR_MOTIF_SOURCE	MOST_SIMILAR_MOTIF	URL
+1	MEME	SYGCCMYCTRSTGGY	MEME-1	SYGCCMYCTRSTGGY	15	3519	5.2e-115	MEME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	CTCF_MOUSE.H11MO.0.A	http://hocomoco.autosome.ru/motif/CTCF_MOUSE.H11MO.0.A
+2	STREME	1-CCASYAGRKGGCR	STREME-1	CCASYAGRKGGCR	13	3699	1.2e-071	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	CTCF_MOUSE.H11MO.0.A	http://hocomoco.autosome.ru/motif/CTCF_MOUSE.H11MO.0.A
+3	STREME	2-GCCCCGCCCCC	STREME-2	GCCCCGCCCCC	11	5919	6.1e-049	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	SP1_MOUSE.H11MO.1.A	http://hocomoco.autosome.ru/motif/SP1_MOUSE.H11MO.1.A
+4	MEME	WWAAAAAAAHAAAAA	MEME-2	WWAAAAAAAHAAAAA	15	1127	1.0e-023	MEME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	FUBP1_MOUSE.H11MO.0.D	http://hocomoco.autosome.ru/motif/FUBP1_MOUSE.H11MO.0.D
+5	STREME	3-AARYAAAYA	STREME-3	AARYAAAYA	9	4704	3.7e-022	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	FOXJ2_MOUSE.H11MO.0.C	http://hocomoco.autosome.ru/motif/FOXJ2_MOUSE.H11MO.0.C
+6	STREME	4-GCCGCCGCCGCCGC	STREME-4	GCCGCCGCCGCCGC	14	1351	1.2e-019	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	EGR2_MOUSE.H11MO.0.A	http://hocomoco.autosome.ru/motif/EGR2_MOUSE.H11MO.0.A
+7	STREME	5-MGGAAGTGR	STREME-5	MGGAAGTGR	9	2814	3.8e-019	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	SPIB_MOUSE.H11MO.0.A	http://hocomoco.autosome.ru/motif/SPIB_MOUSE.H11MO.0.A
+8	MEME	GTGTGTGTGTGTGTG	MEME-3	GTGTGTGTGTGTGTG	15	671	6.7e-019	MEME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	EGR3_MOUSE.H11MO.0.D	http://hocomoco.autosome.ru/motif/EGR3_MOUSE.H11MO.0.D
+9	STREME	6-GTCMCCR	STREME-6	GTCMCCR	7	12465	2.9e-011	STREME	 	 	 
+10	STREME	7-YGCGCATGCGCR	STREME-7	YGCGCATGCGCR	12	872	3.1e-011	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	NRF1_MOUSE.H11MO.0.A	http://hocomoco.autosome.ru/motif/NRF1_MOUSE.H11MO.0.A
+11	STREME	8-CCCCCACCCCCAC	STREME-8	CCCCCACCCCCAC	13	941	9.5e-011	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	ZN281_MOUSE.H11MO.0.A	http://hocomoco.autosome.ru/motif/ZN281_MOUSE.H11MO.0.A
+12	STREME	9-CYGGGAT	STREME-9	CYGGGAT	7	23929	2.3e-009	STREME	 	 	 
+13	STREME	10-GCCAATCAGMR	STREME-10	10-GCCAATCAGMR	11	973	9.1e-008	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	NFYB_MOUSE.H11MO.0.A	http://hocomoco.autosome.ru/motif/NFYB_MOUSE.H11MO.0.A
+14	STREME	11-AAGATGGCGGCSSC	STREME-11	11-AAGATGGCGGCSSC	14	303	9.8e-008	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	TAF1_MOUSE.H11MO.0.A	http://hocomoco.autosome.ru/motif/TAF1_MOUSE.H11MO.0.A
+15	STREME	12-AGCCAAG	STREME-12	12-AGCCAAG	7	6657	2.4e-006	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	NFIA_MOUSE.H11MO.1.D	http://hocomoco.autosome.ru/motif/NFIA_MOUSE.H11MO.1.D
+16	STREME	13-AGCAGCAGCAGC	STREME-13	13-AGCAGCAGCAGC	12	1718	1.8e-005	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	BHA15_MOUSE.H11MO.0.A	http://hocomoco.autosome.ru/motif/BHA15_MOUSE.H11MO.0.A
+17	STREME	14-CCAAGGTCA	STREME-14	14-CCAAGGTCA	9	2647	3.7e-005	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	NR5A2_MOUSE.H11MO.0.A	http://hocomoco.autosome.ru/motif/NR5A2_MOUSE.H11MO.0.A
+18	STREME	15-CYTCCTCCY	STREME-15	15-CYTCCTCCY	9	4438	6.8e-005	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	WT1_MOUSE.H11MO.1.A	http://hocomoco.autosome.ru/motif/WT1_MOUSE.H11MO.1.A
+19	STREME	16-RACTACAACTCCCAG	STREME-16	16-RACTACAACTCCCAG	15	157	1.4e-004	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	THA11_MOUSE.H11MO.0.B	http://hocomoco.autosome.ru/motif/THA11_MOUSE.H11MO.0.B
+20	STREME	17-CGGGCGGGCGGGCGG	STREME-17	17-CGGGCGGGCGGGCGG	15	224	2.0e-004	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	SP1_MOUSE.H11MO.0.A	http://hocomoco.autosome.ru/motif/SP1_MOUSE.H11MO.0.A
+21	STREME	18-CATGGCAAC	STREME-18	18-CATGGCAAC	9	212	2.9e-004	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	RFX3_MOUSE.H11MO.0.C	http://hocomoco.autosome.ru/motif/RFX3_MOUSE.H11MO.0.C
+22	STREME	19-TAGATAA	STREME-19	19-TAGATAA	7	3715	1.9e-003	STREME	 	 	 
+23	STREME	20-AGAGAGAGAGAGAGA	STREME-20	20-AGAGAGAGAGAGAGA	15	312	2.4e-003	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	IRF3_MOUSE.H11MO.0.A	http://hocomoco.autosome.ru/motif/IRF3_MOUSE.H11MO.0.A
+24	STREME	21-TAATCATTAACYW	STREME-21	21-TAATCATTAACYW	13	773	5.6e-003	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	HNF1B_MOUSE.H11MO.1.A	http://hocomoco.autosome.ru/motif/HNF1B_MOUSE.H11MO.1.A
+25	STREME	22-CCATGGCGGC	STREME-22	22-CCATGGCGGC	10	556	9.2e-003	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	RFX3_MOUSE.H11MO.0.C	http://hocomoco.autosome.ru/motif/RFX3_MOUSE.H11MO.0.C
+26	STREME	23-GCCCGGCCCGGCCC	STREME-23	23-GCCCGGCCCGGCCC	14	245	9.9e-003	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	SP3_MOUSE.H11MO.0.B	http://hocomoco.autosome.ru/motif/SP3_MOUSE.H11MO.0.B
+27	STREME	24-CTCCACCTCC	STREME-24	24-CTCCACCTCC	10	975	1.0e-002	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	ZBTB6_MOUSE.H11MO.0.D	http://hocomoco.autosome.ru/motif/ZBTB6_MOUSE.H11MO.0.D
+28	STREME	25-CACACACACACACA	STREME-25	25-CACACACACACACA	14	810	1.8e-002	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	EGR3_MOUSE.H11MO.0.D	http://hocomoco.autosome.ru/motif/EGR3_MOUSE.H11MO.0.D
+29	STREME	26-AAATSAAA	STREME-26	26-AAATSAAA	8	3041	2.4e-002	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	STAT2_MOUSE.H11MO.0.A	http://hocomoco.autosome.ru/motif/STAT2_MOUSE.H11MO.0.A
+30	STREME	27-GAGGCGGAGGCSGA	STREME-27	27-GAGGCGGAGGCSGA	14	101	3.5e-002	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	SP5_MOUSE.H11MO.0.C	http://hocomoco.autosome.ru/motif/SP5_MOUSE.H11MO.0.C
+31	STREME	28-RTCACGTGAY	STREME-28	28-RTCACGTGAY	10	632	3.8e-002	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	USF1_MOUSE.H11MO.0.A	http://hocomoco.autosome.ru/motif/USF1_MOUSE.H11MO.0.A
+32	STREME	29-TGTAAAYAT	STREME-29	29-TGTAAAYAT	9	1148	4.5e-002	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	FOXL2_MOUSE.H11MO.0.C	http://hocomoco.autosome.ru/motif/FOXL2_MOUSE.H11MO.0.C
+
+# MEME-ChIP (Motif Analysis of Large Nucleotide Datasets): Version 5.4.1 released on Sat Aug 21 19:23:23 2021 -0700
+# The format of this file is described at https://meme-suite.org/meme//doc/meme-chip-output-format.html
+# meme-chip -oc /jet/home/kwang18/output/meme/6b/mousePancreas_enhancers -db /ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme -meme-nmotifs 3 -spamo-skip /jet/home/kwang18/input/step6_inputs/6b/mousePancreas_enhancers.fasta

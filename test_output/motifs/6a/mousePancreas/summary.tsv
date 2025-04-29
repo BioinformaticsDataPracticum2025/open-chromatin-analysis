@@ -1,0 +1,8 @@
+MOTIF_INDEX	MOTIF_SOURCE	MOTIF_ID	ALT_ID	CONSENSUS	WIDTH	SITES	E-VALUE	E-VALUE_SOURCE	MOST_SIMILAR_MOTIF_SOURCE	MOST_SIMILAR_MOTIF	URL
+1	MEME	RSYGCCMYCTRSTGG	MEME-1	RSYGCCMYCTRSTGG	15	2909	3.9e-061	MEME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	CTCF_MOUSE.H11MO.0.A	http://hocomoco.autosome.ru/motif/CTCF_MOUSE.H11MO.0.A
+2	MEME	AAAAAAAAAMAAAMA	MEME-2	AAAAAAAAAMAAAMA	15	1558	1.4e-033	MEME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	FOXJ3_MOUSE.H11MO.1.B	http://hocomoco.autosome.ru/motif/FOXJ3_MOUSE.H11MO.1.B
+3	MEME	TGTTTRYTYWV	MEME-3	TGTTTRYTYWV	11	2420	1.5e-005	MEME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme	FOXJ2_MOUSE.H11MO.0.C	http://hocomoco.autosome.ru/motif/FOXJ2_MOUSE.H11MO.0.C
+
+# MEME-ChIP (Motif Analysis of Large Nucleotide Datasets): Version 5.4.1 released on Sat Aug 21 19:23:23 2021 -0700
+# The format of this file is described at https://meme-suite.org/meme//doc/meme-chip-output-format.html
+# meme-chip -oc /jet/home/kwang18/output/meme/6a/mousePancreas -db /ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_MOUSE_mono_meme_format.meme -meme-nmotifs 3 -spamo-skip /jet/home/kwang18/input/step6_inputs/6a/mousePancreas.fasta

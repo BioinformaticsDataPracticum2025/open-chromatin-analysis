@@ -1,0 +1,28 @@
+MOTIF_INDEX	MOTIF_SOURCE	MOTIF_ID	ALT_ID	CONSENSUS	WIDTH	SITES	E-VALUE	E-VALUE_SOURCE	MOST_SIMILAR_MOTIF_SOURCE	MOST_SIMILAR_MOTIF	URL
+1	STREME	1-GGCCCCGCCCCCT	STREME-1	GGCCCCGCCCCCT	13	4448	1.8e-045	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme	SP1_HUMAN.H11MO.0.A	http://hocomoco.autosome.ru/motif/SP1_HUMAN.H11MO.0.A
+2	MEME	AVARAAAAWDAAAAA	MEME-1	AVARAAAAWDAAAAA	15	814	2.5e-040	MEME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme	CPEB1_HUMAN.H11MO.0.D	http://hocomoco.autosome.ru/motif/CPEB1_HUMAN.H11MO.0.D
+3	MEME	CCCCSGCCCCGCCCC	MEME-3	CCCCSGCCCCGCCCC	15	1533	6.8e-036	MEME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme	SP3_HUMAN.H11MO.0.B	http://hocomoco.autosome.ru/motif/SP3_HUMAN.H11MO.0.B
+4	STREME	2-RGCCAATCAGMR	STREME-2	RGCCAATCAGMR	12	1351	6.2e-022	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme	NFYB_HUMAN.H11MO.0.A	http://hocomoco.autosome.ru/motif/NFYB_HUMAN.H11MO.0.A
+5	STREME	3-GCCGCCRCCKCC	STREME-3	GCCGCCRCCKCC	12	4959	1.0e-018	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme	TAF1_HUMAN.H11MO.0.A	http://hocomoco.autosome.ru/motif/TAF1_HUMAN.H11MO.0.A
+6	MEME	GGCGGCGGCGGCGGC	MEME-2	GGCGGCGGCGGCGGC	15	1078	1.4e-014	MEME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme	TAF1_HUMAN.H11MO.0.A	http://hocomoco.autosome.ru/motif/TAF1_HUMAN.H11MO.0.A
+7	STREME	4-TGCGCATGCGCA	STREME-4	TGCGCATGCGCA	12	867	1.5e-014	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme	NRF1_HUMAN.H11MO.0.A	http://hocomoco.autosome.ru/motif/NRF1_HUMAN.H11MO.0.A
+8	STREME	5-CCCARCCCC	STREME-5	CCCARCCCC	9	7595	1.9e-009	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme	KLF5_HUMAN.H11MO.0.A	http://hocomoco.autosome.ru/motif/KLF5_HUMAN.H11MO.0.A
+9	STREME	6-AGGTGAGTG	STREME-6	AGGTGAGTG	9	1152	3.0e-008	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme	NR1H4_HUMAN.H11MO.1.B	http://hocomoco.autosome.ru/motif/NR1H4_HUMAN.H11MO.1.B
+10	STREME	7-CCGGGACCCGGD	STREME-7	CCGGGACCCGGD	12	3771	4.0e-008	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme	ZF64A_HUMAN.H11MO.0.D	http://hocomoco.autosome.ru/motif/ZF64A_HUMAN.H11MO.0.D
+11	STREME	8-GGGAAGGAG	STREME-8	GGGAAGGAG	9	3816	5.8e-008	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme	VEZF1_HUMAN.H11MO.1.C	http://hocomoco.autosome.ru/motif/VEZF1_HUMAN.H11MO.1.C
+12	STREME	9-ACTACAWYTCCCAG	STREME-9	ACTACAWYTCCCAG	14	409	3.4e-007	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme	ZN143_HUMAN.H11MO.0.A	http://hocomoco.autosome.ru/motif/ZN143_HUMAN.H11MO.0.A
+13	STREME	10-AGGAGGAGGARGAG	STREME-10	10-AGGAGGAGGARGAG	14	892	2.4e-006	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme	ZN263_HUMAN.H11MO.0.A	http://hocomoco.autosome.ru/motif/ZN263_HUMAN.H11MO.0.A
+14	STREME	11-RCCGGAAGTGRB	STREME-11	11-RCCGGAAGTGRB	12	525	8.8e-006	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme	ELK1_HUMAN.H11MO.0.B	http://hocomoco.autosome.ru/motif/ELK1_HUMAN.H11MO.0.B
+15	STREME	12-GTSACGTSAC	STREME-12	12-GTSACGTSAC	10	1018	1.4e-005	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme	ATF3_HUMAN.H11MO.0.A	http://hocomoco.autosome.ru/motif/ATF3_HUMAN.H11MO.0.A
+16	STREME	13-CAAGATGGCGG	STREME-13	13-CAAGATGGCGG	11	646	5.9e-005	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme	TYY1_HUMAN.H11MO.0.A	http://hocomoco.autosome.ru/motif/TYY1_HUMAN.H11MO.0.A
+17	STREME	14-AAAACAAA	STREME-14	14-AAAACAAA	8	1961	1.8e-004	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme	SRY_HUMAN.H11MO.0.B	http://hocomoco.autosome.ru/motif/SRY_HUMAN.H11MO.0.B
+18	STREME	15-CCATRGCAACS	STREME-15	15-CCATRGCAACS	11	304	1.8e-004	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme	RFX4_HUMAN.H11MO.0.D	http://hocomoco.autosome.ru/motif/RFX4_HUMAN.H11MO.0.D
+19	STREME	16-AAATAA	STREME-16	16-AAATAA	6	753	3.9e-003	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme	MYNN_HUMAN.H11MO.0.D	http://hocomoco.autosome.ru/motif/MYNN_HUMAN.H11MO.0.D
+20	STREME	17-CCCGGCCCCG	STREME-17	17-CCCGGCCCCG	10	5415	4.1e-003	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme	SP1_HUMAN.H11MO.0.A	http://hocomoco.autosome.ru/motif/SP1_HUMAN.H11MO.0.A
+21	STREME	18-GAAGCCGA	STREME-18	18-GAAGCCGA	8	3676	9.5e-003	STREME	 	 	 
+22	STREME	19-CCAGGCTGGAGK	STREME-19	19-CCAGGCTGGAGK	12	147	2.1e-002	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme	SPDEF_HUMAN.H11MO.0.D	http://hocomoco.autosome.ru/motif/SPDEF_HUMAN.H11MO.0.D
+23	STREME	20-GAAACTGAGGC	STREME-20	20-GAAACTGAGGC	11	83	4.2e-002	STREME	/ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme	RORG_HUMAN.H11MO.0.C	http://hocomoco.autosome.ru/motif/RORG_HUMAN.H11MO.0.C
+
+# MEME-ChIP (Motif Analysis of Large Nucleotide Datasets): Version 5.4.1 released on Sat Aug 21 19:23:23 2021 -0700
+# The format of this file is described at https://meme-suite.org/meme//doc/meme-chip-output-format.html
+# meme-chip -oc /jet/home/kwang18/output/meme/6b/humanOvary_enhancers -db /ocean/projects/bio230007p/kwang18/HOCOMOCOv11_full_HUMAN_mono_meme_format.meme -meme-nmotifs 3 -spamo-skip /jet/home/kwang18/input/step6_inputs/6b/humanOvary_enhancers.fasta
