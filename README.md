@@ -138,10 +138,10 @@ Species 2 .meme motif database
 ```
 
 #### Outputs  
-Please refer to the output directory. If you would like to test the pipeline using the example inputs, we recommend that you keep the hal subdirectory and comment out the four sbatch commands that run submit_hal in step 2, as HALPER takes a long time to run. Alternatively, if you don't comment out these lines but you keep the hal subdirectory, step 2 seems to finish quickly because the halLiftover files already exist.  
+Please refer to the output directory. If you would like to test the pipeline using the example inputs, we recommend that you keep the hal subdirectory and comment out the four sbatch commands that run submit_hal in step 2, as HALPER takes a long time to run.
 Here is a list of which output subdirectories correspond to which steps:
 * Step 1 (manual QC inspection of input ATAC-seq data): not applicable
-* Step 2 (hal analysis): hal. Subdirectories of this are divided by species and tissue.
+* Step 2 (hal analysis): hal. Subdirectories of this are divided by species and tissue. Note: the halLiftover files were too large to upload, so they have been deleted.
 * Step 2a (cross-species intersection): cross_species
 * Step 3 (cross-tissue intersection): cross_tissue
 * Step 4 (GREAT gene ontology analysis): not applicable; however, you could use the intermediate files from several steps in the pipeline (particularly steps 2a, 3, and 5) as input.
