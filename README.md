@@ -48,20 +48,22 @@ cut -f1-3 input_bed_file  > output_file_name
 main.sh prompts the user for inputs. If you mistype something, use Ctrl+C to stop the program so that you can start over.  
 #### Example inputs
 Here is a set of example inputs to paste line by line into the console, when prompted to do so by main.sh. The prompts will take inputs that are used in steps 2, 5, and 6.  
-Output directory (you can download a copy of this directory from our repository):
+Output directory (you may refer to a copy of this directory from our repository):
 ```text
 test_output
 ```
+Note that the output directory is placed in $HOME.  
+
 Step 2 inputs:  
 Cactus alignment file (not included in our repository due to size concerns):
 ```text
 /ocean/projects/bio230007p/ikaplow/Alignments/10plusway-master.hal
 ```
-Species 1:
+Species 1 (exactly as written in the Cactus alignment file):
 ```text
 Human
 ```
-Species 2:
+Species 2 (exactly as written in the Cactus alignment file):
 ```text
 Mouse
 ```
@@ -74,7 +76,7 @@ Tissue 2:
 Ovary
 ```
 
-The following files are not included in our repository due to their large size, but if you have access to the ikaplow directory, you can use these paths.  
+The following files are not included in our repository due to their large size, but if you have access to the ikaplow directory, you can use these paths. These are the ATAC-seq peak (i.e. open chromatin regions) files that you have selected after performing QC for step 1.  
 Species 1, tissue 1:
 ```text
 /ocean/projects/bio230007p/ikaplow/HumanAtac/Pancreas/peak/idr_reproducibility/idr.optimal_peak.narrowPeak.gz
@@ -92,8 +94,9 @@ Species 2, tissue 2:
 /ocean/projects/bio230007p/ikaplow/MouseAtac/Ovary/peak/idr_reproducibility/idr.optimal_peak.narrowPeak.gz
 ```
 
+
 Step 5 inputs:  
-For the following enhancers and promoters BED files, you can either use our pre-split files for human and mouse (included in the input directory) or use [split_encode_ccres.sh](https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/blob/main/split_encode_ccres.sh) if you'd like to analyze a different species. These filepaths assume that your current working directory is this repository.  
+To split the open chromatin regions from the step 2 inputs into enhancers and promoters, we intersect them with BED files that contain enhancers and promoters. For the following enhancers and promoters BED files, you can either use our pre-split files for human and mouse (included in the input directory) or use [split_encode_ccres.sh](https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/blob/main/split_encode_ccres.sh) if you'd like to analyze a different species. These filepaths assume that your current working directory is this repository.  
 Species 1 promoters BED file:
 ```text
 input/promoters_human.txt
@@ -112,7 +115,7 @@ input/enhancers_mouse.txt
 ```
 
 Step 6 inputs:  
-The following files are not included in our repository due to their large size, but if you have access to the ikaplow directory, you can use these paths.  
+Step 6 uses MEME-suite, which requires FASTA files as input. Since every step prior to this has used BED files, these BED files must be converted to FASTA using a reference genome. Although MEME-suite has its own converter, our installation lacks that converter, so we are using bedtools getfasta instead (wrapped in the `convert_bed_to_fasta.sh` script). The following files are not included in our repository due to their large size, but if you have access to the ikaplow directory, you can use these paths.  
 **NOTE:** it's not possible to use the ikaplow copies of the human and mouse reference genomes because that directory is read-only, so you must make your own copies of these files.
 ```bash
 # these are not inputs for main.sh. run this in advance.
@@ -138,7 +141,7 @@ Species 2 .meme motif database
 ```
 
 #### Outputs  
-Please refer to the test_output directory. If you would like to quickly test the pipeline using the example input files, we recommend that you place the hal subdirectory in your own output directory and comment out the four sbatch commands that run submit_hal in step 2, as HALPER takes a long time to run. Also note that test_output in the example run is created in your $HOME directory, not within this repository directory.
+Please refer to the test_output directory for an example of directory structure. If you would like to quickly test the pipeline using the example input files, we recommend that you place the hal subdirectory in your own output directory and also comment out the four sbatch commands that run submit_hal in step 2, as HALPER takes a long time to run. Also note that test_output in the example run is created in your $HOME directory, not within this repository directory.
 Here is a list of which output subdirectories correspond to which steps:
 * Step 1 (manual QC inspection of input ATAC-seq data): not applicable
 * Step 2 (hal analysis): hal. Subdirectories of this are divided by species and tissue. Note: the halLiftover files were too large to upload and are not used downstream in the pipeline, so they have been deleted. Only the HALPER output files from step 2 are used downstream.
@@ -146,8 +149,8 @@ Here is a list of which output subdirectories correspond to which steps:
 * Step 3 (cross-tissue intersection): cross_tissue
 * Step 4 (GREAT gene ontology analysis): not applicable; however, you could use the intermediate files from several steps in the pipeline (particularly steps 2a, 3, and 5) as input.
 * Step 5 (sorting peaks into enhancers and promoters): enhancers_and_promoters. While there are a lot of output bed files from this step, the outputs that directly answer the questions posed by 5a and 5b are the Jaccard figures in the top level of the directory. Generally the output files from step 5 are sorted into subdirectories that correspond to which step 6 task they serve as input for. However, there is no step 6a subdirectory because the inputs to step 6a are simply the four original input ATAC-seq files, and the steps 6d and 6f subdirectories contain promoter files that are not actually used in step 6.
-* Step 6 (motif analysis): motifs. Please note that the version uploaded to GitHub only contains a subset of files from the output, as the entire output is too massive to put on GitHub.
-On the main level of the output directory, you can also find figures that visualize the Jaccard index for the overlaps performed.
+* Step 6 (motif analysis): motifs. Please note that the version uploaded to GitHub only contains a subset of files from the output, as the entire output is too massive to put on GitHub. The files that have been included are meme-chip.html and summary.tsv, which show the motifs that are enriched in the input datasets. (Directory names indicate what the input datasets were.) Outputs that are labeled with MEME describe motifs that were discovered (with E-value as a measure of significance), while STREME outputs are motifs that are either enriched in the sequence or relatively enriched compared to control sequences.  
+On the main level of the output directory, you can also find figures that visualize the Jaccard index for the overlaps performed. The [Jaccard index](https://bedtools.readthedocs.io/en/latest/content/tools/jaccard.html), which measures the size of the intersection divided by the size of the union of the two datasets. It ranges from 0 to 1, with 1 indicating more overlap between the datasets. It is a symmetrical measure that serves as an alternative to percentage overlap between two datasets, as percentage overlap is not robust to any differences in dataset size, especially if one dataset is much larger than the other.
 
 ### Individual scripts, if you'd like to run only parts of the pipeline:
 **Usage of the following individual scripts (with inputs, outputs, and example runs) can be found [here](setup/SCRIPTS.md).**
