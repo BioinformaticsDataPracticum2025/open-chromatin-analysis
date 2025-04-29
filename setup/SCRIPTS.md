@@ -126,8 +126,20 @@ both_open=$4 # either "y" or "n"; will not take other values
 If $both_open == "y", writes bedtools intersect -a $a -b $b -u > $out. This is the set of unique overlaps between the first and second input files. If the input files contain open chromatin regions, then the output file represents peaks that occur in both input files.
 If $both_open == "n", writes bedtools intersect -a $a -b $b -v > $out. This is the set of peaks that occur in the first but not the second input file. If the input files contain open chromatin regions, then the output file represents peaks that occur in $a but not $b.
 
-# Step 5: identify promoters and enhancers
-## (add step 5 script once it's done)
+# Step 5: split an ENCODE cCREs file into promoters and enhancers
+## split_encode_ccres.sh
+The purpose of this script is to split an ENCODE cCREs file into promoters and enhancers. For your convenience, we've provided mouse and human cCREs that have already been split- refer to the [input directory](https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/tree/main/input).  
+However, if you are studying a different species, you can use this script to split the corresponding ENCODE cCREs file. You must follow the instructions below on how to download the ENCODE cCREs file in order to ensure that it is in the correct format.
+
+### Instructions on how to download the input:
+split_encode_ccres.sh expects an ENCODE cCREs BED file downloaded from the UCSC Table Browser https://genome.ucsc.edu/cgi-bin/hgTables . Under the "Retrieve and display data" menu, select the "Output format" of "Selected fields from primary and related tables", enter a filename so that it downloads instead of opening in the browser, choose tsv format, and gzip it. Click "Get output", and on the next page, select the following four columns: chrom, chromStart, chromEnd, and ucscLabel. The first three columns are the contents of a typical BED file, while the fourth column is comprised of "prom", "enhD", or "enhP" which are the annotations that will be used to separate the entries into promoters ("prom") and enhancers (everything else). **IMPORTANT:** This script is not built to work with any fourth column that is not ucscLabel.
+
+Input: a gzipped BED file with the format described above
+```bash
+# Example run:
+bash split_encode_ccres.sh "${HOME}/input/ENCODE_cCREs_human.txt.gz"
+```
+Output: two files, one containing the promoters and one containing the enhancers. The script will print their filenames.
 
 # Step 6: find motifs enriched in OCRs (particularly enhancers) from previously-processed datasets
 ## convert_bed_to_fasta.sh
