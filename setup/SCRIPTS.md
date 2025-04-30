@@ -1,7 +1,7 @@
 # Scripts Documentation
 
 This document provides detailed usage information for the scripts.
-Steps 1 and 4 are not included. Step 1 entails manual inspection of QC reports, while Step 4 is done using the [GREAT web tool](http://great.stanford.edu/public/html/).
+Steps 1 and 4 are not included. Step 1 entails manual inspection of QC reports from the [ENCODE ATAC-seq pipeline](https://github.com/ENCODE-DCC/atac-seq-pipeline/tree/master), while Step 4 is done using the [GREAT web tool](http://great.stanford.edu/public/html/).
 
 ---
 
@@ -115,6 +115,9 @@ Output: two files, one containing the promoters and one containing the enhancers
 ## convert_bed_to_fasta.sh
 Step 6 (motif analysis) requires FASTA input. Prior steps in the pipeline produce BED files, so it's necessary to run this on any files you intend to use in step 6. In particular, use this script to convert bed outputs from step 5 (enhancers and promoters) to FASTA.
 
+### Dependencies
+* [bedtools](https://anaconda.org/bioconda/bedtools) (can be conda installed)
+
 ### Inputs:
 $1: $ref_fasta which is either h (human), m (mouse), or a filepath ending in .fasta. If the file is equivalent to FASTA but has a different file extension, rename it to end in .fasta.
 $2: $input_bed which is a filepath to the BED file you want to convert to a FASTA
@@ -130,6 +133,9 @@ bash convert_bed_to_fasta.sh h ~/output/step3_bedtools/human_ovary_to_pancreas_i
 
 ## motif_analysis.sh
 After converting your input from bed to fasta using convert_bed_to_fasta.sh, you are ready to find motifs that are enriched in the input file.
+
+### Dependencies
+* MEME-ChIP from [MEMEsuite](https://meme-suite.org/meme/doc/install.html) v5.4.1, or you may choose to use the web version of MEME-ChIP instead, commenting out the step 6 section of main.sh. In our installation, CentriMo was non-functional, so our analysis is limited to the MEME and STREME outputs.
 
 ### Inputs:
 $1: $input fasta in which to find motifs.
