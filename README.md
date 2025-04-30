@@ -7,6 +7,13 @@
 - [Requirements & Installation](#required-packages--tools)
 
 - [Usage](#usage)
+  - [Pipeline diagram](#pipeline-diagram)
+  - [Running the pipeline](#running-the-pipeline-with-an-integrated-script-mainsh)
+    - [Inputs](#example-inputs)
+    - [Outputs](#outputs)
+  - [Individual scripts](#individual-scripts-if-youd-like-to-run-only-parts-of-the-pipeline)
+  
+- [Citations and contributors](#citations)
 
 
 ---
@@ -43,9 +50,12 @@ cut -f1-3 input_bed_file  > output_file_name
 **IMPORTANT:** refer to the "important note" heading in the markdown linked [here](setup/SCRIPTS.md). You will need to change a few lines of code in order to get submit_hal to run on your own device; according to [hal setup documentation](https://github.com/pfenninglab/halLiftover-postprocessing/blob/master/hal_install_instructions.md), the paths must be hardcoded without use of "~". This unfortunately means that these lines must be hard-coded.  
 
 ## Usage
+### Pipeline diagram
+![pipeline_diagram](https://github.com/user-attachments/assets/7a32ba90-649e-4c03-b235-86b8dcb91c4e)
+
+### Running the pipeline with an integrated script: main.sh
 Clone this repository to your own device.  
-First, run your ATAC-seq narrowPeak files through the [ENCODE ATAC-seq pipeline](https://github.com/ENCODE-DCC/atac-seq-pipeline/tree/master), and inspect the html QC reports that it generates. These will be the four input datasets representing two species and two tissues. 
-### Integrated script: main.sh
+First, run your ATAC-seq narrowPeak files through the [ENCODE ATAC-seq pipeline](https://github.com/ENCODE-DCC/atac-seq-pipeline/tree/master), and inspect the html QC reports that it generates. These will be the four input datasets representing two species and two tissues.   
 main.sh prompts the user for inputs. If you mistype something, use Ctrl+C to stop the program so that you can start over.  
 #### Example inputs
 Here is a set of example inputs to paste line by line into the console, when prompted to do so by main.sh. The prompts will take inputs that are used in steps 2, 5, and 6.  
@@ -168,15 +178,15 @@ On the main level of the output directory, you can also find figures that visual
 * GREAT: McLean, Cory Y et al. “GREAT improves functional interpretation of cis-regulatory regions.” Nature biotechnology vol. 28,5 (2010): 495-501. doi:10.1038/nbt.1630
 * MEMEsuite: Bailey, Timothy L et al. “The MEME Suite.” Nucleic acids research vol. 43,W1 (2015): W39-49. doi:10.1093/nar/gkv416
 
+## How to cite this repository
+A pipeline to compare regulatory regions across tissues and species - Github repository. 2025. https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/
+
 ## Contributors
 * Shih-Ying Lin (shihying@andrew.cmu.edu)
 * Peng Qiu (pengq@andrew.cmu.edu)
 * Aayushi Soni (ajsoni@andrew.cmu.edu)
 * Katherine Wang (kcw2@andrew.cmu.edu)
 
-  Special thanks to:
-  * Professor: Dr. Irene Kaplow (ikaplow@andrew.cmu.edu)
-  * TA: Wanxing Zhang (wanxingz@andrew.cmu.edu)
-
-## How to cite this repository
-A pipeline to compare regulatory regions across tissues and species - Github repository. 2025. https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/
+Special thanks to:
+* Professor: Dr. Irene Kaplow (ikaplow@andrew.cmu.edu)
+* TA: Wanxing Zhang (wanxingz@andrew.cmu.edu)
