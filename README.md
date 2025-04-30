@@ -6,8 +6,6 @@
 
 - [Requirements & Installation](#required-packages--tools)
 
-- [Scripts](#scripts)
-
 - [Usage](#usage)
 
 
@@ -30,7 +28,8 @@ Our goals are to:
 ## Required Packages & Tools
 To run the analyses and workflows in this project, the following packages and tools are required. Initial setup is available [here](setup/README.md). 
 
-- [Anaconda3](https://www.anaconda.com/docs/getting-started/anaconda/install) 2024.10-1 for conda installation and Python
+- [ENCODE ATAC-seq pipeline](https://github.com/ENCODE-DCC/atac-seq-pipeline/tree/master) for ATAC-seq pre-processing and QC
+-  [Anaconda3](https://www.anaconda.com/docs/getting-started/anaconda/install) 2024.10-1 for conda installation and Python
 - [bedtools](https://anaconda.org/bioconda/bedtools) v2.30.0 (can be conda installed)
 - **[halLiftover and HALPER](https://github.com/pfenninglab/halLiftover-postprocessing.git)**, March 2025 version
 - [GREAT](http://great.stanford.edu/public/html/) (please make sure that your input BED files have been cut to columns 1-3)
