@@ -44,7 +44,7 @@ To run the analyses and workflows in this project, the following packages and to
 cut -f1-3 input_bed_file  > output_file_name 
 # This keeps only the first 3 columns of the file.
 ```
-- MEME-ChIP from [MEMEsuite](https://meme-suite.org/meme/doc/install.html) v5.4.1, or you may choose to use the web version of [MEME-ChIP](https://meme-suite.org/meme/tools/meme-chip) instead, commenting out the step 6 section of main.sh. In our installation, CentriMo was non-functional, so our analysis is limited to the MEME and STREME outputs.
+- MEME-ChIP from [MEMEsuite](https://meme-suite.org/meme/doc/install.html) v5.4.1, or you may choose to use the web version of [MEME-ChIP](https://meme-suite.org/meme/tools/meme-chip) instead, commenting out the step 6 section of [main.sh](https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/blob/main/main.sh). In our installation, CentriMo was non-functional, so our analysis is limited to the MEME and STREME outputs.
 
 ### IMPORTANT NOTE REGARDING HAL
 **IMPORTANT:** refer to the "important note" heading in the markdown linked [here](setup/SCRIPTS.md). You will need to change a few lines of code in order to get submit_hal to run on your own device; according to [hal setup documentation](https://github.com/pfenninglab/halLiftover-postprocessing/blob/master/hal_install_instructions.md), the paths must be hardcoded without use of "~". This unfortunately means that these lines must be hard-coded.  
@@ -53,12 +53,12 @@ cut -f1-3 input_bed_file  > output_file_name
 ### Pipeline diagram
 ![pipeline_diagram](https://github.com/user-attachments/assets/7a32ba90-649e-4c03-b235-86b8dcb91c4e)
 
-### Running the pipeline with an integrated script: main.sh
+### Running the pipeline with an integrated script: [main.sh](https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/blob/main/main.sh)
 Clone this repository to your own device.  
 First, run your ATAC-seq narrowPeak files through the [ENCODE ATAC-seq pipeline](https://github.com/ENCODE-DCC/atac-seq-pipeline/tree/master), and inspect the html QC reports that it generates. These will be the four input datasets representing two species and two tissues.   
-main.sh prompts the user for inputs. If you mistype something, use Ctrl+C to stop the program so that you can start over.  
+[main.sh](https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/blob/main/main.sh) prompts the user for inputs. If you mistype something, use Ctrl+C to stop the program so that you can start over.  
 #### Example inputs
-Here is a set of example inputs to paste line by line into the console, when prompted to do so by main.sh. The prompts will take inputs that are used in steps 2, 5, and 6.  
+Here is a set of example inputs to paste line by line into the console, when prompted to do so by [main.sh](https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/blob/main/main.sh). The prompts will take inputs that are used in steps 2, 5, and 6.  
 Output directory (you may refer to a copy of this directory from our repository):
 ```text
 test_output
@@ -111,7 +111,7 @@ If the files above do not work, try these files, in this order:
 /ocean/projects/bio230007p/ikaplow/MouseAtac/Ovary/peak/idr_reproducibility/idr.optimal_peak.narrowPeak.gz  
 
 Step 5 inputs:  
-To split the open chromatin regions from the step 2 inputs into enhancers and promoters, we intersect them with BED files that contain enhancers and promoters. For the following enhancers and promoters BED files, you can either use our pre-split files for human and mouse (included in the input directory) or use [split_encode_ccres.sh](https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/blob/main/split_encode_ccres.sh) if you'd like to analyze a different species. These filepaths assume that your current working directory is this repository.  
+To split the open chromatin regions from the step 2 inputs into enhancers and promoters, we intersect them with BED files that contain enhancers and promoters. For the following enhancers and promoters BED files, you can either use our pre-split files for human and mouse (included in the input directory) or use [[split_encode_ccres.sh]](https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/blob/main/split_encode_ccres.sh) if you'd like to analyze a different species. These filepaths assume that your current working directory is this repository.  
 Species 1 promoters BED file:
 ```text
 input/ENCODE_cCREs_human_promoters.bed
@@ -130,7 +130,7 @@ input/ENCODE_cCREs_mouse_enhancers.bed
 ```
 
 Step 6 inputs:  
-Step 6 uses MEME-suite, which requires FASTA files as input. Since every step prior to this has used BED files, these BED files must be converted to FASTA using a reference genome. Although MEME-suite has its own converter, our installation lacks that converter, so we are using bedtools getfasta instead (wrapped in the `convert_bed_to_fasta.sh` script). The following files are not included in our repository due to their large size, but if you have access to the ikaplow directory, you can use these paths.  
+Step 6 uses MEME-suite, which requires FASTA files as input. Since every step prior to this has used BED files, these BED files must be converted to FASTA using a reference genome. Although MEME-suite has its own converter, our installation lacks that converter, so we are using bedtools getfasta instead (wrapped in the [`convert_bed_to_fasta.sh`](https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/blob/main/convert_bed_to_fasta.sh) script). The following files are not included in our repository due to their large size, but if you have access to the ikaplow directory, you can use these paths.  
 **NOTE:** it's not possible to use the ikaplow copies of the human and mouse reference genomes because that directory is read-only, so you must make your own copies of these files.
 ```bash
 # these are not inputs for main.sh. run this in advance.
@@ -169,10 +169,10 @@ On the main level of the output directory, you can also find figures that visual
 
 ### Individual scripts, if you'd like to run only parts of the pipeline:
 **Usage of the following individual scripts (with inputs, outputs, and example runs) can be found [here](setup/SCRIPTS.md).**
-- Step 2: `submit_hal.sh`, which is used to run halLiftover and HALPER. **IMPORTANT: refer to the "important note" heading in the markdown linked above. You will need to change a few lines of code in order to get this to run on your own device; according to [hal setup documentation](https://github.com/pfenninglab/halLiftover-postprocessing/blob/master/hal_install_instructions.md), it must be hardcoded without use of "~".** 
-- Steps 2a, 3, and parts of 5: `bedtools.sh`, which is used to run cross-species (same tissue) and intraspecies (cross-tissue) comparison of open chromatin regions
-- Step 5: `split_encode_ccres.sh` if you would like to use your own ENCODE cCREs file
-- Step 6: `convert_bed_to_fasta.sh` and `motif_analysis.sh`
+- Step 2: [`submit_hal.sh`](https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/blob/main/submit_hal.sh), which is used to run halLiftover and HALPER. **IMPORTANT: refer to the "important note" heading in the markdown linked above. You will need to change a few lines of code in order to get this to run on your own device; according to [hal setup documentation](https://github.com/pfenninglab/halLiftover-postprocessing/blob/master/hal_install_instructions.md), it must be hardcoded without use of "~".** 
+- Steps 2a, 3, and parts of 5: [`bedtools.sh`](https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/blob/main/bedtools.sh), which is used to run cross-species (same tissue) and intraspecies (cross-tissue) comparison of open chromatin regions
+- Step 5: [`split_encode_ccres.sh`](https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/blob/main/split_encode_ccres.sh) if you would like to use your own ENCODE cCREs file
+- Step 6: [`convert_bed_to_fasta.sh`](https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/blob/main/convert_bed_to_fasta.sh) and [`motif_analysis.sh`](https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/blob/main/motif_analysis.sh)
 
 
 ## Citations
