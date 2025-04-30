@@ -179,7 +179,7 @@ echo "All HALPER jobs have completed. Proceeding with next steps."
 s1t1_hal=$(find_halper_file "$s1t1_outdir")
 s1t2_hal=$(find_halper_file "$s1t2_outdir")
 s2t1_hal=$(find_halper_file "$s2t1_outdir")
-s2t2_hal=$(find_halper_file "$s1t2_outdir")
+s2t2_hal=$(find_halper_file "$s2t2_outdir")
 
 
 
