@@ -19,7 +19,7 @@ conda create -n hal python=3.7
 conda activate hal
 ```
 HALPER expects the conda env name to be hal. If using another name, modify line 27 of `halper_map_peak_orthologs.sh` and change to the corresponding name. 
-Detailed instructions on how to install hal and HALPER [here](https://github.com/pfenninglab/halLiftover-postprocessing/blob/master/hal_install_instructions.md). IMPORTANT: this installation, as well as our code, assumes that the directories are cloned in a "repos" directory.
+Detailed instructions on how to install hal and HALPER [here](https://github.com/pfenninglab/halLiftover-postprocessing/blob/master/hal_install_instructions.md).
 
 ### Git
 **🧩 Step 1: Activate Env and Install Git**
@@ -28,15 +28,9 @@ Detailed instructions on how to install hal and HALPER [here](https://github.com
 conda activate hal
 conda install git
 ```
-
+You may also need to install the [ENCODE ATAC-seq data processing pipeline](https://github.com/ENCODE-DCC/atac-seq-pipeline/tree/master?tab=readme-ov-file#installation), [bedtools](https://anaconda.org/bioconda/bedtools), and [MEME-suite](https://meme-suite.org/meme/doc/install.html). Refer to the hyperlinks for their respective installation instructions.
 **🧩 Step 2: Clone the Main Repository**
 ```bash
 https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis.git
-```
-**🧩 Step 3: Clone the HALPER Repository**
-```bash
-cd open-chromatin-analysis
-git clone https://github.com/pfenninglab/halLiftover-postprocessing.git
-# note: this doesn't actually install HALPER. Follow the instructions linked [here](https://github.com/pfenninglab/halLiftover-postprocessing/blob/master/hal_install_instructions.md).
 ```
 
