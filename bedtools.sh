@@ -28,7 +28,7 @@ preprocess_file() {
     local infile="$1"
     local outfile="$2"
     if [[ "$infile" == *.gz ]]; then
-        zcat "$infile" | sort -k1,1 -k2,2n > "$outfile"
+        gzcat "$infile" | sort -k1,1 -k2,2n > "$outfile"
     else
         sort -k1,1 -k2,2n "$infile" > "$outfile"
     fi
