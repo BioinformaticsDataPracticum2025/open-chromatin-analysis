@@ -13,7 +13,7 @@
 
 ## Introduction
 This project explores the conservation and functional significance of open chromatin regions across human and mouse tissues, such as the ovary and pancreas. Open chromatin regions play a crucial role in regulating gene expression by providing access to transcriptional machinery. These open chromatin regions may be promoters or enhancers. Refer to the project description [here](https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/blob/main/03-713-ProjectDescription-2025.pdf).  
-This pipeline could generally be used to conduct differential regulatory analysis between two different conditions in  bulk ATAC-seq data, e.g. between species and tissues. 
+This pipeline could generally be used to conduct differential regulatory analysis between two different conditions in  bulk ATAC-seq data: a comparison between species and tissues. 
 
 Our goals are to:  
 1. Evaluate the quality of chromatin accessibility datasets (manual inspection of ATAC-seq QC reports).
@@ -43,6 +43,7 @@ cut -f1-3 input_bed_file  > output_file_name
 **IMPORTANT:** refer to the "important note" heading in the markdown linked [here](setup/SCRIPTS.md). You will need to change a few lines of code in order to get submit_hal to run on your own device; according to [hal setup documentation](https://github.com/pfenninglab/halLiftover-postprocessing/blob/master/hal_install_instructions.md), the paths must be hardcoded without use of "~". This unfortunately means that these lines must be hard-coded.  
 
 ## Usage
+Clone this repository to your own device.  
 First, run your ATAC-seq narrowPeak files through the [ENCODE ATAC-seq pipeline](https://github.com/ENCODE-DCC/atac-seq-pipeline/tree/master), and inspect the html QC reports that it generates. These will be the four input datasets representing two species and two tissues. 
 ### Integrated script: main.sh
 main.sh prompts the user for inputs. If you mistype something, use Ctrl+C to stop the program so that you can start over.  
