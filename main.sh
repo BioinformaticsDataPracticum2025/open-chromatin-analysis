@@ -59,8 +59,9 @@ run_bedtools() {
 
 # First, establish the output directory where everything will go.
 echo "Before entering an output directory, note that if prior analyses were conducted in this outdir, they will be overwritten."
-read -p "Enter the output directory for this pipeline. This will be created in ${HOME}: " pipe_out
-pipe_out="${HOME}/${pipe_out%/}" # place in the home directory, and strip the "/" if one was included
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+read -p "Enter the output directory for this pipeline. This will be created in ${SCRIPT_DIR}: " pipe_out
+pipe_out="${SCRIPT_DIR}/${pipe_out%/}" # place in the home directory, and strip the "/" if one was included
 mkdir -p $pipe_out # make this directory in case it doesn't already exist
 
 echo "Step 1 of the pipeline was to perform QC on the input data that you are about to provide for step 2."
