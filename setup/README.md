@@ -6,7 +6,7 @@ This doc provides some basic setup instructions on an HPC system such as Bridges
 ## Download & Install 
 
 ### Conda 
-Anaconda is usually available as a pre-installed module on Bridges2.   
+Anaconda3 is usually available as a pre-installed module on Bridges2. If Anaconda3 does not come installed on your cluster, please [install](https://www.anaconda.com/download) it.   
 
 **✅ Step 1: Load Anaconda Module**  
 ```bash
@@ -28,9 +28,10 @@ Detailed instructions on how to install hal and HALPER [here](https://github.com
 conda activate hal
 conda install git
 ```
-You may also need to install the [ENCODE ATAC-seq data processing pipeline](https://github.com/ENCODE-DCC/atac-seq-pipeline/tree/master?tab=readme-ov-file#installation), [bedtools](https://anaconda.org/bioconda/bedtools), and [MEME-suite](https://meme-suite.org/meme/doc/install.html). Refer to the hyperlinks for their respective installation instructions.
+
 **🧩 Step 2: Clone the Main Repository**
 ```bash
 https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis.git
 ```
 
+You may also need to install the [ENCODE ATAC-seq data processing pipeline](https://github.com/ENCODE-DCC/atac-seq-pipeline/tree/master?tab=readme-ov-file#installation), [bedtools](https://anaconda.org/bioconda/bedtools), and [MEME-suite](https://meme-suite.org/meme/doc/install.html). Refer to the hyperlinks for their respective installation instructions.
