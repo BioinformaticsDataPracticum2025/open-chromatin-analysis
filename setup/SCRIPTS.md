@@ -46,7 +46,7 @@ Parameters:
 ```
 
 ### Inputs
-Refer to the help string under the "usage" heading.
+Refer to the help string under the "usage" heading. The BED/narrowPeak file should be processed through the [ENCODE ATAC-seq](https://github.com/ENCODE-DCC/atac-seq-pipeline/tree/master) pipeline. The alignment file is a Cactus alignment. The source species is the species that matches your input dataset's species, and the target species is the one whose genome coordinates you need to convert your input data to in order to map orthologs. Make sure to spell your source and target species exactly as they are spelled in the Cactus alignment.
 
 ### Outputs
 Two halLiftover output files ending in .sFile.bed.gz and .tFile.bed.gz. Also a HALPER output file ending in .HALPER.narrowPeak.gz. The HALPER file is essentially a BED file in which the first three columns are the coordinates of the source species's gene in terms of the target species's coordinates (for every ortholog found between the two), the fourth column contains the original coordinates from the source species, and the rest of the columns can be ignored.
@@ -96,36 +96,6 @@ There are 5 CLIs. Below is an example:
 * Prints the [Jaccard](https://bedtools.readthedocs.io/en/latest/content/tools/jaccard.html) of input files A and B; a measurement that is robust to input file sizes.
 * An output file with name provided as CLI 5.
 
-## cross_species_bedtools_intersection.sh (deprecated)
-
-This script will eventually be merged into bedtool.sh. It takes two input BED files, outputs a bedtools intersection of these two files, and prints two metrics: the percentage overlap (number of lines in output intersection file divided by number of lines in the first input file) and the Jaccard overlap (a better metric to use than percentage if the two input files differ greatly in number of lines, as might be the case if intersecting conservative peaks with optimal peaks).
-
-### Dependencies
-* [Anaconda3](https://www.anaconda.com/docs/getting-started/anaconda/install)
-* [bedtools](https://anaconda.org/bioconda/bedtools) (can be conda installed)
-
-### Usage
-```bash
-bash cross_species_bedtools_intersection.sh $1 $2 $3 $4
-
-# With example values:
-bash cross_species_bedtools_intersection.sh "~/output/hal/Mouse/Ovary/peaks.MouseToHuman.HALPER.narrowPeak.gz" "$PROJECT/../ikaplow/HumanAtac/Ovary/peak/idr_reproducibility/idr.conservative_peak.narrowPeak.gz" "ovary_intersect_mouse_peaks_to_human_coords_open.bed" y
-
-# $1 and $2 are input files to bedtools (.gz format expected), $3 is the name of the output file,
-# $4 specifies whether to look for regions that are open in both genomes ("y") or closed in the second genome ("n")
-
-# Using CLIs:
-a=$1
-b=$2
-out=$3
-both_open=$4 # either "y" or "n"; will not take other values
-```
-(note: while you can specify a directory in the output filepath, this script currently doesn't check whether that directory already exists, and so you may run into errors if that happens. I suggest first making your desired output directory so that you don't encounter errors. We hope to implement that fix sometime.)
-
-### Outputs
-If $both_open == "y", writes bedtools intersect -a $a -b $b -u > $out. This is the set of unique overlaps between the first and second input files. If the input files contain open chromatin regions, then the output file represents peaks that occur in both input files.
-If $both_open == "n", writes bedtools intersect -a $a -b $b -v > $out. This is the set of peaks that occur in the first but not the second input file. If the input files contain open chromatin regions, then the output file represents peaks that occur in $a but not $b.
-
 # Step 5: split an ENCODE cCREs file into promoters and enhancers
 ## split_encode_ccres.sh
 The purpose of this script is to split an ENCODE cCREs file into promoters and enhancers. For your convenience, we've provided mouse and human cCREs that have already been split- refer to the [input directory](https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/tree/main/input).  
@@ -166,7 +136,8 @@ $1: $input fasta in which to find motifs.
 $2: $outdir in which the results will be written. IMPORTANT NOTE ABOUT OUTDIR: provide a unique outdir each time, otherwise the results will be overwritten
 $3: ref_db, which is either h, m, or a path to a file that ends in .meme. Throws an error otherwise.
 
-#### Output: Look for the motifs and E-values in the summary.tsv file in $outdir.
+#### Output: 
+Look for the motifs and E-values in the summary.tsv file in $outdir. Refer to meme-chip.html (which provides logo diagrams) and summary.tsv.
 
 ### Example run:
 ```bash
