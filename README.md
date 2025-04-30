@@ -44,6 +44,7 @@ cut -f1-3 input_bed_file  > output_file_name
 **IMPORTANT:** refer to the "important note" heading in the markdown linked [here](setup/SCRIPTS.md). You will need to change a few lines of code in order to get submit_hal to run on your own device; according to [hal setup documentation](https://github.com/pfenninglab/halLiftover-postprocessing/blob/master/hal_install_instructions.md), the paths must be hardcoded without use of "~". This unfortunately means that these lines must be hard-coded.  
 
 ## Usage
+First, run your ATAC-seq narrowPeak files through the [ENCODE ATAC-seq pipeline](https://github.com/ENCODE-DCC/atac-seq-pipeline/tree/master), and inspect the html QC reports that it generates. These will be the four input datasets representing two species and two tissues. 
 ### Integrated script: main.sh
 main.sh prompts the user for inputs. If you mistype something, use Ctrl+C to stop the program so that you can start over.  
 #### Example inputs
@@ -143,7 +144,7 @@ Species 2 .meme motif database
 #### Outputs  
 Please refer to the test_output directory for an example of directory structure. If you would like to quickly test the pipeline using the example input files, we recommend that you place the hal subdirectory in your own output directory and also comment out the four sbatch commands that run submit_hal in step 2, as HALPER takes a long time to run. Also note that test_output in the example run is created in your $HOME directory, not within this repository directory.
 Here is a list of which output subdirectories correspond to which steps:
-* Step 1 (manual QC inspection of input ATAC-seq data): not applicable
+* Step 1 (manual QC inspection of input ATAC-seq data): not part of our pipeline. Refer to the [ENCODE ATAC-seq pipeline](https://github.com/ENCODE-DCC/atac-seq-pipeline/tree/master).
 * Step 2 (hal analysis): hal. Subdirectories of this are divided by species and tissue. Note: the halLiftover files were too large to upload and are not used downstream in the pipeline, so they have been deleted. Only the HALPER output files from step 2 are used downstream.
 * Step 2a (cross-species intersection): cross_species
 * Step 3 (cross-tissue intersection): cross_tissue
