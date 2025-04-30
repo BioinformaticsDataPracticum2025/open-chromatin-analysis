@@ -59,11 +59,10 @@ First, run your ATAC-seq narrowPeak files through the [ENCODE ATAC-seq pipeline]
 [main.sh](https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/blob/main/main.sh) prompts the user for inputs. If you mistype something, use Ctrl+C to stop the program so that you can start over.  
 #### Example inputs
 Here is a set of example inputs to paste line by line into the console, when prompted to do so by [main.sh](https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/blob/main/main.sh). The prompts will take inputs that are used in steps 2, 5, and 6.  
-Output directory (you may refer to a copy of this directory from our repository):
+Output directory, which will be placed inside this repository (you may refer to a copy of this directory from our repository):
 ```text
 test_output
 ```
-Note that the output directory is placed in $HOME.  
 
 Step 2 inputs:  
 Cactus alignment file (not included in our repository due to size concerns):
