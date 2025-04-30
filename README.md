@@ -114,19 +114,19 @@ Step 5 inputs:
 To split the open chromatin regions from the step 2 inputs into enhancers and promoters, we intersect them with BED files that contain enhancers and promoters. For the following enhancers and promoters BED files, you can either use our pre-split files for human and mouse (included in the input directory) or use [split_encode_ccres.sh](https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/blob/main/split_encode_ccres.sh) if you'd like to analyze a different species. These filepaths assume that your current working directory is this repository.  
 Species 1 promoters BED file:
 ```text
-input/promoters_human.txt
+input/ENCODE_cCREs_human_promoters.bed
 ```
 Species 1 enhancers BED file:
 ```text
-input/enhancers_human.txt
+input/ENCODE_cCREs_human_enhancers.bed
 ```
 Species 2 promoters BED file:
 ```text
-input/promoters_mouse.txt
+input/ENCODE_cCREs_mouse_promoters.bed
 ```
 Species 2 enhancers BED file:
 ```text
-input/enhancers_mouse.txt
+input/ENCODE_cCREs_mouse_enhancers.bed
 ```
 
 Step 6 inputs:  
