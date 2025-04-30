@@ -87,24 +87,28 @@ Tissue 2:
 Ovary
 ```
 
-The following files are not included in our repository due to their large size, but if you have access to the ikaplow directory, you can use these paths. These are the ATAC-seq peak (i.e. open chromatin regions) files that you have selected after performing QC for step 1.  
+The following files  are the ATAC-seq peak (i.e. open chromatin regions) files that you have selected after performing QC for step 1. This assumes that your current working directory is this repository.  
 Species 1, tissue 1:
 ```text
-/ocean/projects/bio230007p/ikaplow/HumanAtac/Pancreas/peak/idr_reproducibility/idr.optimal_peak.narrowPeak.gz
+input/humanPancreas.narrowPeak
 ```
 Species 1, tissue 2:
 ```text
-/ocean/projects/bio230007p/ikaplow/HumanAtac/Ovary/peak/idr_reproducibility/idr.conservative_peak.narrowPeak.gz
+input/humanOvary.narrowPeak
 ```
 Species 2, tissue 1:
 ```text
-/ocean/projects/bio230007p/ikaplow/MouseAtac/Pancreas/peak/idr_reproducibility/idr.optimal_peak.narrowPeak.gz
+input/mousePancreas.narrowPeak
 ```
 Species 2, tissue 2:
 ```text
-/ocean/projects/bio230007p/ikaplow/MouseAtac/Ovary/peak/idr_reproducibility/idr.optimal_peak.narrowPeak.gz
+input/mouseOvary.narrowPeak
 ```
-
+If the files above do not work, try these files, in this order:  
+/ocean/projects/bio230007p/ikaplow/HumanAtac/Pancreas/peak/idr_reproducibility/idr.optimal_peak.narrowPeak.gz  
+/ocean/projects/bio230007p/ikaplow/HumanAtac/Ovary/peak/idr_reproducibility/idr.conservative_peak.narrowPeak.gz  
+/ocean/projects/bio230007p/ikaplow/MouseAtac/Pancreas/peak/idr_reproducibility/idr.optimal_peak.narrowPeak.gz  
+/ocean/projects/bio230007p/ikaplow/MouseAtac/Ovary/peak/idr_reproducibility/idr.optimal_peak.narrowPeak.gz  
 
 Step 5 inputs:  
 To split the open chromatin regions from the step 2 inputs into enhancers and promoters, we intersect them with BED files that contain enhancers and promoters. For the following enhancers and promoters BED files, you can either use our pre-split files for human and mouse (included in the input directory) or use [split_encode_ccres.sh](https://github.com/BioinformaticsDataPracticum2025/open-chromatin-analysis/blob/main/split_encode_ccres.sh) if you'd like to analyze a different species. These filepaths assume that your current working directory is this repository.  
